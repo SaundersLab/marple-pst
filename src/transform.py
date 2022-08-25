@@ -1,13 +1,16 @@
 
 from Bio.SeqIO import parse
 import pandas as pd
-from utils import file, get_sample_name_and_extenstion, run, pushd
+from utils import file, get_sample_name_and_extenstion, run, pushd, string_to_color, darken_color
 from os.path import abspath, join
 from os import makedirs
 from re import finditer, sub
 from typing import Dict, List, Optional, Tuple
 from collections import defaultdict
 import tempfile
+import matplotlib.pyplot as plt
+from Bio import Phylo
+
 
 # Make a pileup and return the path to it
 def reads_to_pileup(fastq: str, reference: str, out_dir: str) -> str:
@@ -17,20 +20,14 @@ def reads_to_pileup(fastq: str, reference: str, out_dir: str) -> str:
 
     porechopped = join(out_dir, f'{sample_name}_porechopped{sample_ext}')
     run(['porechop', '-i', fastq], porechopped)
-
     run(['bwa', 'index', reference])
-
     aligned_sam = join(out_dir, f'{sample_name}.sam')
     run(['bwa', 'mem', reference, porechopped], aligned_sam)
-
     aligned_bam = join(out_dir, f'{sample_name}.bam')
     run(['samtools', 'view', '-S', '-b', aligned_sam], aligned_bam)
-
     sorted_bam = join(out_dir, f'{sample_name}_sorted.bam')
     run(['samtools', 'sort', aligned_bam], sorted_bam)
-
     run(['samtools', 'faidx', reference])
-
     pileup = join(out_dir, f'{sample_name}.pileup')
     run(['samtools', 'mpileup', '-f', reference, sorted_bam], pileup)
 
@@ -280,7 +277,7 @@ def alignment_to_flagstat(alignment: str, out_dir: str) -> str:
     run(['samtools', 'flagstat', alignment], flagstat)
     return flagstat
 
-def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=1) -> str:
+def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=2) -> str:
     makedirs(out_dir, exist_ok=True)
     collection_name, _ = get_sample_name_and_extenstion(exons_concat, 'fasta')
     # need absolute path because we're about to run raxml from the output directory
@@ -289,23 +286,173 @@ def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=1) -> str:
     # output name cannot contain slashes, so run raxml from the output directory
     with pushd(out_dir):
         # make a temporary file to prevent raxml log being written to screen
-        with tempfile.TemporaryFile(mode='wt') as log:
+        with tempfile.TemporaryFile() as log:
             try:
                 run(['raxmlHPC-PTHREADS-SSE3',
                     '-T', str(n_threads),
                     '-s', exons_concat,
                     '-m', 'GTRGAMMA',
-                    '-n', collection_name,
+                    '-n', f'{collection_name}.newick',
                     '-p', '100',
                 ], out=log)
             except:
                 # if raxml failed then raise an exception with the error message
                 # which was written to the temporary file (redirected from stdout)
                 log.seek(0)
-                error = log.read()
+                error = log.read().decode()
                 # supress warning that looks like an error
                 error = error.replace("\nRAxML can't, parse the alignment file as phylip file \nit will now try to parse it as FASTA file\n\n", '')
                 raise Exception(error)
 
     return join(out_dir, f'RAxML_bestTree.{collection_name}.newick')
 
+
+def newick_to_pdfs(newick_path: str, metadata_path: str, out_dir: str) -> Dict[str, str]:
+    makedirs(out_dir, exist_ok=True)
+    collection_name, _ = get_sample_name_and_extenstion(newick_path, 'newick')
+
+    # Load metadata and styles
+    tree = Phylo.read(newick_path, 'newick')
+    tree.ladderize()
+    sheets = pd.read_excel(metadata_path, sheet_name=None, engine='openpyxl')
+    metadata = sheets['metadata'].fillna('?').astype(str).set_index('tree_name').to_dict()
+    style = {}
+    for sheet_name, sheet in sheets.items():
+        if sheet_name == 'metadata':
+            continue
+        style[sheet_name] = sheet.set_index(sheet_name)[['color', 'marker']].to_dict(orient='index')
+
+    show_labels = True
+    n_leaves = len(tree.get_terminals())
+    label_col = 'tree_new_name'
+
+    pdf_out_paths = {}
+
+    for style_col in list(style) + ['region']:
+
+        pdf_out_path = join(out_dir, f'{collection_name}_{style_col}.pdf')
+        pdf_out_paths[style_col] = pdf_out_path
+
+        size = max(12, n_leaves / 12)
+        fontsize = 11 - size / 5
+        fig, ax = plt.subplots(figsize=(.9 * size, size))
+        ymin, ymax = (0, n_leaves)
+        ax.set_ylim(ymin, ymax)
+
+        Phylo.draw(tree, axes=ax, do_show=False)
+
+        xmin, xmax = ax.get_xlim()
+
+        # Get dimensions of axis in pixels
+        x1, x2 = ax.get_window_extent().get_points()[:, 0]
+        # Get unit scale
+        xscale = (x2 - x1) / (xmax-xmin)
+        # Get width of font in data units
+        font_size_x_units = fontsize / xscale 
+
+        seen_style_vals = set()
+        
+        name_to_pos = {}
+        name_to_style = {}
+        
+        # Update the markers and labels
+        texts = [t for t in ax.texts]
+        for t in texts:
+            s = t.get_text().strip()
+            
+            style_val = metadata[style_col].get(s, '?')
+            seen_style_vals.add(style_val)
+
+            default_style = {'color': string_to_color(style_val), 'marker': '●'}
+
+            if (style_val == '?') or (style_col not in style):
+                val_style = default_style
+            else:
+                val_style = style[style_col].get(style_val, default_style)
+                
+            name_to_pos[s] = t.get_position()
+            name_to_style[s] = val_style
+
+            color = val_style['color']
+            marker = val_style['marker']
+
+            t.set_text(marker)
+            t.set_color(color)
+
+            t.set_size(fontsize * 1.2)
+            x, y = t.get_position()
+            if show_labels:
+                s = metadata[label_col].get(s, s)
+                ax.text(x + 1.2 * font_size_x_units, y, s, va='center', fontsize=fontsize) 
+            
+        # Fill in the contiguous regions where the style_val is the same
+        right = xmax
+        polygons = []
+        to_fill = pd.DataFrame(name_to_pos).T.rename(columns={0: 'x', 1: 'y'})
+        to_fill = to_fill.join(pd.DataFrame(name_to_style).T)
+        to_fill['style_val'] = [metadata[style_col].get(s, '?') for s in to_fill.index]
+        to_fill = to_fill.sort_values(by='y')
+        poly_x = []
+        poly_y: list = []    
+        curr_style_val = list(to_fill.style_val)[0]
+        curr_color = list(to_fill.color)[0]
+        for x, y, color, style_val in to_fill[['x', 'y', 'color', 'style_val']].values:
+            if style_val != curr_style_val and poly_y:
+                poly_x += [right, right]
+                poly_y += [poly_y[-1], poly_y[0]]
+                polygons += [poly_x, poly_y, curr_color]
+                poly_x = []
+                poly_y = []
+                curr_style_val = style_val
+                curr_color = color
+            poly_x += [x + 1.2 * font_size_x_units] * 2
+            poly_y += [y - .5, y + .5]
+        poly_x += [right, right]
+        poly_y += [y + .5, poly_y[0]]
+        polygons += [poly_x, poly_y, curr_color]
+        ax.fill(*polygons, alpha=.15, ec='#555', lw=.25)
+        
+        # Add a label to each filled region
+        style_val_index = 0
+        curr_style_val = None
+        style_val_indices = []
+        for style_val in to_fill.style_val:
+            if style_val != curr_style_val:
+                style_val_index += 1
+                curr_style_val = style_val
+            style_val_indices.append(style_val_index)
+        to_fill['style_val_index'] = style_val_indices
+        mean_contiguous_y = to_fill.groupby(['style_val_index', 'style_val', 'color']).y.mean().to_frame().reset_index()
+        for style_val, y, color in mean_contiguous_y[['style_val', 'y', 'color']].values:
+            ax.text(right, y, style_val, color=darken_color(color), ha='right', va='center', alpha=.5, fontsize=fontsize)
+          
+        # Make the branches thinner
+        for collection in ax.collections:
+            if list(collection.get_linewidths()) == [1.5]:
+                collection.set_linewidths([0.5])
+
+        # Add a legend
+        for style_val in sorted(seen_style_vals):
+            default_style = {'color': string_to_color(style_val), 'marker': '●'}
+            if (style_val == '?') or (style_col not in style):
+                val_style = default_style
+            else:
+                val_style = style[style_col].get(style_val, default_style)
+            color = val_style['color']
+            scatter_style = {
+                '●': {'marker': 'o', 'fc': color, 'ec': color},
+                '■': {'marker': 's', 'fc': color, 'ec': color},
+                '○': {'marker': 'o', 'fc': '#FFF', 'ec': color},
+            }[val_style['marker']]
+            ax.scatter([], [], label=style_val, **scatter_style)
+        ax.legend(title=' '.join(style_col.split('_')).title(), loc=(1.04,0))
+
+        # Hide the right and top spines
+        for side in ['right', 'top']:
+            ax.spines[side].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig(pdf_out_path)
+        plt.close()
+
+    return pdf_out_paths

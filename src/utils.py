@@ -5,6 +5,11 @@ from typing import List, Union, IO
 from os.path import basename
 from os import chdir, getcwd
 import contextlib
+import matplotlib
+from hashlib import sha1
+import colorsys
+
+
 
 def file(path, mode='rt') -> IO:
     """Create a file object from path. Works regardless of compression based on extension.
@@ -51,10 +56,14 @@ def get_sample_name_and_extenstion(path: str, candidate_exts: Union[str, List[st
             'pileup': ['.pileup.gz', '.mpileup.gz', '.pileup', '.mpileup'],
             'fasta': ['.fa.gz', '.fasta.gz', '.fna.gz', '.ffn.gz', '.fa', '.fasta', '.fna', '.ffn'],
             'alignment': ['.bam', '.sam', '.cram'],
+            'newick': ['.newick.gz', '.tree.gz', '.newick', '.tree'],
         }[candidate_exts]
     sample_filename = basename(path)
     sample_ext = get_file_extenstion(sample_filename, candidate_exts)
     sample_name = sample_filename[:-len(sample_ext)]
+    raxml_prefix = 'RAxML_bestTree.'
+    if sample_name.startswith(raxml_prefix):
+        sample_name = sample_name[len(raxml_prefix):]
     return sample_name, sample_ext
 
 @contextlib.contextmanager
@@ -65,3 +74,14 @@ def pushd(new_dir: str):
         yield
     finally:
         chdir(previous_dir)
+
+def string_to_color(s: str) -> str:
+    if s == '?':
+        return '#00DD00'
+    hash_ = str(int(sha1(str(s).encode("utf-8")).hexdigest(), 16))
+    color_tuple = tuple((int(hash_[(i * 3):(i * 3) + 3]) % 255) / 300 for i in range(3))
+    return matplotlib.colors.to_hex(color_tuple)
+
+def darken_color(color_hex: str) -> str:
+    h, l, s = matplotlib.colors.hex2color(color_hex)
+    return matplotlib.colors.to_hex(colorsys.hls_to_rgb(h, .25, s))
