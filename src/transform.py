@@ -45,7 +45,7 @@ def pileup_to_consensus(
     hetero_max=.75,
 ) -> str:
 
-    sample_name, sample_ext = get_sample_name_and_extenstion(pileup_path, 'pileup')
+    sample_name, _ = get_sample_name_and_extenstion(pileup_path, 'pileup')
 
     snp_ratios_path = join(out_dir, f'{sample_name}_snp_ratios.tsv')
     pileup_to_snp_ratios(pileup_path, snp_ratios_path)
@@ -71,7 +71,7 @@ def pileup_to_consensus(
     consensus = {r.id: ['N'] * len(r.seq) for r in parse(reference_path, 'fasta')}
 
     # Fill in the consensus using alternate bases at positions with coverage >= min_depth
-    for gene, pos, genotype, allele in snp_freq[['gene', 'pos', 'genotype', 'allele']].values:
+    for gene, pos, _, allele in snp_freq[['gene', 'pos', 'genotype', 'allele']].values:
         consensus[gene][pos] = allele_to_code.get(allele, consensus[gene][pos])
 
     # Fill in the consensus using matches to reference with coverage >= min_match_depth
@@ -122,8 +122,8 @@ def _pileup_row_to_snp_ratio_row(row: str) -> str:
     base_to_ratio = _base_ratios_from_reads(reads, depth, ref)
     # sort by base for backward compatability
     base_ratios = sorted(base_to_ratio.items(), key=lambda base_and_ratio: base_and_ratio[0])
-    bases_str = ','.join(base for base, ratio in base_ratios)
-    ratios_str = ','.join(str(ratio) for base, ratio in base_ratios)
+    bases_str = ','.join(base for base, _ in base_ratios)
+    ratios_str = ','.join(str(ratio) for _, ratio in base_ratios)
     return '\t'.join((contig, pos_str, ref, depth_str, bases_str, ratios_str))
 
 def pileup_to_snp_ratios(pileup_path: str, snp_ratios_path: str) -> None:
@@ -219,7 +219,7 @@ def consensus_to_exons(consensus_path: str, gff: str, out_dir: str) -> str:
     exon_positions = defaultdict(set)
     for line in file(gff):
         # Assumes everything's on the positive strand
-        seqid, source, type_, start, end, score, strand, phase, attributes = line.strip().split('\t')
+        seqid, _, type_, start, end, _, strand, _, _ = line.strip().split('\t')
         assert strand == '+', 'Only + strand supported'
         if type_ == 'exon':
             exon_positions[seqid].update(set(range(int(start) - 1, int(end) - 1)))
@@ -250,8 +250,8 @@ def reads_to_exons_concat(
     out_dir: str,
     min_snp_depth: int = 20,
     min_match_depth: int = 2,
-    hetero_min: float = .2,
-    hetero_max: float = .8,
+    hetero_min: float = .25,
+    hetero_max: float = .75,
 ) -> str:
 
     pileup = reads_to_pileup(fastq, reference, out_dir)
