@@ -5,7 +5,7 @@ from utils import file, get_sample_name_and_extenstion, run, pushd, string_to_co
 from os.path import abspath, join
 from os import makedirs
 from re import finditer, sub
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Tuple
 from collections import defaultdict
 import tempfile
 import matplotlib.pyplot as plt
@@ -276,6 +276,26 @@ def alignment_to_flagstat(alignment: str, out_dir: str) -> str:
     flagstat = join(out_dir, f'{sample_name}.txt')
     run(['samtools', 'flagstat', alignment], flagstat)
     return flagstat
+
+def consensuses_to_coverage_table(consensus_paths: Iterable[str], collection_name: str, out_dir: str) -> str:
+    makedirs(out_dir, exist_ok=True)
+    coverage_rows = []
+    for consensus_path in consensus_paths:
+        sample_name, _ = get_sample_name_and_extenstion(consensus_path, 'fasta')
+        pct_coverages = []
+        for r in parse(consensus_path, 'fasta'):
+            length = len(r.seq)
+            pct_missing = (r.seq.count('?') + r.seq.count('N')) / length
+            pct_coverages.append(1 - pct_missing)
+        coverage_rows.append({
+            'sample': sample_name,
+            '<50% coverage': len([p for p in pct_coverages if p < .5]),
+            '≥50% coverage': len([p for p in pct_coverages if p >= .5]),
+        })
+    coverage_df = pd.DataFrame(coverage_rows)
+    coverage_table_path = join(out_dir, f'{collection_name}.tsv')
+    coverage_df.to_csv(coverage_table_path, sep='\t', index=None)
+    return coverage_table_path
 
 def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=2) -> str:
     makedirs(out_dir, exist_ok=True)
