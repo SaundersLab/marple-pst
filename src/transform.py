@@ -1,15 +1,17 @@
-
-from Bio.SeqIO import parse
-import pandas as pd
-from utils import file, get_sample_name_and_extenstion, run, pushd, string_to_color, darken_color
-from os.path import abspath, join
+import tempfile
+from collections import defaultdict
 from os import makedirs
+from os.path import abspath, join
 from re import finditer, sub
 from typing import Dict, Iterable, List, Optional, Tuple
-from collections import defaultdict
-import tempfile
+
 import matplotlib.pyplot as plt
+import pandas as pd
 from Bio import Phylo
+from Bio.SeqIO import parse
+
+from utils import (darken_color, file, get_sample_name_and_extenstion, pushd,
+                   run, string_to_color)
 
 
 # Make a pileup and return the path to it

@@ -1,14 +1,13 @@
-import gzip
-from typing import IO, Tuple
-import subprocess
-from typing import List, Union, IO
-from os.path import basename
-from os import chdir, getcwd
-import contextlib
-import matplotlib
-from hashlib import sha1
 import colorsys
+import contextlib
+import gzip
+import subprocess
+from hashlib import sha1
+from os import chdir, getcwd
+from os.path import basename
+from typing import IO, List, Tuple, Union
 
+import matplotlib
 
 
 def file(path, mode='rt') -> IO:
@@ -31,23 +30,28 @@ def file(path, mode='rt') -> IO:
     """
     return gzip.open(path, mode) if path.endswith('.gz') else open(path, mode)
 
+
 def run(args: List[str], out: Union[str, IO] = None) -> None:
     if out is not None:
         if isinstance(out, str):
             with open(out, 'wt') as f:
-                process = subprocess.run(args, text=True, stdout=f, stderr=subprocess.PIPE)
+                process = subprocess.run(
+                    args, text=True, stdout=f, stderr=subprocess.PIPE)
         else:
-            process = subprocess.run(args, text=True, stdout=out, stderr=subprocess.PIPE)
+            process = subprocess.run(
+                args, text=True, stdout=out, stderr=subprocess.PIPE)
     else:
         process = subprocess.run(args, text=True, stderr=subprocess.PIPE)
     if process.returncode:
         raise Exception(process.stderr)
+
 
 def get_file_extenstion(path: str, candidate_exts: List[str]) -> str:
     for ext in candidate_exts:
         if path.endswith(ext):
             return ext
     raise ValueError('Unknown extension for file ' + path)
+
 
 def get_sample_name_and_extenstion(path: str, candidate_exts: Union[str, List[str]]) -> Tuple[str, str]:
     if isinstance(candidate_exts, str):
@@ -66,6 +70,7 @@ def get_sample_name_and_extenstion(path: str, candidate_exts: Union[str, List[st
         sample_name = sample_name[len(raxml_prefix):]
     return sample_name, sample_ext
 
+
 @contextlib.contextmanager
 def pushd(new_dir: str):
     previous_dir = getcwd()
@@ -75,12 +80,15 @@ def pushd(new_dir: str):
     finally:
         chdir(previous_dir)
 
+
 def string_to_color(s: str) -> str:
     if s == '?':
         return '#00DD00'
     hash_ = str(int(sha1(str(s).encode("utf-8")).hexdigest(), 16))
-    color_tuple = tuple((int(hash_[(i * 3):(i * 3) + 3]) % 255) / 300 for i in range(3))
+    color_tuple = tuple(
+        (int(hash_[(i * 3):(i * 3) + 3]) % 255) / 300 for i in range(3))
     return matplotlib.colors.to_hex(color_tuple)
+
 
 def darken_color(color_hex: str) -> str:
     h, l, s = matplotlib.colors.hex2color(color_hex)
