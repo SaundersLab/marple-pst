@@ -264,7 +264,7 @@ def reads_to_exons_concat(
 
 def reads_to_fastqc(fastq: str, out_dir: str) -> Tuple[str, str]:
     makedirs(out_dir, exist_ok=True)
-    sample_name, sample_ext = get_sample_name_and_extenstion(fastq, 'fastq')
+    sample_name, _ = get_sample_name_and_extenstion(fastq, 'fastq')
     fastqc_page = join(out_dir, f'{sample_name}_fastqc.html')
     fastqc_data = join(out_dir, f'{sample_name}_fastqc.zip')
     run(['fastqc', '--quiet', '-o', out_dir, fastq])
@@ -272,7 +272,7 @@ def reads_to_fastqc(fastq: str, out_dir: str) -> Tuple[str, str]:
 
 def alignment_to_flagstat(alignment: str, out_dir: str) -> str:
     makedirs(out_dir, exist_ok=True)
-    sample_name, sample_ext = get_sample_name_and_extenstion(alignment, 'alignment')
+    sample_name, _ = get_sample_name_and_extenstion(alignment, 'alignment')
     flagstat = join(out_dir, f'{sample_name}.txt')
     run(['samtools', 'flagstat', alignment], flagstat)
     return flagstat
