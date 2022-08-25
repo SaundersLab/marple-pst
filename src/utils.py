@@ -1,8 +1,10 @@
 import gzip
 from typing import IO, Tuple
 import subprocess
-from typing import List, Union
+from typing import List, Union, IO
 from os.path import basename
+from os import chdir, getcwd
+import contextlib
 
 def file(path, mode='rt') -> IO:
     """Create a file object from path. Works regardless of compression based on extension.
@@ -24,11 +26,13 @@ def file(path, mode='rt') -> IO:
     """
     return gzip.open(path, mode) if path.endswith('.gz') else open(path, mode)
 
-def run(args: List[str], out: str = None) -> None:
+def run(args: List[str], out: Union[str, IO] = None) -> None:
     if out is not None:
-        # subprocess stdout will not be compressed even if giving gzip.open
-        with open(out, 'wt') as f:
-            process = subprocess.run(args, text=True, stdout=f, stderr=subprocess.PIPE)
+        if isinstance(out, str):
+            with open(out, 'wt') as f:
+                process = subprocess.run(args, text=True, stdout=f, stderr=subprocess.PIPE)
+        else:
+            process = subprocess.run(args, text=True, stdout=out, stderr=subprocess.PIPE)
     else:
         process = subprocess.run(args, text=True, stderr=subprocess.PIPE)
     if process.returncode:
@@ -45,10 +49,19 @@ def get_sample_name_and_extenstion(path: str, candidate_exts: Union[str, List[st
         candidate_exts = {
             'fastq': ['.fastq.gz', '.fq.gz', '.fastq', '.fq'],
             'pileup': ['.pileup.gz', '.mpileup.gz', '.pileup', '.mpileup'],
-            'fasta': ['.fa.gz', '.fasta.gz', '.fna.gz', '.fa', '.fasta', '.fna'],
+            'fasta': ['.fa.gz', '.fasta.gz', '.fna.gz', '.ffn.gz', '.fa', '.fasta', '.fna', '.ffn'],
+            'alignment': ['.bam', '.sam', '.cram'],
         }[candidate_exts]
     sample_filename = basename(path)
     sample_ext = get_file_extenstion(sample_filename, candidate_exts)
     sample_name = sample_filename[:-len(sample_ext)]
     return sample_name, sample_ext
 
+@contextlib.contextmanager
+def pushd(new_dir: str):
+    previous_dir = getcwd()
+    chdir(new_dir)
+    try:
+        yield
+    finally:
+        chdir(previous_dir)

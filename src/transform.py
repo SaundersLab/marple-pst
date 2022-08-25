@@ -1,12 +1,13 @@
 
 from Bio.SeqIO import parse
 import pandas as pd
-from utils import file, get_sample_name_and_extenstion, run
-from os.path import join
+from utils import file, get_sample_name_and_extenstion, run, pushd
+from os.path import abspath, join
 from os import makedirs
 from re import finditer, sub
 from typing import Dict, List, Optional, Tuple
 from collections import defaultdict
+import tempfile
 
 # Make a pileup and return the path to it
 def reads_to_pileup(fastq: str, reference: str, out_dir: str) -> str:
@@ -43,9 +44,8 @@ def pileup_to_consensus(
     out_dir: str,
     min_snp_depth: int,
     min_match_depth: int,
-    hetero_min: float,
-    hetero_max: float,
-    tidy=False,
+    hetero_min=.25,
+    hetero_max=.75,
 ) -> str:
 
     sample_name, sample_ext = get_sample_name_and_extenstion(pileup_path, 'pileup')
@@ -264,3 +264,48 @@ def reads_to_exons_concat(
     exons = consensus_to_exons(consensus, gff, out_dir)
     exons_concat = exons_to_exons_concat(exons, out_dir)
     return exons_concat
+
+def reads_to_fastqc(fastq: str, out_dir: str) -> Tuple[str, str]:
+    makedirs(out_dir, exist_ok=True)
+    sample_name, sample_ext = get_sample_name_and_extenstion(fastq, 'fastq')
+    fastqc_page = join(out_dir, f'{sample_name}_fastqc.html')
+    fastqc_data = join(out_dir, f'{sample_name}_fastqc.zip')
+    run(['fastqc', '--quiet', '-o', out_dir, fastq])
+    return fastqc_page, fastqc_data
+
+def alignment_to_flagstat(alignment: str, out_dir: str) -> str:
+    makedirs(out_dir, exist_ok=True)
+    sample_name, sample_ext = get_sample_name_and_extenstion(alignment, 'alignment')
+    flagstat = join(out_dir, f'{sample_name}.txt')
+    run(['samtools', 'flagstat', alignment], flagstat)
+    return flagstat
+
+def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=1) -> str:
+    makedirs(out_dir, exist_ok=True)
+    collection_name, _ = get_sample_name_and_extenstion(exons_concat, 'fasta')
+    # need absolute path because we're about to run raxml from the output directory
+    exons_concat = abspath(exons_concat)
+    
+    # output name cannot contain slashes, so run raxml from the output directory
+    with pushd(out_dir):
+        # make a temporary file to prevent raxml log being written to screen
+        with tempfile.TemporaryFile(mode='wt') as log:
+            try:
+                run(['raxmlHPC-PTHREADS-SSE3',
+                    '-T', str(n_threads),
+                    '-s', exons_concat,
+                    '-m', 'GTRGAMMA',
+                    '-n', collection_name,
+                    '-p', '100',
+                ], out=log)
+            except:
+                # if raxml failed then raise an exception with the error message
+                # which was written to the temporary file (redirected from stdout)
+                log.seek(0)
+                error = log.read()
+                # supress warning that looks like an error
+                error = error.replace("\nRAxML can't, parse the alignment file as phylip file \nit will now try to parse it as FASTA file\n\n", '')
+                raise Exception(error)
+
+    return join(out_dir, f'RAxML_bestTree.{collection_name}.newick')
+
