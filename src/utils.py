@@ -5,7 +5,7 @@ import subprocess
 from hashlib import sha1
 from os import chdir, getcwd
 from os.path import basename
-from typing import IO, List, Tuple, Union
+from typing import Dict, IO, List, Tuple, Union
 
 import matplotlib
 
@@ -93,3 +93,10 @@ def string_to_color(s: str) -> str:
 def darken_color(color_hex: str) -> str:
     h, l, s = matplotlib.colors.hex2color(color_hex)
     return matplotlib.colors.to_hex(colorsys.hls_to_rgb(h, .25, s))
+
+def write_fasta(fasta: Dict[str, str], path: str) -> None:
+    with file(path, 'wt') as f_out:
+        for header in sorted(fasta):
+            assert isinstance(header, str)
+            assert isinstance(fasta[header], str)
+            f_out.write('>' + header + '\n' + fasta[header] + '\n')
