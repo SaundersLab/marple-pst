@@ -154,6 +154,15 @@ def _get_genotype_and_valid_bases_and_valid_ratios(
     ref: str, bases: List[str], ratio_strs: list, hetero_min: float, hetero_max: float
 ) -> Optional[Tuple[str, str, str]]:
 
+    """Use the heterozygosity thresholds to filter the base ratios and determine the genotype:
+    Genotype	Condition	                                        Example
+    0/0	        pref ≥ hetero_max or only refbase qualified	        G GG 0/0 1
+    0/1	        ref base and 1 alt base qualified	                T CT 0/1 0.217,0.783
+    1/1	        palt 1 ≥ hetero_max or only 1 alt base qualified	T CC 1/1 0.822
+    1/2	        2 alt bases qualified and ref base did not	        C AT 1/2 0.476,0.524
+    ?	        3+ bases qualified	                                T ACT ? 0.2,0.6,0.2
+    """
+
     ratios = map(float, ratio_strs)
 
     genotype = ''
