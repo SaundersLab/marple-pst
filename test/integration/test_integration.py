@@ -1,7 +1,7 @@
 from importlib.metadata import metadata
 import unittest
 
-from src.transform import newick_to_imgs, reads_to_exons_concat, exons_concat_to_newick, reads_to_fastqc, alignment_to_flagstat
+from src.transform import newick_to_imgs, reads_to_exons_concat, exons_concat_to_newick, reads_to_fastqc, alignment_to_flagstat, consensuses_to_coverage_table
 from shutil import rmtree
 import filecmp
 import os
@@ -116,6 +116,15 @@ class TestAlignmentToFlagstat(IntegrationTestCase):
     def test_alignment_to_flagstat(self):
         alignment_to_flagstat(join(IN_DIR, 'isolate_1_sorted.bam'), join(OBS_DIR, 'flagstat'))
         self.assertExpectedDirectoryFilesMatch('flagstat')
+
+class TestConsensusesToCoverageTable(IntegrationTestCase):
+
+    def test_consensuses_to_coverage_table(self):
+        consensus_paths = [join(IN_DIR, f'consensus_{i}.fasta') for i in [1, 2]]
+        consensuses_to_coverage_table(
+            consensus_paths, '2_consensuses', join(OBS_DIR, 'coverage_table')
+        )
+        self.assertExpectedDirectoryFilesMatch('coverage_table')
 
 if __name__ == '__main__':
     unittest.main()
