@@ -240,13 +240,14 @@ def consensus_to_exons(consensus_path: str, gff: str, out_dir: str) -> str:
 
     # Find the exon positions
     exon_positions = defaultdict(set)
-    for line in file(gff):
-        # Assumes everything's on the positive strand
-        seqid, _, type_, start, end, _, strand, _, _ = line.strip().split('\t')
-        assert strand == '+', 'Only + strand supported'
-        if type_ == 'exon':
-            exon_positions[seqid].update(
-                set(range(int(start) - 1, int(end) - 1)))
+    with file(gff) as f:
+        for line in f:
+            # Assumes everything's on the positive strand
+            seqid, _, type_, start, end, _, strand, _, _ = line.strip().split('\t')
+            assert strand == '+', 'Only + strand supported'
+            if type_ == 'exon':
+                exon_positions[seqid].update(
+                    set(range(int(start) - 1, int(end) - 1)))
 
     consensus_exons_path = join(out_dir, f'{sample_name}_exons{sample_ext}')
 
