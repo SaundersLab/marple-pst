@@ -1,6 +1,7 @@
+from importlib.metadata import metadata
 import unittest
 
-from src.transform import reads_to_exons_concat, exons_concat_to_newick
+from src.transform import newick_to_imgs, reads_to_exons_concat, exons_concat_to_newick
 from shutil import rmtree
 import filecmp
 import os
@@ -74,6 +75,26 @@ class TestExonsConcatToNewick(unittest.TestCase, Assertions):
         exp_path = join(EXP_DIR, f'RAxML_bestTree.{splitext(input_name)[0]}.newick')
         obs_path = exons_concat_to_newick(join(IN_DIR, input_name), OBS_DIR)
         self.assertExpectedFilesMatch(exp_path, obs_path)
+
+class TestNewickToImgs(unittest.TestCase, Assertions):
+
+    def setUp(self):
+        setUp()
+
+    @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
+    def test_newick_to_imgs(self):
+        # TODO: this is a fragile way to compare plots, something with
+        #       image histograms might be safer but its a tricky one.
+        name = '50_isolates'
+        newick_path = join(IN_DIR, f'RAxML_bestTree.{name}.newick')
+        metadata_path = 'data/metadata_264_isolates.xlsx'
+
+        obs_dir = join(OBS_DIR, f'{name}_imgs')
+        newick_to_imgs(newick_path, metadata_path, obs_dir, 'png')
+
+        exp_dir = join(EXP_DIR, f'{name}_imgs')
+        self.assertExpectedDirectoryFilesMatch(exp_dir, obs_dir)
+
 
 
 if __name__ == '__main__':
