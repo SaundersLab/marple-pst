@@ -4,13 +4,19 @@ Pipeline for analysis of Puccinia striiformis f.sp. tritici genomic reads
 
 ## Running the tests
 
-All the tests:
+Run the tests:
 
 ```bash
 ./test/run_tests.sh
 ```
 
-Just the unit tests:
+Run the tests and report code coverage:
+
+```bash
+./test/run_tests.sh COVERAGE
+```
+
+Only run the unit tests:
 
 ```bash
 ./test/run_tests.sh SKIP_INTEGRATION

@@ -7,5 +7,9 @@ flag=$1
 [ "$SKIP_INTEGRATION" == true ] && echo "skiping integtation tests"
 
 export PYTHONPATH=$PYTHONPATH:$PWD/src
-python3 -m unittest
+
+[ "$flag" != "COVERAGE" ] && python3 -m unittest
+
+[ "$flag" == "COVERAGE" ] && coverage run --omit=src/__init__.py --source=src -m unittest discover && coverage report -m
+
 exit 0
