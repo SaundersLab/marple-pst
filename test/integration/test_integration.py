@@ -22,7 +22,9 @@ def setUp():
 
 class Assertions:
 
-    def assertExpectedDirectoryFilesMatch(self, exp_dir, obs_dir):
+    def assertExpectedDirectoryFilesMatch(self, directory):
+        exp_dir = join(EXP_DIR, directory)
+        obs_dir = join(OBS_DIR, directory)
         dircmp = filecmp.dircmp(exp_dir, obs_dir)
         missing = dircmp.left_only
         if missing:
@@ -49,7 +51,6 @@ class TestReadsToExonsConcat(unittest.TestCase, Assertions):
     @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
     def test_reads_to_exons_concat(self):
 
-        exp_dir = join(EXP_DIR, 'isolate_1')
         obs_dir = join(OBS_DIR, 'isolate_1')
 
         reads_to_exons_concat(
@@ -59,7 +60,7 @@ class TestReadsToExonsConcat(unittest.TestCase, Assertions):
             out_dir=obs_dir,
         )
 
-        self.assertExpectedDirectoryFilesMatch(exp_dir, obs_dir)
+        self.assertExpectedDirectoryFilesMatch('isolate_1')
 
 class TestExonsConcatToNewick(unittest.TestCase, Assertions):
 
@@ -105,11 +106,9 @@ class TestNewickToImgs(unittest.TestCase, Assertions):
         newick_path = join(IN_DIR, f'RAxML_bestTree.{name}.newick')
         metadata_path = 'data/metadata_264_isolates.xlsx'
 
-        obs_dir = join(OBS_DIR, f'{name}_imgs')
-        newick_to_imgs(newick_path, metadata_path, obs_dir, 'png')
+        newick_to_imgs(newick_path, metadata_path, join(OBS_DIR, f'{name}_imgs'), 'png')
 
-        exp_dir = join(EXP_DIR, f'{name}_imgs')
-        self.assertExpectedDirectoryFilesMatch(exp_dir, obs_dir)
+        self.assertExpectedDirectoryFilesMatch(f'{name}_imgs')
 
 class TestReadsToFastqc(unittest.TestCase, Assertions):
 
@@ -134,10 +133,8 @@ class TestAlignmentToFlagstat(unittest.TestCase, Assertions):
 
     @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
     def test_alignment_to_flagstat(self):
-        obs_dir = join(OBS_DIR, 'flagstat')
-        alignment_to_flagstat(join(IN_DIR, 'isolate_1_sorted.bam'), obs_dir)
-        exp_dir = join(EXP_DIR, 'flagstat')
-        self.assertExpectedDirectoryFilesMatch(exp_dir, obs_dir)
+        alignment_to_flagstat(join(IN_DIR, 'isolate_1_sorted.bam'), join(OBS_DIR, 'flagstat'))
+        self.assertExpectedDirectoryFilesMatch('flagstat')
 
 if __name__ == '__main__':
     unittest.main()
