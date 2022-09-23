@@ -368,7 +368,9 @@ def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=2) -> str:
                 # which was written to the temporary file (redirected from stdout)
                 log.seek(0)
                 error = log.read().decode()
-                # supress warning that looks like an error
+                # When run with a fasta file, RAxML reports it cannot be parsed as a phylip.
+                # This message can make it harder to find the actual error if RAxML crashes,
+                # so supress that message.
                 error = error.replace(
                     "\nRAxML can't, parse the alignment file as phylip file \nit will now try to parse it as FASTA file\n\n",
                     ''
