@@ -378,7 +378,7 @@ def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=2) -> str:
     return join(out_dir, f'RAxML_bestTree.{collection_name}.newick')
 
 
-def newick_to_pdfs(newick_path: str, metadata_path: str, out_dir: str) -> Dict[str, str]:
+def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, out_fmt='pdf') -> Dict[str, str]:
     makedirs(out_dir, exist_ok=True)
     collection_name, _ = get_sample_name_and_extenstion(newick_path, 'newick')
 
@@ -399,12 +399,12 @@ def newick_to_pdfs(newick_path: str, metadata_path: str, out_dir: str) -> Dict[s
     n_leaves = len(tree.get_terminals())
     label_col = 'tree_new_name'
 
-    pdf_out_paths = {}
+    img_out_paths = {}
 
     for style_col in list(style) + ['region']:
 
-        pdf_out_path = join(out_dir, f'{collection_name}_{style_col}.pdf')
-        pdf_out_paths[style_col] = pdf_out_path
+        img_out_path = join(out_dir, f'{collection_name}_{style_col}.{out_fmt}')
+        img_out_paths[style_col] = img_out_path
 
         size = max(12, n_leaves / 12)
         fontsize = 11 - size / 5
@@ -531,7 +531,7 @@ def newick_to_pdfs(newick_path: str, metadata_path: str, out_dir: str) -> Dict[s
             ax.spines[side].set_visible(False)
 
         plt.tight_layout()
-        plt.savefig(pdf_out_path)
+        plt.savefig(img_out_path)
         plt.close()
 
-    return pdf_out_paths
+    return img_out_paths
