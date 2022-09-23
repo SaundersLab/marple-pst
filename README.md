@@ -6,8 +6,12 @@ Pipeline for analysis of Puccinia striiformis f.sp. tritici genomic reads
 
 All the tests:
 
-```./test/run_tests.sh```
+```bash
+./test/run_tests.sh
+```
 
 Just the unit tests:
 
-```./test/run_tests.sh SKIP_INTEGRATION```
+```bash
+./test/run_tests.sh SKIP_INTEGRATION
+```
