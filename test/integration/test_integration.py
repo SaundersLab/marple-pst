@@ -42,32 +42,26 @@ class Assertions:
         if not filecmp.cmp(exp_path, obs_path):
             raise AssertionError(f'contents of {exp_name} does not match the expected output')
 
-
-class TestReadsToExonsConcat(unittest.TestCase, Assertions):
-
+@unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
+class IntegrationTestCase(unittest.TestCase, Assertions):
+    
     def setUp(self):
         setUp()
 
-    @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
+
+class TestReadsToExonsConcat(IntegrationTestCase):
+
     def test_reads_to_exons_concat(self):
-
-        obs_dir = join(OBS_DIR, 'isolate_1')
-
         reads_to_exons_concat(
             fastq=join(IN_DIR, 'isolate_1.fastq.gz'),
             reference='data/reference/pst-130_388_genes.fasta',
             gff='data/reference/pst-130_388_genes_as_positive_strand_landmarks.gff3',
-            out_dir=obs_dir,
+            out_dir=join(OBS_DIR, 'isolate_1'),
         )
-
         self.assertExpectedDirectoryFilesMatch('isolate_1')
 
-class TestExonsConcatToNewick(unittest.TestCase, Assertions):
+class TestExonsConcatToNewick(IntegrationTestCase):
 
-    def setUp(self):
-        setUp()
-
-    @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
     def test_exons_concat_to_newick(self):
         # TODO: this is a fragile way to compare trees, something with
         #       BIO.Phylo which re-roots, ladderizes, and does approximate
@@ -77,7 +71,6 @@ class TestExonsConcatToNewick(unittest.TestCase, Assertions):
         obs_path = exons_concat_to_newick(join(IN_DIR, input_name), OBS_DIR)
         self.assertExpectedFilesMatch(exp_path, obs_path)
 
-    @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
     def test_exons_concat_to_newick_exceptions(self):
         # When run with a fasta file, RAxML reports it cannot be parsed as a phylip.
         # This message can make it harder to find the actual error if RAxML crashes
@@ -93,12 +86,8 @@ class TestExonsConcatToNewick(unittest.TestCase, Assertions):
             'warning about RAxML input file being fasta instead of phylip should have been suprressed but was not'
         )
 
-class TestNewickToImgs(unittest.TestCase, Assertions):
+class TestNewickToImgs(IntegrationTestCase):
 
-    def setUp(self):
-        setUp()
-
-    @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
     def test_newick_to_imgs(self):
         # TODO: this is a fragile way to compare plots, something with
         #       image histograms might be safer but its a tricky one.
@@ -110,12 +99,8 @@ class TestNewickToImgs(unittest.TestCase, Assertions):
 
         self.assertExpectedDirectoryFilesMatch(f'{name}_imgs')
 
-class TestReadsToFastqc(unittest.TestCase, Assertions):
+class TestReadsToFastqc(IntegrationTestCase):
 
-    def setUp(self):
-        setUp()
-
-    @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
     def test_reads_to_fastqc(self):
         # TODO: could also test the zip file contents match, so that
         #       multiqc can pick up the data more easily, but it may
@@ -126,12 +111,8 @@ class TestReadsToFastqc(unittest.TestCase, Assertions):
         exp_path = join(EXP_DIR, 'fastqc', 'isolate_1_fastqc.html')
         self.assertExpectedFilesMatch(exp_path, obs_path)
 
-class TestAlignmentToFlagstat(unittest.TestCase, Assertions):
+class TestAlignmentToFlagstat(IntegrationTestCase):
 
-    def setUp(self):
-        setUp()
-
-    @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
     def test_alignment_to_flagstat(self):
         alignment_to_flagstat(join(IN_DIR, 'isolate_1_sorted.bam'), join(OBS_DIR, 'flagstat'))
         self.assertExpectedDirectoryFilesMatch('flagstat')
