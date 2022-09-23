@@ -50,7 +50,8 @@ def get_file_extenstion(path: str, candidate_exts: List[str]) -> str:
     for ext in candidate_exts:
         if path.endswith(ext):
             return ext
-    raise ValueError('Unknown extension for file ' + path)
+    extensions_str = '"' + '", "'.join(candidate_exts) + '"'
+    raise ValueError(f'Unknown extension for file "{path}". Tried these extenstions: {extensions_str}')
 
 
 def get_sample_name_and_extenstion(path: str, candidate_exts: Union[str, List[str]]) -> Tuple[str, str]:
