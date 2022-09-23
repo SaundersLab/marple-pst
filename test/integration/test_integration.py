@@ -1,7 +1,7 @@
 from importlib.metadata import metadata
 import unittest
 
-from src.transform import newick_to_imgs, reads_to_exons_concat, exons_concat_to_newick
+from src.transform import newick_to_imgs, reads_to_exons_concat, exons_concat_to_newick, reads_to_fastqc, alignment_to_flagstat
 from shutil import rmtree
 import filecmp
 import os
@@ -111,7 +111,33 @@ class TestNewickToImgs(unittest.TestCase, Assertions):
         exp_dir = join(EXP_DIR, f'{name}_imgs')
         self.assertExpectedDirectoryFilesMatch(exp_dir, obs_dir)
 
+class TestReadsToFastqc(unittest.TestCase, Assertions):
 
+    def setUp(self):
+        setUp()
+
+    @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
+    def test_reads_to_fastqc(self):
+        # TODO: could also test the zip file contents match, so that
+        #       multiqc can pick up the data more easily, but it may
+        #       be better to just test multiqc output instead
+        obs_dir = join(OBS_DIR, 'fastqc')
+        reads_to_fastqc(join(IN_DIR, 'isolate_1.fastq.gz'), obs_dir)
+        obs_path = join(obs_dir, 'isolate_1_fastqc.html')
+        exp_path = join(EXP_DIR, 'fastqc', 'isolate_1_fastqc.html')
+        self.assertExpectedFilesMatch(exp_path, obs_path)
+
+class TestAlignmentToFlagstat(unittest.TestCase, Assertions):
+
+    def setUp(self):
+        setUp()
+
+    @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
+    def test_alignment_to_flagstat(self):
+        obs_dir = join(OBS_DIR, 'flagstat')
+        alignment_to_flagstat(join(IN_DIR, 'isolate_1_sorted.bam'), obs_dir)
+        exp_dir = join(EXP_DIR, 'flagstat')
+        self.assertExpectedDirectoryFilesMatch(exp_dir, obs_dir)
 
 if __name__ == '__main__':
     unittest.main()
