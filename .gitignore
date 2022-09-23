@@ -1,3 +1,14 @@
+# results from running tests
+test/*/observed
+
+# index files
+data/reference/pst-130_388_genes.fasta.amb
+data/reference/pst-130_388_genes.fasta.ann
+data/reference/pst-130_388_genes.fasta.bwt
+data/reference/pst-130_388_genes.fasta.fai
+data/reference/pst-130_388_genes.fasta.pac
+data/reference/pst-130_388_genes.fasta.sa
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
