@@ -1,9 +1,10 @@
 import unittest
 
-from src.transform import reads_to_exons_concat
+from src.transform import reads_to_exons_concat, exons_concat_to_newick
 from shutil import rmtree
 import filecmp
 import os
+from os.path import basename, join, splitext
 
 def should_skip_integration_tests():
     try:
@@ -11,6 +12,12 @@ def should_skip_integration_tests():
     except:
         return False
 
+OBS_DIR = 'test/integration/observed'
+EXP_DIR = 'test/integration/expected'
+IN_DIR = 'test/integration/input'
+
+def setUp():
+    rmtree(OBS_DIR, ignore_errors=True)
 
 class Assertions:
 
@@ -21,30 +28,52 @@ class Assertions:
             raise AssertionError(f'{len(missing)} expected output file(s) were not created: ' + "\n".join(missing))
         match, mismatch, errors = filecmp.cmpfiles(exp_dir, obs_dir, dircmp.left_list, False)
         if mismatch:
-            raise AssertionError(f'{len(mismatch)} file(s) do not match the expected output: ' + "\n".join(mismatch))
+            raise AssertionError(f'contents of {len(mismatch)} file(s) do not match the expected outputs: ' + "\n".join(mismatch))
         if errors:
             raise AssertionError(f'{len(errors)} file(s) could not be compared: ' + "\n".join(errors))
+
+    def assertExpectedFilesMatch(self, exp_path, obs_path):
+        exp_name = basename(exp_path)
+        if not os.path.isfile(obs_path):
+            raise AssertionError(f'expected output file {exp_name} was not created')
+        if not filecmp.cmp(exp_path, obs_path):
+            raise AssertionError(f'contents of {exp_name} does not match the expected output')
 
 
 class TestReadsToExonsConcat(unittest.TestCase, Assertions):
 
     def setUp(self):
-        rmtree('test/integration/observed', ignore_errors=True)
+        setUp()
 
     @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
     def test_reads_to_exons_concat(self):
 
-        exp_dir = 'test/integration/expected/isolate_1'
-        obs_dir = 'test/integration/observed/isolate_1'
+        exp_dir = join(EXP_DIR, 'isolate_1')
+        obs_dir = join(OBS_DIR, 'isolate_1')
 
         reads_to_exons_concat(
-            fastq='test/integration/input/isolate_1.fastq.gz',
+            fastq=join(IN_DIR, 'isolate_1.fastq.gz'),
             reference='data/reference/pst-130_388_genes.fasta',
             gff='data/reference/pst-130_388_genes_as_positive_strand_landmarks.gff3',
             out_dir=obs_dir,
         )
 
         self.assertExpectedDirectoryFilesMatch(exp_dir, obs_dir)
+
+class TestExonsConcatToNewick(unittest.TestCase, Assertions):
+
+    def setUp(self):
+        setUp()
+
+    @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
+    def test_exons_concat_to_newick(self):
+        # TODO: this is a fragile way to compare trees, something with
+        #       BIO.Phylo which re-roots, ladderizes, and does approximate
+        #       comparison of branch lengths would safer.
+        input_name = '6_isolates_8000_bases.fasta'
+        exp_path = join(EXP_DIR, f'RAxML_bestTree.{splitext(input_name)[0]}.newick')
+        obs_path = exons_concat_to_newick(join(IN_DIR, input_name), OBS_DIR)
+        self.assertExpectedFilesMatch(exp_path, obs_path)
 
 
 if __name__ == '__main__':
