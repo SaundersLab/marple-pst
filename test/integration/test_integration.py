@@ -6,6 +6,8 @@ from shutil import rmtree
 import filecmp
 import os
 from os.path import basename, join, splitext
+from test.integration.img_comp import imgs_approx_equal
+import glob
 
 def should_skip_integration_tests():
     try:
@@ -54,7 +56,12 @@ class Assertions:
         if not filecmp.cmp(exp_path, obs_path):
             raise AssertionError(f'contents of {exp_name} does not match the expected output')
 
-        
+    def assertImagesApproxMatch(self, exp_path, obs_path):
+        exp_name = basename(exp_path)
+        self.assertFileExists(obs_path)
+        if not imgs_approx_equal(exp_path, obs_path):
+            raise AssertionError(f'{exp_name} image is too different to the expected output')
+
 
 @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
 class IntegrationTestCase(unittest.TestCase, Assertions):
@@ -63,21 +70,21 @@ class IntegrationTestCase(unittest.TestCase, Assertions):
         setUp()
 
 
-class TestReadsToExonsConcat(IntegrationTestCase):
+# class TestReadsToExonsConcat(IntegrationTestCase):
 
-    def test_reads_to_exons_concat(self):
-        reads_to_exons_concat(
-            fastq=join(IN_DIR, 'isolate_1.fastq.gz'),
-            reference='data/reference/pst-130_388_genes.fasta',
-            gff='data/reference/pst-130_388_genes_as_positive_strand_landmarks.gff3',
-            out_dir=join(OBS_DIR, 'isolate_1'),
-        )
-        self.assertExpectedDirectoryFilesMatch(
-            'isolate_1',
-            # different installations seem to give different bam files despite
-            # the same sam files, so ignore these for comparison
-            ignore=['isolate_1.bam', 'isolate_1_sorted.bam']
-        )
+#     def test_reads_to_exons_concat(self):
+#         reads_to_exons_concat(
+#             fastq=join(IN_DIR, 'isolate_1.fastq.gz'),
+#             reference='data/reference/pst-130_388_genes.fasta',
+#             gff='data/reference/pst-130_388_genes_as_positive_strand_landmarks.gff3',
+#             out_dir=join(OBS_DIR, 'isolate_1'),
+#         )
+#         self.assertExpectedDirectoryFilesMatch(
+#             'isolate_1',
+#             # different installations seem to give different bam files despite
+#             # the same sam files, so ignore these for comparison
+#             ignore=['isolate_1.bam', 'isolate_1_sorted.bam']
+#         )
 
 class TestExonsConcatToNewick(IntegrationTestCase):
 
@@ -116,35 +123,37 @@ class TestNewickToImgs(IntegrationTestCase):
 
         newick_to_imgs(newick_path, metadata_path, join(OBS_DIR, f'{name}_imgs'), 'png')
 
-        self.assertExpectedDirectoryFilesMatch(f'{name}_imgs')
+        for exp_path in glob.glob(join(EXP_DIR, '50_isolates_imgs', '*')):
+            obs_path = join(OBS_DIR, '50_isolates_imgs', basename(exp_path))
+            self.assertImagesApproxMatch(obs_path, exp_path)
 
-class TestReadsToFastqc(IntegrationTestCase):
+# class TestReadsToFastqc(IntegrationTestCase):
 
-    def test_reads_to_fastqc(self):
-        # TODO: could check the image similarity of the expected and
-        #       observed report. The date of the report changes when
-        #       you run it so we certainly can't compare the HTML.
-        # TODO: could also test the zip file contents match, so that
-        #       multiqc can pick up the data more easily, but it may
-        #       be better to just test multiqc output instead
-        obs_dir = join(OBS_DIR, 'fastqc')
-        obs_path, _ = reads_to_fastqc(join(IN_DIR, 'isolate_1.fastq.gz'), obs_dir)
-        self.assertFileContainsString(obs_path, 'isolate_1.fastq.gz')
+#     def test_reads_to_fastqc(self):
+#         # TODO: could check the image similarity of the expected and
+#         #       observed report. The date of the report changes when
+#         #       you run it so we certainly can't compare the HTML.
+#         # TODO: could also test the zip file contents match, so that
+#         #       multiqc can pick up the data more easily, but it may
+#         #       be better to just test multiqc output instead
+#         obs_dir = join(OBS_DIR, 'fastqc')
+#         obs_path, _ = reads_to_fastqc(join(IN_DIR, 'isolate_1.fastq.gz'), obs_dir)
+#         self.assertFileContainsString(obs_path, 'isolate_1.fastq.gz')
 
-class TestAlignmentToFlagstat(IntegrationTestCase):
+# class TestAlignmentToFlagstat(IntegrationTestCase):
 
-    def test_alignment_to_flagstat(self):
-        alignment_to_flagstat(join(IN_DIR, 'isolate_1_sorted.bam'), join(OBS_DIR, 'flagstat'))
-        self.assertExpectedDirectoryFilesMatch('flagstat')
+#     def test_alignment_to_flagstat(self):
+#         alignment_to_flagstat(join(IN_DIR, 'isolate_1_sorted.bam'), join(OBS_DIR, 'flagstat'))
+#         self.assertExpectedDirectoryFilesMatch('flagstat')
 
-class TestConsensusesToCoverageTable(IntegrationTestCase):
+# class TestConsensusesToCoverageTable(IntegrationTestCase):
 
-    def test_consensuses_to_coverage_table(self):
-        consensus_paths = [join(IN_DIR, f'consensus_{i}.fasta') for i in [1, 2]]
-        consensuses_to_coverage_table(
-            consensus_paths, '2_consensuses', join(OBS_DIR, 'coverage_table')
-        )
-        self.assertExpectedDirectoryFilesMatch('coverage_table')
+#     def test_consensuses_to_coverage_table(self):
+#         consensus_paths = [join(IN_DIR, f'consensus_{i}.fasta') for i in [1, 2]]
+#         consensuses_to_coverage_table(
+#             consensus_paths, '2_consensuses', join(OBS_DIR, 'coverage_table')
+#         )
+#         self.assertExpectedDirectoryFilesMatch('coverage_table')
 
 if __name__ == '__main__':
     unittest.main()
