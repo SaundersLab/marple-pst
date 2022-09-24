@@ -410,7 +410,7 @@ def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, out_fmt='
 
         size = max(12, n_leaves / 12)
         fontsize = 11 - size / 5
-        fig, ax = plt.subplots(figsize=(.9 * size, size))
+        fig, ax = plt.subplots(1, 1, figsize=(.9 * size, size))
         ymin, ymax = (0, n_leaves)
         ax.set_ylim(ymin, ymax)
 
@@ -459,7 +459,7 @@ def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, out_fmt='
             x, y = t.get_position()
             if show_labels:
                 s = metadata[label_col].get(s, s)
-                ax.text(x + 1.2 * font_size_x_units, y,
+                ax.text(x + 3.6 * font_size_x_units, y,
                         s, va='center', fontsize=fontsize)
 
         # Fill in the contiguous regions where the style_val is the same

@@ -22,10 +22,10 @@ def setUp():
 
 class Assertions:
 
-    def assertExpectedDirectoryFilesMatch(self, directory):
+    def assertExpectedDirectoryFilesMatch(self, directory, ignore=[]):
         exp_dir = join(EXP_DIR, directory)
         obs_dir = join(OBS_DIR, directory)
-        dircmp = filecmp.dircmp(exp_dir, obs_dir)
+        dircmp = filecmp.dircmp(exp_dir, obs_dir, ignore)
         missing = dircmp.left_only
         if missing:
             raise AssertionError(f'{len(missing)} expected output file(s) were not created: ' + "\n".join(missing))
@@ -35,12 +35,26 @@ class Assertions:
         if errors:
             raise AssertionError(f'{len(errors)} file(s) could not be compared: ' + "\n".join(errors))
 
+    def assertFileExists(self, obs_path):
+        if not os.path.isfile(obs_path):
+            raise AssertionError(f'expected output file {obs_path} was not created')
+
+    def assertFileContainsString(self, path, s):
+        s = str(s)
+        self.assertFileExists(path)
+        with open(path) as f:
+            for line in f:
+                if s in line:
+                    return
+        raise AssertionError('contents of {path} does not included the expected string {s}')
+
     def assertExpectedFilesMatch(self, exp_path, obs_path):
         exp_name = basename(exp_path)
-        if not os.path.isfile(obs_path):
-            raise AssertionError(f'expected output file {exp_name} was not created')
+        self.assertFileExists(obs_path)
         if not filecmp.cmp(exp_path, obs_path):
             raise AssertionError(f'contents of {exp_name} does not match the expected output')
+
+        
 
 @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
 class IntegrationTestCase(unittest.TestCase, Assertions):
@@ -58,7 +72,12 @@ class TestReadsToExonsConcat(IntegrationTestCase):
             gff='data/reference/pst-130_388_genes_as_positive_strand_landmarks.gff3',
             out_dir=join(OBS_DIR, 'isolate_1'),
         )
-        self.assertExpectedDirectoryFilesMatch('isolate_1')
+        self.assertExpectedDirectoryFilesMatch(
+            'isolate_1',
+            # different installations seem to give different bam files despite
+            # the same sam files, so ignore these for comparison
+            ignore=['isolate_1.bam', 'isolate_1_sorted.bam']
+        )
 
 class TestExonsConcatToNewick(IntegrationTestCase):
 
@@ -102,14 +121,15 @@ class TestNewickToImgs(IntegrationTestCase):
 class TestReadsToFastqc(IntegrationTestCase):
 
     def test_reads_to_fastqc(self):
+        # TODO: could check the image similarity of the expected and
+        #       observed report. The date of the report changes when
+        #       you run it so we certainly can't compare the HTML.
         # TODO: could also test the zip file contents match, so that
         #       multiqc can pick up the data more easily, but it may
         #       be better to just test multiqc output instead
         obs_dir = join(OBS_DIR, 'fastqc')
-        reads_to_fastqc(join(IN_DIR, 'isolate_1.fastq.gz'), obs_dir)
-        obs_path = join(obs_dir, 'isolate_1_fastqc.html')
-        exp_path = join(EXP_DIR, 'fastqc', 'isolate_1_fastqc.html')
-        self.assertExpectedFilesMatch(exp_path, obs_path)
+        obs_path, _ = reads_to_fastqc(join(IN_DIR, 'isolate_1.fastq.gz'), obs_dir)
+        self.assertFileContainsString(obs_path, 'isolate_1.fastq.gz')
 
 class TestAlignmentToFlagstat(IntegrationTestCase):
 
