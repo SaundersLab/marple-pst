@@ -1,4 +1,4 @@
-# marple-pst
+<img alt="MARPLE DIAGNOSTICS" src="docs/marple-bordered.png" height="160em"/>
 
 Pipeline for analysis of Puccinia striiformis f.sp. tritici genomic reads
 
