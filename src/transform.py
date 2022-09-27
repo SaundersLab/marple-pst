@@ -1,7 +1,7 @@
 import tempfile
 from collections import defaultdict
 from os import makedirs
-from os.path import abspath, join
+from os.path import abspath, basename, join
 from re import finditer, sub
 from typing import Dict, Iterable, List, Optional, Tuple
 
@@ -25,9 +25,9 @@ def reads_to_pileup(fastq: str, reference: str, out_dir: str) -> str:
     run(['bwa', 'index', reference])
     aligned_sam = join(out_dir, f'{sample_name}.sam')
     run(['bwa', 'mem', reference, porechopped], aligned_sam)
-    aligned_bam = join(out_dir, f'{sample_name}.bam')
+    aligned_bam = join(out_dir, f'{sample_name}_unsorted.bam')
     run(['samtools', 'view', '-S', '-b', aligned_sam], aligned_bam)
-    sorted_bam = join(out_dir, f'{sample_name}_sorted.bam')
+    sorted_bam = join(out_dir, f'{sample_name}.bam')
     run(['samtools', 'sort', aligned_bam], sorted_bam)
     run(['samtools', 'faidx', reference])
     pileup = join(out_dir, f'{sample_name}.pileup')
@@ -318,6 +318,21 @@ def alignment_to_flagstat(alignment: str, out_dir: str) -> str:
     flagstat = join(out_dir, f'{sample_name}.txt')
     run(['samtools', 'flagstat', alignment], flagstat)
     return flagstat
+
+def alignment_to_coverage_report(alignment: str, out_dir: str):
+    makedirs(out_dir, exist_ok=True)
+    sample_name, _ = get_sample_name_and_extenstion(alignment, 'alignment')
+    run(['samtools', 'index', alignment])
+    run(['mosdepth', join(out_dir, sample_name), alignment])
+
+
+def sample_report(sample_dir: str):
+    sample_name = basename(sample_dir)
+    out_dir = join(sample_dir, 'report')
+    # TODO: make this more flexible
+    reads_to_fastqc(join(sample_dir, f'{sample_name}.fastq'), out_dir)
+    alignment_to_flagstat(join(sample_dir, f'{sample_name}.bam'), out_dir)
+    alignment_to_coverage_report(join(sample_dir, f'{sample_name}.bam'), out_dir)
 
 
 def consensuses_to_coverage_table(
