@@ -275,7 +275,8 @@ def exons_to_exons_concat(exons_path: str, out_dir: str) -> str:
     sample_name, sample_ext = get_sample_name_and_extenstion(
         exons_path, 'fasta')
     exons_concat_path = join(out_dir, f'{sample_name}_concat{sample_ext}')
-
+    if sample_name.endswith('_exons'):
+        sample_name = sample_name[:-len('_exons')]
     all_genes_exons = ''.join(str(r.seq) for r in parse(exons_path, 'fasta'))
     write_fasta({sample_name: all_genes_exons}, exons_concat_path)
 
