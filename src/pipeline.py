@@ -11,6 +11,7 @@ def pipeline(
     reference: str,
     gff: str,
     out_dirs: List[str],
+    multiqc_config: str,
 ):
     for fastq, out_dir in zip(fastq_paths, out_dirs):
         print(fastq)
@@ -21,7 +22,8 @@ def pipeline(
             out_dir=out_dir,
         )
         sample_report(out_dir)
-    run(['multiqc'] + [join(out_dir, 'report') for out_dir in out_dirs], out='/dev/null')
+    report_dirs = [join(out_dir, 'report') for out_dir in out_dirs]
+    run(['multiqc', '--config', multiqc_config] + report_dirs, out='/dev/null')
 
 
 if __name__ == '__main__':
@@ -33,5 +35,6 @@ if __name__ == '__main__':
     relative_fastq_paths = sys.argv[1:]
     fastq_paths = [realpath(path) for path in relative_fastq_paths]
     out_dirs = [dirname(path) for path in fastq_paths]
-    pipeline(fastq_paths, reference, gff, out_dirs)
+    multiqc_config = join(marple_dir, 'config', 'multiqc_config.yaml')
+    pipeline(fastq_paths, reference, gff, out_dirs, multiqc_config)
 
