@@ -4,7 +4,7 @@ from os import makedirs
 from os.path import abspath, basename, join
 from re import finditer, sub
 from typing import Dict, Iterable, List, Optional, Tuple
-
+import subprocess
 import matplotlib.pyplot as plt
 import pandas as pd
 from Bio import Phylo
@@ -319,12 +319,43 @@ def alignment_to_flagstat(alignment: str, out_dir: str) -> str:
     run(['samtools', 'flagstat', alignment], flagstat)
     return flagstat
 
-def alignment_to_coverage_report(alignment: str, out_dir: str):
-    makedirs(out_dir, exist_ok=True)
-    sample_name, _ = get_sample_name_and_extenstion(alignment, 'alignment')
-    run(['samtools', 'index', alignment])
-    run(['mosdepth', join(out_dir, sample_name), alignment])
+def seq_to_pct_coverage(seq: str) -> float:
+    seq = str(seq).upper()
+    n_unknown = seq.count('?') + seq.count('N')
+    pct_unknown = 100 * n_unknown / len(seq)
+    return 100 - pct_unknown
 
+assert seq_to_pct_coverage('????') == 0
+assert seq_to_pct_coverage('NNNN') == 0
+assert seq_to_pct_coverage('ATCG') == 100
+assert seq_to_pct_coverage('A?AaTC?GAT') == 80
+assert seq_to_pct_coverage('ANAaTCNGAT') == 80
+
+def consensus_to_coverage(consensus, out_dir, step=1):
+    sample_name, _ = get_sample_name_and_extenstion(consensus, 'fasta')
+    out_path = join(out_dir, f'{sample_name}.csv')
+    cov_pcts = [seq_to_pct_coverage(r.seq) for r in parse(consensus, 'fasta')]
+
+    pct_coverage_thresholds = list(range(0, 101, step))
+    number_of_genes_with_pct_coverage_ge_thresholds = [
+        len([pct for pct in cov_pcts if pct >= min_pct])
+        for min_pct in pct_coverage_thresholds
+    ]
+    pd.DataFrame({
+        'pct_exon_positions_covered': pct_coverage_thresholds,
+        'number_of_genes': number_of_genes_with_pct_coverage_ge_thresholds,
+    }).to_csv(out_path, index=None, header=None)
+    return out_path
+
+# This is a work around to ensure that multiqc can create the plot specified in
+# config/multiqc_config.yaml.
+# Unless there is at least one _mqc.yaml in the directory, multiqc will not 
+# pick up any of the custom_data specified in the --config file. To ensure it
+# does pick up those files, we create a file for each sample with only id.
+def create_empty_config_required_for_gene_coverage_mqc(sample: str, out_dir: str):
+    config_name = f'{sample}_empty_config_required_for_gene_coverage_mqc'
+    with open(join(out_dir, f'{config_name}.yaml'), 'w') as f:
+        f.write(f'id: "{config_name}"' + '\n')
 
 def sample_report(sample_dir: str):
     sample_name = basename(sample_dir)
@@ -332,8 +363,8 @@ def sample_report(sample_dir: str):
     # TODO: make this more flexible
     reads_to_fastqc(join(sample_dir, f'{sample_name}.fastq'), out_dir)
     alignment_to_flagstat(join(sample_dir, f'{sample_name}.bam'), out_dir)
-    alignment_to_coverage_report(join(sample_dir, f'{sample_name}.bam'), out_dir)
-
+    consensus_to_coverage(join(sample_dir, f'{sample_name}.fasta'), out_dir)
+    create_empty_config_required_for_gene_coverage_mqc(sample_name, out_dir)
 
 def consensuses_to_coverage_table(
     consensus_paths: Iterable[str],
