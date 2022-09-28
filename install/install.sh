@@ -3,7 +3,8 @@
 # Bash strict mode
 set -euo pipefail
 
-marple_pst_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+install_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+marple_pst_dir=$(dirname $install_dir)
 echo "Installing into $marple_pst_dir"
 
 # is_conda_active=$(conda --version > /dev/null 2> /dev/null && echo "yes" || echo "no")
@@ -46,12 +47,12 @@ fi
 
 echo "INFO: Downloading miniconda installer"
 if [ "$operating_system_name" = "Mac" ]; then
-    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -o "$marple_pst_dir"/marple_pst_miniconda.sh
+    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -o "$install_dir"/marple_pst_miniconda.sh
 fi
 if [ "$operating_system_name" = "Linux" ]; then
-    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o "$marple_pst_dir"/marple_pst_miniconda.sh
+    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o "$install_dir"/marple_pst_miniconda.sh
 fi
-bash "$marple_pst_dir"/marple_pst_miniconda.sh -b -p "$marple_pst_dir"/marple_pst_miniconda
+bash "$install_dir"/marple_pst_miniconda.sh -b -p "$marple_pst_dir"/marple_pst_miniconda
 source "$marple_pst_dir"/marple_pst_miniconda/bin/activate
 conda --version
 echo "SUCCESS: activate conda with this command:"

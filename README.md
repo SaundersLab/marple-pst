@@ -5,7 +5,7 @@
 ## Install
 
 ```bash
-./install.sh
+./install/install.sh
 ```
 
 - Installs conda (miniconda)
@@ -72,7 +72,7 @@ Only run the unit tests:
 ## Uninstall
 
 ```bash
-./uninstall.sh
+./install/uninstall.sh
 ```
 
 - Deletes the `marple-pst` and its packacges
