@@ -256,7 +256,7 @@ def consensus_to_exons(consensus_path: str, gff: str, out_dir: str) -> str:
             assert strand == '+', 'Only + strand supported'
             if type_ == 'exon':
                 exon_positions[seqid].update(
-                    set(range(int(start) - 1, int(end) - 1)))
+                    set(range(int(start) - 1, int(end))))
 
     consensus_exons_path = join(out_dir, f'{sample_name}_exons{sample_ext}')
 
