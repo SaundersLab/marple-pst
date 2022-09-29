@@ -444,7 +444,7 @@ def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=2) -> str:
     return join(out_dir, f'RAxML_bestTree.{collection_name}.newick')
 
 
-def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, out_fmt='pdf') -> Dict[str, str]:
+def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, img_fmt='pdf') -> Dict[str, str]:
     makedirs(out_dir, exist_ok=True)
     collection_name, _ = get_sample_name_and_extenstion(newick_path, 'newick')
 
@@ -469,7 +469,7 @@ def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, out_fmt='
 
     for style_col in list(style) + ['region']:
 
-        img_out_path = join(out_dir, f'{collection_name}_{style_col}.{out_fmt}')
+        img_out_path = join(out_dir, f'{collection_name}_{style_col}.{img_fmt}')
         img_out_paths[style_col] = img_out_path
 
         size = max(12, n_leaves / 12)
@@ -620,3 +620,47 @@ def reads_list_to_exons_concat_with_report(
         sample_report(out_dir)
     report_dirs = [join(out_dir, 'report') for out_dir in out_dirs]
     run(['multiqc', '--config', multiqc_config] + report_dirs, out='/dev/null')
+
+
+def exon_concat_paths_to_tree_input(
+    exon_concat_paths: List[str],
+    starting_tree_input: str,
+    new_tree_input: str,
+) -> str:
+    with open(new_tree_input, 'w') as f_out:
+        for path in [*exon_concat_paths, starting_tree_input]:
+            with file(path) as f_in:
+                for line in f_in:
+                    f_out.write(line)
+    # You already know where to find it, but for consistency
+    return new_tree_input
+
+
+def exon_concat_paths_to_tree_imgs(
+    exon_concat_paths: List[str],
+    starting_tree_input: str,
+    tree_name: str,
+    out_dir: str,
+    metadata_path: str,
+    n_threads=2,
+    img_fmt='pdf',
+) -> Dict[str, str]:
+    makedirs(out_dir, exist_ok=True)
+    tree_input = join(out_dir, f'{tree_name}.fasta')
+    exon_concat_paths_to_tree_input(
+        exon_concat_paths=exon_concat_paths,
+        starting_tree_input=starting_tree_input,
+        new_tree_input=tree_input,
+    )
+    newick = exons_concat_to_newick(
+        exons_concat=tree_input,
+        out_dir=out_dir,
+        n_threads=n_threads,
+    )
+    imgs = newick_to_imgs(
+        newick_path=newick,
+        metadata_path=metadata_path,
+        out_dir=out_dir,
+        img_fmt=img_fmt,
+    )
+    return imgs
