@@ -62,6 +62,7 @@ def get_sample_name_and_extenstion(path: str, candidate_exts: Union[str, List[st
             'fasta': ['.fa.gz', '.fasta.gz', '.fna.gz', '.ffn.gz', '.fa', '.fasta', '.fna', '.ffn'],
             'alignment': ['.bam', '.sam', '.cram'],
             'newick': ['.newick.gz', '.tree.gz', '.newick', '.tree'],
+            'snp_ratios': ['_snp_ratios.tsv'],
         }[candidate_exts]
     sample_filename = basename(path)
     sample_ext = get_file_extenstion(sample_filename, candidate_exts)
