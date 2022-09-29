@@ -36,6 +36,55 @@ def reads_to_pileup(fastq: str, reference: str, out_dir: str) -> str:
     # Let the caller know where to find the pileup file
     return pileup
 
+def snp_ratios_and_snp_freq_to_consensus(
+    snp_ratios_path: str,
+    snp_freq_path: str,
+    reference_path: str,
+    out_dir: str,
+    min_match_depth: int,
+):
+    sample_name, _ = get_sample_name_and_extenstion(snp_ratios_path, 'snp_ratios')
+    
+    snp_freq = pd.read_csv(snp_freq_path, sep='\t', header=None)
+    snp_freq.columns = [
+        'gene', 'pos', 'pos1', 'ref', 'depth', 'allele', 'genotype', 'ratios'
+    ]
+    # Drop the position where 3+ bases qualified (e.g. T ACT ? 0.2,0.6,0.2)
+    snp_freq = snp_freq[snp_freq.genotype != '?']
+
+    snp_ratios = pd.read_csv(snp_ratios_path, sep='\t', header=None)
+    snp_ratios.columns = ['gene', 'pos', 'ref', 'depth', 'alts', 'ratios']
+
+    allele_to_code = {
+        'AA': 'A',  'CC': 'C',  'GG': 'G',  'TT': 'T',  'UU': 'U',
+        'AT': 'W',  'CG': 'S',  'AC': 'M',  'GT': 'K',  'AG': 'R',  'CT': 'Y',
+        'TA': 'W',  'GC': 'S',  'CA': 'M',  'TG': 'K',  'GA': 'R',  'TC': 'Y',
+    }
+
+    # Start with an empty consensus
+    consensus = {str(r.id): ['N'] * len(r.seq) for r in parse(reference_path, 'fasta')}
+
+    # Fill in the consensus using alternate bases where coverage >= min_depth
+    for gene, pos, _, allele in snp_freq[['gene', 'pos', 'genotype', 'allele']].values:
+        consensus[gene][pos] = allele_to_code.get(allele, consensus[gene][pos])
+
+    # Fill in the consensus using reference matches where coverage >= min_match_depth
+    ref_matches = snp_ratios[snp_ratios.alts == snp_ratios.ref]
+    ref_matches_enough_depth = ref_matches.query(f'depth >= {min_match_depth}')
+    for gene, pos, ref in ref_matches_enough_depth[['gene', 'pos', 'ref']].values:
+        consensus[gene][pos] = ref
+
+    # Convert the sequence lists into strings
+    consensus_fasta = {gene: ''.join(l) for gene, l in consensus.items()}
+
+    # Write out the consensus
+    consensus_path = join(out_dir, f'{sample_name}.fasta')
+    write_fasta(consensus_fasta, consensus_path)
+
+    # Let the caller know where to find the consensus file
+    return consensus_path
+
+
 # Make a consensus and return the path to it
 
 
@@ -59,46 +108,14 @@ def pileup_to_consensus(
         snp_ratios_path, snp_freq_path, min_snp_depth, hetero_min, hetero_max
     )
 
-    snp_freq = pd.read_csv(snp_freq_path, sep='\t', header=None)
-    snp_freq.columns = [
-        'gene', 'pos', 'pos1', 'ref', 'depth', 'allele', 'genotype', 'ratios'
-    ]
-    # Drop the position where 3+ bases qualified (e.g. T ACT ? 0.2,0.6,0.2)
-    snp_freq = snp_freq[snp_freq.genotype != '?']
-
-    snp_ratios = pd.read_csv(snp_ratios_path, sep='\t', header=None)
-    snp_ratios.columns = ['gene', 'pos', 'ref', 'depth', 'alts', 'ratios']
-
-    allele_to_code = {
-        'AA': 'A',  'CC': 'C',  'GG': 'G',  'TT': 'T',  'UU': 'U',
-        'AT': 'W',  'CG': 'S',  'AC': 'M',  'GT': 'K',  'AG': 'R',  'CT': 'Y',
-        'TA': 'W',  'GC': 'S',  'CA': 'M',  'TG': 'K',  'GA': 'R',  'TC': 'Y',
-    }
-
-    # Start with an empty consensus
-    consensus = {str(r.id): ['N'] * len(r.seq)
-                 for r in parse(reference_path, 'fasta')}
-
-    # Fill in the consensus using alternate bases where coverage >= min_depth
-    for gene, pos, _, allele in snp_freq[['gene', 'pos', 'genotype', 'allele']].values:
-        consensus[gene][pos] = allele_to_code.get(allele, consensus[gene][pos])
-
-    # Fill in the consensus using reference matches where coverage >= min_match_depth
-    ref_matches = snp_ratios[snp_ratios.alts == snp_ratios.ref]
-    ref_matches_enough_depth = ref_matches.query(f'depth >= {min_match_depth}')
-    for gene, pos, ref in ref_matches_enough_depth[['gene', 'pos', 'ref']].values:
-        consensus[gene][pos] = ref
-
-    # Convert the sequence lists into strings
-    consensus_fasta = {gene: ''.join(l) for gene, l in consensus.items()}
-
-    # Write out the consensus
-    consensus_path = join(out_dir, f'{sample_name}.fasta')
-    write_fasta(consensus_fasta, consensus_path)
-
     # Let the caller know where to find the consensus file
-    return consensus_path
-
+    return snp_ratios_and_snp_freq_to_consensus(
+        snp_ratios_path=snp_ratios_path,
+        snp_freq_path=snp_freq_path,
+        reference_path=reference_path,
+        out_dir=out_dir,
+        min_match_depth=min_match_depth,
+    )
 
 def _subtract_indels_from_counts(upper_reads: str, base_counts: Dict[str, int]) -> None:
     for indel in finditer(r'([+|-])(\d+)(\w+)', upper_reads):
