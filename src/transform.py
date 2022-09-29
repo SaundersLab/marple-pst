@@ -601,3 +601,22 @@ def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, out_fmt='
         plt.close()
 
     return img_out_paths
+
+def reads_list_to_exons_concat_with_report(
+    fastq_paths: List[str],
+    reference: str,
+    gff: str,
+    out_dirs: List[str],
+    multiqc_config: str,
+):
+    for fastq, out_dir in zip(fastq_paths, out_dirs):
+        print(fastq)
+        reads_to_exons_concat(
+            fastq=fastq,
+            reference=reference,
+            gff=gff,
+            out_dir=out_dir,
+        )
+        sample_report(out_dir)
+    report_dirs = [join(out_dir, 'report') for out_dir in out_dirs]
+    run(['multiqc', '--config', multiqc_config] + report_dirs, out='/dev/null')
