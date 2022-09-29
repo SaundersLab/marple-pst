@@ -8,6 +8,8 @@ Pipeline for analysis of Puccinia striiformis f.sp. tritici genomic reads
 ./install/install.sh
 ```
 
+Before installing, please ensure the licences of miniconda and each software dependency in `env.yml` are compatible with your usage.
+
 - Installs conda (miniconda)
 - Installs dependencies from `eny.yml` into the environment `marple-pst`
 - Runs tests with `test/run_tests.sh`
