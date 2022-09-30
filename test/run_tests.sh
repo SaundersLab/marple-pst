@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source marple_pst_miniconda/bin/activate marple-pst
+
 flag=$1
 
 [ "$flag" == "SKIP_INTEGRATION" ] && export SKIP_INTEGRATION=true 
