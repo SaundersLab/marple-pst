@@ -1,5 +1,10 @@
 #!/bin/bash
 
+export PYTHONPATH=$PYTHONPATH:$PWD/src
+
+# Bash strict mode
+set -euo pipefail
+
 source marple_pst_miniconda/bin/activate marple-pst
 
 coverage=false
@@ -12,7 +17,7 @@ while [[ $# -gt 0 ]] ; do
     shift 1
 done
 
-export PYTHONPATH=$PYTHONPATH:$PWD/src
+
 [ "$coverage" == "false" ] && python3 -m unittest
 [ "$coverage" == "true" ] && coverage run --omit=src/__init__.py --source=src -m unittest discover && coverage report -m
 

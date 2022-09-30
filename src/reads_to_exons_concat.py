@@ -30,6 +30,7 @@ if __name__ == '__main__':
         help='MultiQC config file for creating the report',
         default=join(marple_dir, 'config', 'multiqc_config.yaml'),
     )
+    parser.add_argument('--threads', help='Number of threads to use', default=2)
     args = parser.parse_args()
     fastq_paths = [realpath(path) for path in args.relative_fastq_paths]
     out_dirs = [dirname(path) for path in fastq_paths]

@@ -15,20 +15,25 @@ from utils import (darken_color, file, get_sample_name_and_extenstion, pushd,
 
 
 # Make a pileup and return the path to it
-def reads_to_pileup(fastq: str, reference: str, out_dir: str) -> str:
+def reads_to_pileup(
+    fastq: str,
+    reference: str,
+    out_dir: str,
+    threads=1,
+) -> str:
     makedirs(out_dir, exist_ok=True)
 
     sample_name, sample_ext = get_sample_name_and_extenstion(fastq, 'fastq')
-
+    threads = str(threads)
     porechopped = join(out_dir, f'{sample_name}_porechopped{sample_ext}')
-    run(['porechop', '-i', fastq], porechopped)
+    run(['porechop', '--threads', threads, '-i', fastq], porechopped)
     run(['bwa', 'index', reference])
     aligned_sam = join(out_dir, f'{sample_name}.sam')
-    run(['bwa', 'mem', reference, porechopped], aligned_sam)
+    run(['bwa', 'mem', '-t', threads, reference, porechopped], aligned_sam)
     aligned_bam = join(out_dir, f'{sample_name}_unsorted.bam')
-    run(['samtools', 'view', '-S', '-b', aligned_sam], aligned_bam)
+    run(['samtools', 'view', '-@', threads, '-S', '-b', aligned_sam], aligned_bam)
     sorted_bam = join(out_dir, f'{sample_name}.bam')
-    run(['samtools', 'sort', aligned_bam], sorted_bam)
+    run(['samtools', 'sort', '-@', threads, aligned_bam], sorted_bam)
     run(['samtools', 'faidx', reference])
     pileup = join(out_dir, f'{sample_name}.pileup')
     run(['samtools', 'mpileup', '-f', reference, sorted_bam], pileup)
@@ -309,9 +314,10 @@ def reads_to_exons_concat(
     min_match_depth: int = 2,
     hetero_min: float = .25,
     hetero_max: float = .75,
+    threads=1,
 ) -> str:
 
-    pileup = reads_to_pileup(fastq, reference, out_dir)
+    pileup = reads_to_pileup(fastq, reference, out_dir, threads=threads)
     consensus = pileup_to_consensus(
         pileup, reference, out_dir, min_snp_depth,
         min_match_depth, hetero_min, hetero_max
@@ -404,7 +410,7 @@ def consensuses_to_coverage_table(
     return coverage_table_path
 
 
-def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=2) -> str:
+def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=1) -> str:
     makedirs(out_dir, exist_ok=True)
     collection_name, _ = get_sample_name_and_extenstion(exons_concat, 'fasta')
     # need absolute path because we're about to run raxml from the output directory
@@ -415,13 +421,16 @@ def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=2) -> str:
         # make a temporary file to prevent raxml log being written to screen
         with tempfile.TemporaryFile() as log:
             try:
-                run(['raxmlHPC-PTHREADS-SSE3',
-                    '-T', str(n_threads),
+                args = [
+                    'raxmlHPC-PTHREADS-SSE3',
                      '-s', exons_concat,
                      '-m', 'GTRGAMMA',
                      '-n', f'{collection_name}.newick',
                      '-p', '100',
-                     ], out=log)
+                ]
+                if n_threads >= 2:
+                    args += ['-T', str(n_threads)]
+                run(args, out=log)
             except:
                 # if raxml failed then raise an exception with the error message
                 # which was written to the temporary file (redirected from stdout)
@@ -618,6 +627,7 @@ def reads_list_to_exons_concat_with_report(
     gff: str,
     out_dirs: List[str],
     multiqc_config: str,
+    threads=1,
 ):
     for fastq, out_dir in zip(fastq_paths, out_dirs):
         reads_to_exons_concat(
@@ -625,6 +635,7 @@ def reads_list_to_exons_concat_with_report(
             reference=reference,
             gff=gff,
             out_dir=out_dir,
+            threads=threads,
         )
         sample_report(out_dir)
     report_dirs = [join(out_dir, 'report') for out_dir in out_dirs]
@@ -651,7 +662,7 @@ def exon_concat_paths_to_tree_imgs(
     tree_name: str,
     out_dir: str,
     metadata_path: str,
-    n_threads=2,
+    n_threads=1,
     img_fmt='pdf',
 ) -> Dict[str, str]:
     makedirs(out_dir, exist_ok=True)

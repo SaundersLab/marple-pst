@@ -86,8 +86,10 @@ class TestReadsToExonsConcat(IntegrationTestCase):
         self.assertExpectedDirectoryFilesMatch(
             'isolate_1',
             # different installations seem to give different bam files despite
-            # the same sam files, so ignore these for comparison
-            ignore=['isolate_1.bam', 'isolate_1_sorted.bam']
+            # the same sam files, so ignore these for comparison.
+            # Look like sam file can be in different order because of threads
+            # as well. 
+            ignore=['isolate_1.bam', 'isolate_1_unsorted.bam', 'isolate_1.sam']
         )
 
 class TestExonsConcatToNewick(IntegrationTestCase):

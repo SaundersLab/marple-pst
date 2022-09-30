@@ -29,7 +29,7 @@ if __name__ == '__main__':
     )
     parser.add_argument('--name', help='Name to use as a prefix for all created tree files',)
     parser.add_argument('--out_dir', help='Directory to create tree files in', default=realpath('.'))
-    parser.add_argument('--threads', help='Number of threads to use for RAxML', default=2)
+    parser.add_argument('--threads', type=int, help='Number of threads to use for RAxML', default=1)
     parser.add_argument('--img_fmt', help='Format to output tree images as', default='pdf')
 
     args = parser.parse_args()

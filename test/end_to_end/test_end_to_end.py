@@ -23,7 +23,7 @@ def should_ignore_file(file):
     return matches(
         file,
         matches=['.DS_Store'],
-        suffixes=['.bam', '.pdf', '.html', 'xlsx', '.zip'],
+        suffixes=['.bam', '.sam', '.pdf', '.html', 'xlsx', '.zip'],
         prefixes=['RAxML_parsimonyTree', 'RAxML_info', 'RAxML_log', 'RAxML_result'],
     )
 
