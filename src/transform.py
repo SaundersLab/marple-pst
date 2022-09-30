@@ -466,9 +466,10 @@ def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, img_fmt='
         img_out_path = join(out_dir, f'{collection_name}_{style_col}.{img_fmt}')
         img_out_paths[style_col] = img_out_path
 
-        size = max(12, n_leaves / 12)
-        fontsize = 11 - size / 5
-        fig, ax = plt.subplots(1, 1, figsize=(.9 * size, size))
+        height = max(5, n_leaves / 6)
+        width = 14
+        fontsize = 11 - width / 5
+        fig, ax = plt.subplots(1, 1, figsize=(width, height))
         ymin, ymax = (0, n_leaves)
         ax.set_ylim(ymin, ymax)
 
@@ -517,11 +518,12 @@ def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, img_fmt='
             x, y = t.get_position()
             if show_labels:
                 s = metadata[label_col].get(s, s)
-                ax.text(x + 3.6 * font_size_x_units, y,
+                ax.text(x + 1.8 * font_size_x_units, y,
                         s, va='center', fontsize=fontsize)
 
         # Fill in the contiguous regions where the style_val is the same
-        right = xmax
+        right = xmax + .15 * (xmax - xmin)
+        text_right = xmax + .142 * (xmax - xmin)
         polygons = []
         to_fill = pd.DataFrame(name_to_pos).T.rename(columns={0: 'x', 1: 'y'})
         to_fill = to_fill.join(pd.DataFrame(name_to_style).T)
@@ -561,7 +563,7 @@ def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, img_fmt='
         mean_contiguous_y = to_fill.groupby(
             ['style_val_index', 'style_val', 'color']).y.mean().to_frame().reset_index()
         for style_val, y, color in mean_contiguous_y[['style_val', 'y', 'color']].values:
-            ax.text(right, y, style_val, color=darken_color(color),
+            ax.text(text_right, y, style_val, color=darken_color(color),
                     ha='right', va='center', alpha=.5, fontsize=fontsize)
 
         # Make the branches thinner
@@ -584,11 +586,24 @@ def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, img_fmt='
                 '○': {'marker': 'o', 'fc': '#FFF', 'ec': color},
             }[val_style['marker']]
             ax.scatter([], [], label=style_val, **scatter_style)
-        ax.legend(title=' '.join(style_col.split('_')).title(), loc=(1.04, 0))
+        ax.legend(title=' '.join(style_col.split('_')).title(), loc='lower left')
 
         # Hide the right and top spines
         for side in ['right', 'top']:
             ax.spines[side].set_visible(False)
+
+        # Make the left and top axes less prominent
+        faint_color = '#BBB'
+        for side in ['left', 'bottom']:
+            ax.spines[side].set_color(faint_color)
+        ax.tick_params(axis='x', colors=faint_color)
+        ax.tick_params(axis='y', colors=faint_color)
+        ax.yaxis.label.set_color(faint_color)
+        ax.xaxis.label.set_color(faint_color)
+
+        ax.set_ylabel(None)
+
+        ax.set_xlim(xmin, right)
 
         plt.tight_layout()
         plt.savefig(img_out_path)

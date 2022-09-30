@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def img_to_tiles(img):
-    M = img.shape[0] // 4
-    N = img.shape[1] // 4
+    M = (img.shape[0] // 4) + 1
+    N = (img.shape[1] // 4) + 1
     tiles = [img[x:x+M,y:y+N] for x in range(0,img.shape[0],M) for y in range(0,img.shape[1],N)]
     return tiles
 
@@ -34,6 +34,8 @@ def imgs_approx_equal(img1, img2):
         img1 = plt.imread(img1)
     if isinstance(img2, str):
         img2 = plt.imread(img2)
+    if img1.shape != img2.shape:
+        return False
     return hists_approx_equal(
         tiles_to_hists(img_to_tiles(img1)),
         tiles_to_hists(img_to_tiles(img2)),
