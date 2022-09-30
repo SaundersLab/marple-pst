@@ -11,7 +11,7 @@ cat fastq/barcode02/*.fastq > Warrior_10/Warrior_10.fastq
     --out_dir tree \
     --name 2_new_samples \
     */*_exons_concat.fasta
-mv .metadata_264_isolates_2_new_samples.xlsx metadata_264_isolates_2_new_samples.xlsx
+cp .metadata_264_isolates_2_new_samples.xlsx metadata_264_isolates_2_new_samples.xlsx
 ../src/tree_to_imgs.sh \
     --meta metadata_264_isolates_2_new_samples.xlsx \
     --out_dir tree_with_new_metadata \
