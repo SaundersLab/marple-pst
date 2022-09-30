@@ -1,7 +1,11 @@
 from importlib.metadata import metadata
 import unittest
 
-from src.transform import newick_to_imgs, reads_to_exons_concat, exons_concat_to_newick, reads_to_fastqc, alignment_to_flagstat, consensuses_to_coverage_table
+from src.transform import (
+    newick_to_imgs, reads_to_exons_concat, exons_concat_to_newick, 
+    reads_to_fastqc, alignment_to_flagstat, consensuses_to_coverage_table,
+    consensus_to_coverage
+)
 from shutil import rmtree
 import filecmp
 import os
@@ -33,7 +37,7 @@ class Assertions:
             raise AssertionError(f'{len(missing)} expected output file(s) were not created: ' + "\n".join(missing))
         match, mismatch, errors = filecmp.cmpfiles(exp_dir, obs_dir, dircmp.left_list, False)
         if mismatch:
-            raise AssertionError(f'contents of {len(mismatch)} file(s) do not match the expected outputs: ' + "\n".join(mismatch))
+            raise AssertionError(f'contents of {len(mismatch)} file(s) in {directory} do not match the expected outputs: ' + "\n".join(mismatch))
         if errors:
             raise AssertionError(f'{len(errors)} file(s) could not be compared: ' + "\n".join(errors))
 
@@ -74,7 +78,7 @@ class TestReadsToExonsConcat(IntegrationTestCase):
 
     def test_reads_to_exons_concat(self):
         reads_to_exons_concat(
-            fastq=join(IN_DIR, 'isolate_1.fastq.gz'),
+            fastq=join(IN_DIR, 'isolate_1.fastq'),
             reference='data/reference/pst-130_388_genes.fasta',
             gff='data/reference/pst-130_388_genes_as_positive_strand_landmarks.gff3',
             out_dir=join(OBS_DIR, 'isolate_1'),
@@ -137,14 +141,25 @@ class TestReadsToFastqc(IntegrationTestCase):
         #       multiqc can pick up the data more easily, but it may
         #       be better to just test multiqc output instead
         obs_dir = join(OBS_DIR, 'fastqc')
-        obs_path, _ = reads_to_fastqc(join(IN_DIR, 'isolate_1.fastq.gz'), obs_dir)
-        self.assertFileContainsString(obs_path, 'isolate_1.fastq.gz')
+        obs_path, _ = reads_to_fastqc(join(IN_DIR, 'isolate_1.fastq'), obs_dir)
+        self.assertFileContainsString(obs_path, 'isolate_1.fastq')
 
 class TestAlignmentToFlagstat(IntegrationTestCase):
 
     def test_alignment_to_flagstat(self):
         alignment_to_flagstat(join(IN_DIR, 'isolate_1_sorted.bam'), join(OBS_DIR, 'flagstat'))
         self.assertExpectedDirectoryFilesMatch('flagstat')
+
+class TestConsensusToCoverage(IntegrationTestCase):
+
+    def test_consensus_to_coverage(self):
+        self.assertExpectedFilesMatch(
+            join(EXP_DIR, 'consensus_to_coverage', 'consensus_1.csv'),
+            consensus_to_coverage(
+                join(IN_DIR, 'consensus_1.fasta'),
+                OBS_DIR,
+            )
+        )
 
 class TestConsensusesToCoverageTable(IntegrationTestCase):
 

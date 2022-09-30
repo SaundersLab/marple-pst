@@ -65,6 +65,11 @@ Our starting point is a directory for each sample containing the fastq files cre
         */*_exons_concat.fasta
     ```
 
+    In this example we use a starting tree input containing only 8 isolates to save time.
+
+    When you run this with real samples, use `../data/56_isolates_388_genes_exons.fasta.gz` which
+    contains 56 isolates.
+
 7. Inspect the tree by opening `example/tree/2_new_samples_country.pdf` in your browser.
 
     Notice how country is shown as '?' for the new samples. We'll fix that in the next step.
@@ -103,7 +108,7 @@ See [pipeline.md](docs/pipeline.md) for a flowchart of the pipeline.
 
 ## Test
 
-Run the tests:
+Run all the tests (roughly 2 minutes):
 
 ```bash
 ./test/run_tests.sh
@@ -112,13 +117,13 @@ Run the tests:
 Run the tests and report code coverage:
 
 ```bash
-./test/run_tests.sh COVERAGE
+./test/run_tests.sh coverage
 ```
 
-Only run the unit tests:
+Skip the end to end test and integration tests
 
 ```bash
-./test/run_tests.sh SKIP_INTEGRATION
+./test/run_tests.sh skip_integration skip_end_to_end
 ```
 
 ## Uninstall
