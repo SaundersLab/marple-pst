@@ -1,0 +1,4981 @@
+{
+    "report_data_sources": {
+        "Samtools": {
+            "flagstat": {
+                "Norfolk-1": "/Users/bryan/work/pst_marple/example/Norfolk-1/report/Norfolk-1.txt",
+                "Warrior_10": "/Users/bryan/work/pst_marple/example/Warrior_10/report/Warrior_10.txt"
+            }
+        },
+        "FastQC": {
+            "all_sections": {
+                "Norfolk-1": "/Users/bryan/work/pst_marple/example/Norfolk-1/report/Norfolk-1_fastqc.zip",
+                "Warrior_10": "/Users/bryan/work/pst_marple/example/Warrior_10/report/Warrior_10_fastqc.zip"
+            }
+        }
+    },
+    "report_general_stats_data": [
+        {
+            "Norfolk-1": {
+                "total_passed": 1049,
+                "total_failed": 0,
+                "secondary_passed": 0,
+                "secondary_failed": 0,
+                "supplementary_passed": 68,
+                "supplementary_failed": 0,
+                "duplicates_passed": 0,
+                "duplicates_failed": 0,
+                "mapped_passed": 698,
+                "mapped_failed": 0,
+                "mapped_passed_pct": 66.54,
+                "mapped_failed_pct": NaN,
+                "paired in sequencing_passed": 0,
+                "paired in sequencing_failed": 0,
+                "read1_passed": 0,
+                "read1_failed": 0,
+                "read2_passed": 0,
+                "read2_failed": 0,
+                "properly paired_passed": 0,
+                "properly paired_failed": 0,
+                "properly paired_passed_pct": NaN,
+                "properly paired_failed_pct": NaN,
+                "with itself and mate mapped_passed": 0,
+                "with itself and mate mapped_failed": 0,
+                "singletons_passed": 0,
+                "singletons_failed": 0,
+                "singletons_passed_pct": NaN,
+                "singletons_failed_pct": NaN,
+                "with mate mapped to a different chr_passed": 0,
+                "with mate mapped to a different chr_failed": 0,
+                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
+                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
+                "flagstat_total": 1049
+            },
+            "Warrior_10": {
+                "total_passed": 1002,
+                "total_failed": 0,
+                "secondary_passed": 0,
+                "secondary_failed": 0,
+                "supplementary_passed": 12,
+                "supplementary_failed": 0,
+                "duplicates_passed": 0,
+                "duplicates_failed": 0,
+                "mapped_passed": 241,
+                "mapped_failed": 0,
+                "mapped_passed_pct": 24.05,
+                "mapped_failed_pct": NaN,
+                "paired in sequencing_passed": 0,
+                "paired in sequencing_failed": 0,
+                "read1_passed": 0,
+                "read1_failed": 0,
+                "read2_passed": 0,
+                "read2_failed": 0,
+                "properly paired_passed": 0,
+                "properly paired_failed": 0,
+                "properly paired_passed_pct": NaN,
+                "properly paired_failed_pct": NaN,
+                "with itself and mate mapped_passed": 0,
+                "with itself and mate mapped_failed": 0,
+                "singletons_passed": 0,
+                "singletons_failed": 0,
+                "singletons_passed_pct": NaN,
+                "singletons_failed_pct": NaN,
+                "with mate mapped to a different chr_passed": 0,
+                "with mate mapped to a different chr_failed": 0,
+                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
+                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
+                "flagstat_total": 1002
+            }
+        },
+        {
+            "Norfolk-1": {
+                "percent_gc": 47.0,
+                "avg_sequence_length": 1212.879,
+                "total_sequences": 1000.0,
+                "percent_duplicates": 0.0,
+                "percent_fails": 30.0
+            },
+            "Warrior_10": {
+                "percent_gc": 46.0,
+                "avg_sequence_length": 815.079,
+                "total_sequences": 1000.0,
+                "percent_duplicates": 0.0,
+                "percent_fails": 40.0
+            }
+        }
+    ],
+    "report_general_stats_headers": [
+        {
+            "flagstat_total": {
+                "title": "M Reads",
+                "description": "Total reads in the bam file (millions)",
+                "min": 0,
+                "modify": 1e-06,
+                "shared_key": "read_count",
+                "placement": 100.0,
+                "hidden": true,
+                "namespace": "Samtools",
+                "rid": "mqc-generalstats-samtools-flagstat_total",
+                "scale": "GnBu",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "max": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "dmax": 0.001049,
+                "dmin": 0.0
+            },
+            "mapped_passed": {
+                "title": "M Reads Mapped",
+                "description": "Reads Mapped in the bam file (millions)",
+                "min": 0,
+                "modify": 1e-06,
+                "shared_key": "read_count",
+                "placement": 101.0,
+                "namespace": "Samtools",
+                "rid": "mqc-generalstats-samtools-mapped_passed",
+                "scale": "GnBu",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "hidden": null,
+                "max": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "dmax": 0.001049,
+                "dmin": 0.0
+            }
+        },
+        {
+            "percent_duplicates": {
+                "title": "% Dups",
+                "description": "% Duplicate Reads",
+                "max": 100,
+                "min": 0,
+                "suffix": "%",
+                "scale": "RdYlGn-rev",
+                "namespace": "FastQC",
+                "rid": "mqc-generalstats-fastqc-percent_duplicates",
+                "format": "{:,.1f}",
+                "colour": "77,175,74",
+                "hidden": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "placement": 1000.0,
+                "dmax": 100.0,
+                "dmin": 0.0
+            },
+            "percent_gc": {
+                "title": "% GC",
+                "description": "Average % GC Content",
+                "max": 100,
+                "min": 0,
+                "suffix": "%",
+                "scale": "Set1",
+                "format": "{:,.0f}",
+                "namespace": "FastQC",
+                "rid": "mqc-generalstats-fastqc-percent_gc",
+                "colour": "77,175,74",
+                "hidden": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "placement": 1000.0,
+                "dmax": 100.0,
+                "dmin": 0.0
+            },
+            "avg_sequence_length": {
+                "title": "Read Length",
+                "description": "Average Read Length (bp)",
+                "min": 0,
+                "suffix": " bp",
+                "scale": "RdYlGn",
+                "format": "{:,.0f}",
+                "hidden": false,
+                "namespace": "FastQC",
+                "rid": "mqc-generalstats-fastqc-avg_sequence_length",
+                "colour": "77,175,74",
+                "max": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "placement": 1000.0,
+                "dmax": 1212.879,
+                "dmin": 0.0
+            },
+            "percent_fails": {
+                "title": "% Failed",
+                "description": "Percentage of modules failed in FastQC report (includes those not plotted here)",
+                "max": 100,
+                "min": 0,
+                "suffix": "%",
+                "scale": "Reds",
+                "format": "{:,.0f}",
+                "hidden": true,
+                "namespace": "FastQC",
+                "rid": "mqc-generalstats-fastqc-percent_fails",
+                "colour": "77,175,74",
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "placement": 1000.0,
+                "dmax": 100.0,
+                "dmin": 0.0
+            },
+            "total_sequences": {
+                "title": "M Seqs",
+                "description": "Total Sequences (millions)",
+                "min": 0,
+                "scale": "Blues",
+                "modify": 1e-06,
+                "shared_key": "read_count",
+                "namespace": "FastQC",
+                "rid": "mqc-generalstats-fastqc-total_sequences",
+                "format": "{:,.1f}",
+                "colour": "77,175,74",
+                "hidden": null,
+                "max": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "placement": 1000.0,
+                "dmax": 0.001049,
+                "dmin": 0.0
+            }
+        }
+    ],
+    "report_multiqc_command": "/Users/bryan/work/pst_marple/marple_pst_miniconda/envs/marple-pst/bin/multiqc --config /Users/bryan/work/pst_marple/config/multiqc_config.yaml /Users/bryan/work/pst_marple/example/Norfolk-1/report /Users/bryan/work/pst_marple/example/Warrior_10/report",
+    "report_plot_data": {
+        "gene_coverage_lineplot": {
+            "plot_type": "xy_line",
+            "datasets": [
+                [
+                    {
+                        "name": "Norfolk-1",
+                        "data": [
+                            [
+                                0.0,
+                                388.0
+                            ],
+                            [
+                                1.0,
+                                34.0
+                            ],
+                            [
+                                2.0,
+                                34.0
+                            ],
+                            [
+                                3.0,
+                                33.0
+                            ],
+                            [
+                                4.0,
+                                33.0
+                            ],
+                            [
+                                5.0,
+                                33.0
+                            ],
+                            [
+                                6.0,
+                                33.0
+                            ],
+                            [
+                                7.0,
+                                32.0
+                            ],
+                            [
+                                8.0,
+                                32.0
+                            ],
+                            [
+                                9.0,
+                                32.0
+                            ],
+                            [
+                                10.0,
+                                31.0
+                            ],
+                            [
+                                11.0,
+                                30.0
+                            ],
+                            [
+                                12.0,
+                                30.0
+                            ],
+                            [
+                                13.0,
+                                30.0
+                            ],
+                            [
+                                14.0,
+                                30.0
+                            ],
+                            [
+                                15.0,
+                                28.0
+                            ],
+                            [
+                                16.0,
+                                28.0
+                            ],
+                            [
+                                17.0,
+                                28.0
+                            ],
+                            [
+                                18.0,
+                                28.0
+                            ],
+                            [
+                                19.0,
+                                28.0
+                            ],
+                            [
+                                20.0,
+                                28.0
+                            ],
+                            [
+                                21.0,
+                                28.0
+                            ],
+                            [
+                                22.0,
+                                28.0
+                            ],
+                            [
+                                23.0,
+                                28.0
+                            ],
+                            [
+                                24.0,
+                                28.0
+                            ],
+                            [
+                                25.0,
+                                28.0
+                            ],
+                            [
+                                26.0,
+                                28.0
+                            ],
+                            [
+                                27.0,
+                                27.0
+                            ],
+                            [
+                                28.0,
+                                27.0
+                            ],
+                            [
+                                29.0,
+                                26.0
+                            ],
+                            [
+                                30.0,
+                                26.0
+                            ],
+                            [
+                                31.0,
+                                26.0
+                            ],
+                            [
+                                32.0,
+                                26.0
+                            ],
+                            [
+                                33.0,
+                                26.0
+                            ],
+                            [
+                                34.0,
+                                26.0
+                            ],
+                            [
+                                35.0,
+                                26.0
+                            ],
+                            [
+                                36.0,
+                                25.0
+                            ],
+                            [
+                                37.0,
+                                25.0
+                            ],
+                            [
+                                38.0,
+                                25.0
+                            ],
+                            [
+                                39.0,
+                                25.0
+                            ],
+                            [
+                                40.0,
+                                25.0
+                            ],
+                            [
+                                41.0,
+                                25.0
+                            ],
+                            [
+                                42.0,
+                                24.0
+                            ],
+                            [
+                                43.0,
+                                23.0
+                            ],
+                            [
+                                44.0,
+                                23.0
+                            ],
+                            [
+                                45.0,
+                                23.0
+                            ],
+                            [
+                                46.0,
+                                23.0
+                            ],
+                            [
+                                47.0,
+                                23.0
+                            ],
+                            [
+                                48.0,
+                                23.0
+                            ],
+                            [
+                                49.0,
+                                23.0
+                            ],
+                            [
+                                50.0,
+                                23.0
+                            ],
+                            [
+                                51.0,
+                                23.0
+                            ],
+                            [
+                                52.0,
+                                22.0
+                            ],
+                            [
+                                53.0,
+                                22.0
+                            ],
+                            [
+                                54.0,
+                                22.0
+                            ],
+                            [
+                                55.0,
+                                22.0
+                            ],
+                            [
+                                56.0,
+                                22.0
+                            ],
+                            [
+                                57.0,
+                                22.0
+                            ],
+                            [
+                                58.0,
+                                22.0
+                            ],
+                            [
+                                59.0,
+                                21.0
+                            ],
+                            [
+                                60.0,
+                                20.0
+                            ],
+                            [
+                                61.0,
+                                20.0
+                            ],
+                            [
+                                62.0,
+                                20.0
+                            ],
+                            [
+                                63.0,
+                                18.0
+                            ],
+                            [
+                                64.0,
+                                17.0
+                            ],
+                            [
+                                65.0,
+                                17.0
+                            ],
+                            [
+                                66.0,
+                                17.0
+                            ],
+                            [
+                                67.0,
+                                17.0
+                            ],
+                            [
+                                68.0,
+                                17.0
+                            ],
+                            [
+                                69.0,
+                                16.0
+                            ],
+                            [
+                                70.0,
+                                15.0
+                            ],
+                            [
+                                71.0,
+                                14.0
+                            ],
+                            [
+                                72.0,
+                                14.0
+                            ],
+                            [
+                                73.0,
+                                14.0
+                            ],
+                            [
+                                74.0,
+                                14.0
+                            ],
+                            [
+                                75.0,
+                                14.0
+                            ],
+                            [
+                                76.0,
+                                12.0
+                            ],
+                            [
+                                77.0,
+                                11.0
+                            ],
+                            [
+                                78.0,
+                                11.0
+                            ],
+                            [
+                                79.0,
+                                11.0
+                            ],
+                            [
+                                80.0,
+                                11.0
+                            ],
+                            [
+                                81.0,
+                                10.0
+                            ],
+                            [
+                                82.0,
+                                10.0
+                            ],
+                            [
+                                83.0,
+                                10.0
+                            ],
+                            [
+                                84.0,
+                                10.0
+                            ],
+                            [
+                                85.0,
+                                10.0
+                            ],
+                            [
+                                86.0,
+                                8.0
+                            ],
+                            [
+                                87.0,
+                                6.0
+                            ],
+                            [
+                                88.0,
+                                5.0
+                            ],
+                            [
+                                89.0,
+                                3.0
+                            ],
+                            [
+                                90.0,
+                                1.0
+                            ],
+                            [
+                                91.0,
+                                1.0
+                            ],
+                            [
+                                92.0,
+                                1.0
+                            ],
+                            [
+                                93.0,
+                                1.0
+                            ],
+                            [
+                                94.0,
+                                1.0
+                            ],
+                            [
+                                95.0,
+                                1.0
+                            ],
+                            [
+                                96.0,
+                                1.0
+                            ],
+                            [
+                                97.0,
+                                0.0
+                            ],
+                            [
+                                98.0,
+                                0.0
+                            ],
+                            [
+                                99.0,
+                                0.0
+                            ],
+                            [
+                                100.0,
+                                0.0
+                            ]
+                        ]
+                    },
+                    {
+                        "name": "Warrior_10",
+                        "data": [
+                            [
+                                0.0,
+                                388.0
+                            ],
+                            [
+                                1.0,
+                                35.0
+                            ],
+                            [
+                                2.0,
+                                34.0
+                            ],
+                            [
+                                3.0,
+                                34.0
+                            ],
+                            [
+                                4.0,
+                                33.0
+                            ],
+                            [
+                                5.0,
+                                31.0
+                            ],
+                            [
+                                6.0,
+                                31.0
+                            ],
+                            [
+                                7.0,
+                                31.0
+                            ],
+                            [
+                                8.0,
+                                30.0
+                            ],
+                            [
+                                9.0,
+                                29.0
+                            ],
+                            [
+                                10.0,
+                                28.0
+                            ],
+                            [
+                                11.0,
+                                28.0
+                            ],
+                            [
+                                12.0,
+                                28.0
+                            ],
+                            [
+                                13.0,
+                                28.0
+                            ],
+                            [
+                                14.0,
+                                27.0
+                            ],
+                            [
+                                15.0,
+                                27.0
+                            ],
+                            [
+                                16.0,
+                                27.0
+                            ],
+                            [
+                                17.0,
+                                26.0
+                            ],
+                            [
+                                18.0,
+                                26.0
+                            ],
+                            [
+                                19.0,
+                                26.0
+                            ],
+                            [
+                                20.0,
+                                25.0
+                            ],
+                            [
+                                21.0,
+                                25.0
+                            ],
+                            [
+                                22.0,
+                                25.0
+                            ],
+                            [
+                                23.0,
+                                25.0
+                            ],
+                            [
+                                24.0,
+                                25.0
+                            ],
+                            [
+                                25.0,
+                                25.0
+                            ],
+                            [
+                                26.0,
+                                24.0
+                            ],
+                            [
+                                27.0,
+                                24.0
+                            ],
+                            [
+                                28.0,
+                                24.0
+                            ],
+                            [
+                                29.0,
+                                24.0
+                            ],
+                            [
+                                30.0,
+                                23.0
+                            ],
+                            [
+                                31.0,
+                                23.0
+                            ],
+                            [
+                                32.0,
+                                22.0
+                            ],
+                            [
+                                33.0,
+                                22.0
+                            ],
+                            [
+                                34.0,
+                                21.0
+                            ],
+                            [
+                                35.0,
+                                21.0
+                            ],
+                            [
+                                36.0,
+                                20.0
+                            ],
+                            [
+                                37.0,
+                                18.0
+                            ],
+                            [
+                                38.0,
+                                18.0
+                            ],
+                            [
+                                39.0,
+                                18.0
+                            ],
+                            [
+                                40.0,
+                                18.0
+                            ],
+                            [
+                                41.0,
+                                18.0
+                            ],
+                            [
+                                42.0,
+                                17.0
+                            ],
+                            [
+                                43.0,
+                                17.0
+                            ],
+                            [
+                                44.0,
+                                16.0
+                            ],
+                            [
+                                45.0,
+                                16.0
+                            ],
+                            [
+                                46.0,
+                                16.0
+                            ],
+                            [
+                                47.0,
+                                15.0
+                            ],
+                            [
+                                48.0,
+                                13.0
+                            ],
+                            [
+                                49.0,
+                                13.0
+                            ],
+                            [
+                                50.0,
+                                13.0
+                            ],
+                            [
+                                51.0,
+                                13.0
+                            ],
+                            [
+                                52.0,
+                                12.0
+                            ],
+                            [
+                                53.0,
+                                12.0
+                            ],
+                            [
+                                54.0,
+                                12.0
+                            ],
+                            [
+                                55.0,
+                                12.0
+                            ],
+                            [
+                                56.0,
+                                11.0
+                            ],
+                            [
+                                57.0,
+                                11.0
+                            ],
+                            [
+                                58.0,
+                                10.0
+                            ],
+                            [
+                                59.0,
+                                10.0
+                            ],
+                            [
+                                60.0,
+                                10.0
+                            ],
+                            [
+                                61.0,
+                                10.0
+                            ],
+                            [
+                                62.0,
+                                10.0
+                            ],
+                            [
+                                63.0,
+                                10.0
+                            ],
+                            [
+                                64.0,
+                                9.0
+                            ],
+                            [
+                                65.0,
+                                9.0
+                            ],
+                            [
+                                66.0,
+                                9.0
+                            ],
+                            [
+                                67.0,
+                                9.0
+                            ],
+                            [
+                                68.0,
+                                9.0
+                            ],
+                            [
+                                69.0,
+                                9.0
+                            ],
+                            [
+                                70.0,
+                                8.0
+                            ],
+                            [
+                                71.0,
+                                8.0
+                            ],
+                            [
+                                72.0,
+                                8.0
+                            ],
+                            [
+                                73.0,
+                                8.0
+                            ],
+                            [
+                                74.0,
+                                8.0
+                            ],
+                            [
+                                75.0,
+                                8.0
+                            ],
+                            [
+                                76.0,
+                                7.0
+                            ],
+                            [
+                                77.0,
+                                6.0
+                            ],
+                            [
+                                78.0,
+                                6.0
+                            ],
+                            [
+                                79.0,
+                                6.0
+                            ],
+                            [
+                                80.0,
+                                4.0
+                            ],
+                            [
+                                81.0,
+                                4.0
+                            ],
+                            [
+                                82.0,
+                                4.0
+                            ],
+                            [
+                                83.0,
+                                4.0
+                            ],
+                            [
+                                84.0,
+                                4.0
+                            ],
+                            [
+                                85.0,
+                                3.0
+                            ],
+                            [
+                                86.0,
+                                3.0
+                            ],
+                            [
+                                87.0,
+                                2.0
+                            ],
+                            [
+                                88.0,
+                                1.0
+                            ],
+                            [
+                                89.0,
+                                1.0
+                            ],
+                            [
+                                90.0,
+                                1.0
+                            ],
+                            [
+                                91.0,
+                                1.0
+                            ],
+                            [
+                                92.0,
+                                0.0
+                            ],
+                            [
+                                93.0,
+                                0.0
+                            ],
+                            [
+                                94.0,
+                                0.0
+                            ],
+                            [
+                                95.0,
+                                0.0
+                            ],
+                            [
+                                96.0,
+                                0.0
+                            ],
+                            [
+                                97.0,
+                                0.0
+                            ],
+                            [
+                                98.0,
+                                0.0
+                            ],
+                            [
+                                99.0,
+                                0.0
+                            ],
+                            [
+                                100.0,
+                                0.0
+                            ]
+                        ]
+                    }
+                ]
+            ],
+            "config": {
+                "id": "gene_coverage_lineplot",
+                "title": "Gene Coverage",
+                "ylab": "Coverage",
+                "ymax": 388,
+                "ymin": 0,
+                "tt_label": "{point.y} genes have ≥ {point.x}% positions covered",
+                "save_data_file": false
+            }
+        },
+        "samtools-flagstat-dp": {
+            "plot_type": "beeswarm",
+            "samples": [
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ],
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ],
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ],
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ],
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ],
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ],
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ],
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ],
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ],
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ],
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ]
+            ],
+            "datasets": [
+                [
+                    0.001049,
+                    0.0010019999999999999
+                ],
+                [
+                    0.001049,
+                    0.0010019999999999999
+                ],
+                [
+                    0.0006979999999999999,
+                    0.00024099999999999998
+                ],
+                [
+                    6.8e-05,
+                    1.2e-05
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ]
+            ],
+            "categories": [
+                {
+                    "namespace": "",
+                    "title": "Total Reads",
+                    "description": "Total Reads",
+                    "max": 0.001049,
+                    "min": 0.0,
+                    "suffix": "M reads",
+                    "decimalPlaces": 2,
+                    "bordercol": "rgb(55,126,184)"
+                },
+                {
+                    "namespace": "",
+                    "title": "Total Passed QC",
+                    "description": "Total Passed QC",
+                    "max": 0.001049,
+                    "min": 0.0,
+                    "suffix": "M reads",
+                    "decimalPlaces": 2,
+                    "bordercol": "rgb(55,126,184)"
+                },
+                {
+                    "namespace": "",
+                    "title": "Mapped",
+                    "description": "Mapped",
+                    "max": 0.001049,
+                    "min": 0.0,
+                    "suffix": "M reads",
+                    "decimalPlaces": 2,
+                    "bordercol": "rgb(55,126,184)"
+                },
+                {
+                    "namespace": "",
+                    "title": "Supplementary Alignments",
+                    "description": "Supplementary Alignments",
+                    "max": 0.001049,
+                    "min": 0.0,
+                    "suffix": "M reads",
+                    "decimalPlaces": 2,
+                    "bordercol": "rgb(55,126,184)"
+                },
+                {
+                    "namespace": "",
+                    "title": "Duplicates",
+                    "description": "Duplicates",
+                    "max": 0.001049,
+                    "min": 0.0,
+                    "suffix": "M reads",
+                    "decimalPlaces": 2,
+                    "bordercol": "rgb(55,126,184)"
+                },
+                {
+                    "namespace": "",
+                    "title": "Paired in Sequencing",
+                    "description": "Paired in Sequencing",
+                    "max": 0.001049,
+                    "min": 0.0,
+                    "suffix": "M reads",
+                    "decimalPlaces": 2,
+                    "bordercol": "rgb(55,126,184)"
+                },
+                {
+                    "namespace": "",
+                    "title": "Properly Paired",
+                    "description": "Properly Paired",
+                    "max": 0.001049,
+                    "min": 0.0,
+                    "suffix": "M reads",
+                    "decimalPlaces": 2,
+                    "bordercol": "rgb(55,126,184)"
+                },
+                {
+                    "namespace": "",
+                    "title": "Self and mate mapped",
+                    "description": "Reads with itself and mate mapped",
+                    "max": 0.001049,
+                    "min": 0.0,
+                    "suffix": "M reads",
+                    "decimalPlaces": 2,
+                    "bordercol": "rgb(55,126,184)"
+                },
+                {
+                    "namespace": "",
+                    "title": "Singletons",
+                    "description": "Singletons",
+                    "max": 0.001049,
+                    "min": 0.0,
+                    "suffix": "M reads",
+                    "decimalPlaces": 2,
+                    "bordercol": "rgb(55,126,184)"
+                },
+                {
+                    "namespace": "",
+                    "title": "Mate mapped to diff chr",
+                    "description": "Mate mapped to different chromosome",
+                    "max": 0.001049,
+                    "min": 0.0,
+                    "suffix": "M reads",
+                    "decimalPlaces": 2,
+                    "bordercol": "rgb(55,126,184)"
+                },
+                {
+                    "namespace": "",
+                    "title": "Diff chr (mapQ >= 5)",
+                    "description": "Mate mapped to different chromosome (mapQ >= 5)",
+                    "max": 0.001049,
+                    "min": 0.0,
+                    "suffix": "M reads",
+                    "decimalPlaces": 2,
+                    "bordercol": "rgb(55,126,184)"
+                }
+            ]
+        },
+        "fastqc_sequence_counts_plot": {
+            "plot_type": "bar_graph",
+            "samples": [
+                [
+                    "Norfolk-1",
+                    "Warrior_10"
+                ]
+            ],
+            "datasets": [
+                [
+                    {
+                        "name": "Unique Reads",
+                        "data": [
+                            1000.0,
+                            1000.0
+                        ]
+                    },
+                    {
+                        "name": "Duplicate Reads",
+                        "data": [
+                            0.0,
+                            0.0
+                        ]
+                    }
+                ]
+            ],
+            "config": {
+                "id": "fastqc_sequence_counts_plot",
+                "title": "FastQC: Sequence Counts",
+                "ylab": "Number of reads",
+                "cpswitch_counts_label": "Number of reads",
+                "hide_zero_cats": false
+            }
+        },
+        "fastqc_per_base_sequence_quality_plot": {
+            "plot_type": "xy_line",
+            "datasets": [
+                [
+                    {
+                        "name": "Norfolk-1",
+                        "data": [
+                            [
+                                1,
+                                4.226
+                            ],
+                            [
+                                2,
+                                5.737
+                            ],
+                            [
+                                3,
+                                7.015
+                            ],
+                            [
+                                4,
+                                7.292
+                            ],
+                            [
+                                5,
+                                7.375
+                            ],
+                            [
+                                6,
+                                6.609
+                            ],
+                            [
+                                7,
+                                7.927
+                            ],
+                            [
+                                8,
+                                8.174
+                            ],
+                            [
+                                9,
+                                9.636
+                            ],
+                            [
+                                54,
+                                11.35861111111111
+                            ],
+                            [
+                                149,
+                                13.298160000000001
+                            ],
+                            [
+                                249,
+                                13.294014094097868
+                            ],
+                            [
+                                349,
+                                13.405001795907248
+                            ],
+                            [
+                                449,
+                                13.434645083313006
+                            ],
+                            [
+                                549,
+                                13.313318011339152
+                            ],
+                            [
+                                649,
+                                13.40172972587008
+                            ],
+                            [
+                                749,
+                                13.464245906650085
+                            ],
+                            [
+                                849,
+                                13.555842369896249
+                            ],
+                            [
+                                949,
+                                13.399000565381135
+                            ],
+                            [
+                                1049,
+                                13.304168819454786
+                            ],
+                            [
+                                1149,
+                                13.099068972220975
+                            ],
+                            [
+                                1249,
+                                12.957706935954729
+                            ],
+                            [
+                                1349,
+                                13.095821996284556
+                            ],
+                            [
+                                1449,
+                                12.675611607927634
+                            ],
+                            [
+                                1549,
+                                12.495303386387198
+                            ],
+                            [
+                                1649,
+                                12.843618747420724
+                            ],
+                            [
+                                1749,
+                                12.389687990743157
+                            ],
+                            [
+                                1849,
+                                12.291665267513688
+                            ],
+                            [
+                                1949,
+                                11.948535068699144
+                            ],
+                            [
+                                2049,
+                                12.139148767283555
+                            ],
+                            [
+                                2149,
+                                12.01745115883398
+                            ],
+                            [
+                                2249,
+                                11.952219111781103
+                            ],
+                            [
+                                2349,
+                                12.439686617730104
+                            ],
+                            [
+                                2449,
+                                12.057619047619053
+                            ],
+                            [
+                                2549,
+                                12.165767040149392
+                            ],
+                            [
+                                2649,
+                                12.045394855144856
+                            ],
+                            [
+                                2749,
+                                12.484090909090906
+                            ],
+                            [
+                                2849,
+                                12.839999999999998
+                            ],
+                            [
+                                2949,
+                                11.529777777777776
+                            ],
+                            [
+                                3049,
+                                11.60105952380952
+                            ],
+                            [
+                                3149,
+                                11.1115
+                            ],
+                            [
+                                3249,
+                                11.690833333333336
+                            ],
+                            [
+                                3349,
+                                12.37666666666666
+                            ],
+                            [
+                                3449,
+                                11.881666666666668
+                            ],
+                            [
+                                3528,
+                                11.210526315789474
+                            ]
+                        ],
+                        "color": "#d9534f"
+                    },
+                    {
+                        "name": "Warrior_10",
+                        "data": [
+                            [
+                                1,
+                                4.35
+                            ],
+                            [
+                                2,
+                                5.735
+                            ],
+                            [
+                                3,
+                                7.155
+                            ],
+                            [
+                                4,
+                                7.351
+                            ],
+                            [
+                                5,
+                                7.761
+                            ],
+                            [
+                                6,
+                                6.968
+                            ],
+                            [
+                                7,
+                                8.31
+                            ],
+                            [
+                                8,
+                                8.738
+                            ],
+                            [
+                                9,
+                                10.265
+                            ],
+                            [
+                                29,
+                                9.492174999999998
+                            ],
+                            [
+                                74,
+                                14.410339999999996
+                            ],
+                            [
+                                124,
+                                14.320319999999999
+                            ],
+                            [
+                                174,
+                                13.998960000000002
+                            ],
+                            [
+                                224,
+                                13.916019613129588
+                            ],
+                            [
+                                274,
+                                13.844467158718908
+                            ],
+                            [
+                                324,
+                                13.643183618266148
+                            ],
+                            [
+                                374,
+                                13.630769683551753
+                            ],
+                            [
+                                424,
+                                13.58292099507602
+                            ],
+                            [
+                                474,
+                                13.386518537842813
+                            ],
+                            [
+                                524,
+                                13.547544011309478
+                            ],
+                            [
+                                574,
+                                13.36098839816462
+                            ],
+                            [
+                                624,
+                                13.458070828582231
+                            ],
+                            [
+                                674,
+                                13.532377479667911
+                            ],
+                            [
+                                724,
+                                13.589839532475377
+                            ],
+                            [
+                                774,
+                                13.678860660086649
+                            ],
+                            [
+                                824,
+                                13.977793241226715
+                            ],
+                            [
+                                874,
+                                13.783789064429943
+                            ],
+                            [
+                                924,
+                                13.872000231262389
+                            ],
+                            [
+                                974,
+                                13.873725078655697
+                            ],
+                            [
+                                1024,
+                                13.771922275694523
+                            ],
+                            [
+                                1074,
+                                13.999825654329412
+                            ],
+                            [
+                                1124,
+                                13.98061144513869
+                            ],
+                            [
+                                1174,
+                                14.277117106654487
+                            ],
+                            [
+                                1224,
+                                14.204160733751225
+                            ],
+                            [
+                                1274,
+                                14.293024234508716
+                            ],
+                            [
+                                1324,
+                                14.106382221792888
+                            ],
+                            [
+                                1374,
+                                14.292497644311652
+                            ],
+                            [
+                                1424,
+                                14.06134449475718
+                            ],
+                            [
+                                1474,
+                                13.701204030622039
+                            ],
+                            [
+                                1524,
+                                13.768938693207716
+                            ],
+                            [
+                                1574,
+                                13.571964936491302
+                            ],
+                            [
+                                1624,
+                                14.164668429601013
+                            ],
+                            [
+                                1674,
+                                13.775553603341493
+                            ],
+                            [
+                                1724,
+                                13.473534648646854
+                            ],
+                            [
+                                1774,
+                                13.104874261823033
+                            ],
+                            [
+                                1824,
+                                13.421691656927253
+                            ],
+                            [
+                                1874,
+                                13.977145108321412
+                            ],
+                            [
+                                1924,
+                                14.207667513645767
+                            ],
+                            [
+                                1974,
+                                13.891943240454076
+                            ],
+                            [
+                                2024,
+                                13.700642857142856
+                            ],
+                            [
+                                2074,
+                                13.343282828282833
+                            ],
+                            [
+                                2124,
+                                14.442222222222222
+                            ],
+                            [
+                                2174,
+                                13.506349206349203
+                            ],
+                            [
+                                2224,
+                                14.828000000000005
+                            ],
+                            [
+                                2274,
+                                14.072999999999997
+                            ],
+                            [
+                                2324,
+                                16.10166666666667
+                            ],
+                            [
+                                2374,
+                                14.326666666666668
+                            ],
+                            [
+                                2424,
+                                14.13666666666667
+                            ],
+                            [
+                                2474,
+                                14.1
+                            ],
+                            [
+                                2524,
+                                15.98
+                            ],
+                            [
+                                2574,
+                                14.36
+                            ],
+                            [
+                                2624,
+                                11.74
+                            ],
+                            [
+                                2674,
+                                8.58
+                            ],
+                            [
+                                2724,
+                                6.56
+                            ],
+                            [
+                                2753,
+                                5.142857142857143
+                            ]
+                        ],
+                        "color": "#d9534f"
+                    }
+                ]
+            ],
+            "config": {
+                "id": "fastqc_per_base_sequence_quality_plot",
+                "title": "FastQC: Mean Quality Scores",
+                "ylab": "Phred Score",
+                "xlab": "Position (bp)",
+                "ymin": 0,
+                "xDecimals": false,
+                "tt_label": "<b>Base {point.x}</b>: {point.y:.2f}",
+                "colors": {
+                    "Norfolk-1": "#d9534f",
+                    "Warrior_10": "#d9534f"
+                },
+                "yPlotBands": [
+                    {
+                        "from": 28,
+                        "to": 100,
+                        "color": "#c3e6c3"
+                    },
+                    {
+                        "from": 20,
+                        "to": 28,
+                        "color": "#e6dcc3"
+                    },
+                    {
+                        "from": 0,
+                        "to": 20,
+                        "color": "#e6c3c3"
+                    }
+                ]
+            }
+        },
+        "fastqc_per_sequence_quality_scores_plot": {
+            "plot_type": "xy_line",
+            "datasets": [
+                [
+                    {
+                        "name": "Norfolk-1",
+                        "data": [
+                            [
+                                8.0,
+                                4.0
+                            ],
+                            [
+                                9.0,
+                                36.0
+                            ],
+                            [
+                                10.0,
+                                55.0
+                            ],
+                            [
+                                11.0,
+                                126.0
+                            ],
+                            [
+                                12.0,
+                                229.0
+                            ],
+                            [
+                                13.0,
+                                292.0
+                            ],
+                            [
+                                14.0,
+                                237.0
+                            ],
+                            [
+                                15.0,
+                                21.0
+                            ]
+                        ],
+                        "color": "#d9534f"
+                    },
+                    {
+                        "name": "Warrior_10",
+                        "data": [
+                            [
+                                8.0,
+                                2.0
+                            ],
+                            [
+                                9.0,
+                                11.0
+                            ],
+                            [
+                                10.0,
+                                40.0
+                            ],
+                            [
+                                11.0,
+                                92.0
+                            ],
+                            [
+                                12.0,
+                                207.0
+                            ],
+                            [
+                                13.0,
+                                311.0
+                            ],
+                            [
+                                14.0,
+                                264.0
+                            ],
+                            [
+                                15.0,
+                                68.0
+                            ],
+                            [
+                                16.0,
+                                5.0
+                            ]
+                        ],
+                        "color": "#d9534f"
+                    }
+                ]
+            ],
+            "config": {
+                "id": "fastqc_per_sequence_quality_scores_plot",
+                "title": "FastQC: Per Sequence Quality Scores",
+                "ylab": "Count",
+                "xlab": "Mean Sequence Quality (Phred Score)",
+                "ymin": 0,
+                "xmin": 0,
+                "xDecimals": false,
+                "colors": {
+                    "Norfolk-1": "#d9534f",
+                    "Warrior_10": "#d9534f"
+                },
+                "tt_label": "<b>Phred {point.x}</b>: {point.y} reads",
+                "xPlotBands": [
+                    {
+                        "from": 28,
+                        "to": 100,
+                        "color": "#c3e6c3"
+                    },
+                    {
+                        "from": 20,
+                        "to": 28,
+                        "color": "#e6dcc3"
+                    },
+                    {
+                        "from": 0,
+                        "to": 20,
+                        "color": "#e6c3c3"
+                    }
+                ]
+            }
+        },
+        "fastqc_per_sequence_gc_content_plot": {
+            "plot_type": "xy_line",
+            "datasets": [
+                [
+                    {
+                        "name": "Norfolk-1",
+                        "data": [
+                            [
+                                0.0,
+                                0.0
+                            ],
+                            [
+                                1.0,
+                                0.0
+                            ],
+                            [
+                                2.0,
+                                0.0
+                            ],
+                            [
+                                3.0,
+                                0.0
+                            ],
+                            [
+                                4.0,
+                                0.0
+                            ],
+                            [
+                                5.0,
+                                0.0
+                            ],
+                            [
+                                6.0,
+                                0.0
+                            ],
+                            [
+                                7.0,
+                                0.0
+                            ],
+                            [
+                                8.0,
+                                0.0
+                            ],
+                            [
+                                9.0,
+                                0.0
+                            ],
+                            [
+                                10.0,
+                                0.0
+                            ],
+                            [
+                                11.0,
+                                0.0
+                            ],
+                            [
+                                12.0,
+                                0.0
+                            ],
+                            [
+                                13.0,
+                                0.0
+                            ],
+                            [
+                                14.0,
+                                0.0
+                            ],
+                            [
+                                15.0,
+                                0.0
+                            ],
+                            [
+                                16.0,
+                                0.0
+                            ],
+                            [
+                                17.0,
+                                0.0
+                            ],
+                            [
+                                18.0,
+                                0.0
+                            ],
+                            [
+                                19.0,
+                                0.0
+                            ],
+                            [
+                                20.0,
+                                0.0
+                            ],
+                            [
+                                21.0,
+                                0.0
+                            ],
+                            [
+                                22.0,
+                                0.0
+                            ],
+                            [
+                                23.0,
+                                0.0
+                            ],
+                            [
+                                24.0,
+                                0.0
+                            ],
+                            [
+                                25.0,
+                                0.0
+                            ],
+                            [
+                                26.0,
+                                0.0
+                            ],
+                            [
+                                27.0,
+                                0.0
+                            ],
+                            [
+                                28.0,
+                                0.0
+                            ],
+                            [
+                                29.0,
+                                0.0
+                            ],
+                            [
+                                30.0,
+                                0.0
+                            ],
+                            [
+                                31.0,
+                                0.0
+                            ],
+                            [
+                                32.0,
+                                0.0
+                            ],
+                            [
+                                33.0,
+                                0.0
+                            ],
+                            [
+                                34.0,
+                                0.0
+                            ],
+                            [
+                                35.0,
+                                0.0
+                            ],
+                            [
+                                36.0,
+                                0.0
+                            ],
+                            [
+                                37.0,
+                                0.0
+                            ],
+                            [
+                                38.0,
+                                0.47006146483062244
+                            ],
+                            [
+                                39.0,
+                                0.4048590299040812
+                            ],
+                            [
+                                40.0,
+                                0.962938189909983
+                            ],
+                            [
+                                41.0,
+                                1.9053258696694473
+                            ],
+                            [
+                                42.0,
+                                2.7478967858406818
+                            ],
+                            [
+                                43.0,
+                                4.194546272515362
+                            ],
+                            [
+                                44.0,
+                                6.058239884206414
+                            ],
+                            [
+                                45.0,
+                                6.3076979135437234
+                            ],
+                            [
+                                46.0,
+                                9.587553921977161
+                            ],
+                            [
+                                47.0,
+                                11.237192121159001
+                            ],
+                            [
+                                48.0,
+                                12.40726249707325
+                            ],
+                            [
+                                49.0,
+                                13.20294469824798
+                            ],
+                            [
+                                50.0,
+                                9.876351499316872
+                            ],
+                            [
+                                51.0,
+                                4.209443475769968
+                            ],
+                            [
+                                52.0,
+                                3.3734431308713466
+                            ],
+                            [
+                                53.0,
+                                3.1610598994382384
+                            ],
+                            [
+                                54.0,
+                                2.8089611588593644
+                            ],
+                            [
+                                55.0,
+                                1.7227199080462738
+                            ],
+                            [
+                                56.0,
+                                1.8328538665263967
+                            ],
+                            [
+                                57.0,
+                                1.3261929217134236
+                            ],
+                            [
+                                58.0,
+                                1.1496542535632601
+                            ],
+                            [
+                                59.0,
+                                0.32601217463270615
+                            ],
+                            [
+                                60.0,
+                                0.42230599362370447
+                            ],
+                            [
+                                61.0,
+                                0.30448306876073505
+                            ],
+                            [
+                                62.0,
+                                0.0
+                            ],
+                            [
+                                63.0,
+                                0.0
+                            ],
+                            [
+                                64.0,
+                                0.0
+                            ],
+                            [
+                                65.0,
+                                0.0
+                            ],
+                            [
+                                66.0,
+                                0.0
+                            ],
+                            [
+                                67.0,
+                                0.0
+                            ],
+                            [
+                                68.0,
+                                0.0
+                            ],
+                            [
+                                69.0,
+                                0.0
+                            ],
+                            [
+                                70.0,
+                                0.0
+                            ],
+                            [
+                                71.0,
+                                0.0
+                            ],
+                            [
+                                72.0,
+                                0.0
+                            ],
+                            [
+                                73.0,
+                                0.0
+                            ],
+                            [
+                                74.0,
+                                0.0
+                            ],
+                            [
+                                75.0,
+                                0.0
+                            ],
+                            [
+                                76.0,
+                                0.0
+                            ],
+                            [
+                                77.0,
+                                0.0
+                            ],
+                            [
+                                78.0,
+                                0.0
+                            ],
+                            [
+                                79.0,
+                                0.0
+                            ],
+                            [
+                                80.0,
+                                0.0
+                            ],
+                            [
+                                81.0,
+                                0.0
+                            ],
+                            [
+                                82.0,
+                                0.0
+                            ],
+                            [
+                                83.0,
+                                0.0
+                            ],
+                            [
+                                84.0,
+                                0.0
+                            ],
+                            [
+                                85.0,
+                                0.0
+                            ],
+                            [
+                                86.0,
+                                0.0
+                            ],
+                            [
+                                87.0,
+                                0.0
+                            ],
+                            [
+                                88.0,
+                                0.0
+                            ],
+                            [
+                                89.0,
+                                0.0
+                            ],
+                            [
+                                90.0,
+                                0.0
+                            ],
+                            [
+                                91.0,
+                                0.0
+                            ],
+                            [
+                                92.0,
+                                0.0
+                            ],
+                            [
+                                93.0,
+                                0.0
+                            ],
+                            [
+                                94.0,
+                                0.0
+                            ],
+                            [
+                                95.0,
+                                0.0
+                            ],
+                            [
+                                96.0,
+                                0.0
+                            ],
+                            [
+                                97.0,
+                                0.0
+                            ],
+                            [
+                                98.0,
+                                0.0
+                            ],
+                            [
+                                99.0,
+                                0.0
+                            ],
+                            [
+                                100.0,
+                                0.0
+                            ]
+                        ],
+                        "color": "#f0ad4e"
+                    },
+                    {
+                        "name": "Warrior_10",
+                        "data": [
+                            [
+                                0.0,
+                                0.0
+                            ],
+                            [
+                                1.0,
+                                0.0
+                            ],
+                            [
+                                2.0,
+                                0.0
+                            ],
+                            [
+                                3.0,
+                                0.0
+                            ],
+                            [
+                                4.0,
+                                0.0
+                            ],
+                            [
+                                5.0,
+                                0.0
+                            ],
+                            [
+                                6.0,
+                                0.0
+                            ],
+                            [
+                                7.0,
+                                0.0
+                            ],
+                            [
+                                8.0,
+                                0.0
+                            ],
+                            [
+                                9.0,
+                                0.0
+                            ],
+                            [
+                                10.0,
+                                0.0
+                            ],
+                            [
+                                11.0,
+                                0.0
+                            ],
+                            [
+                                12.0,
+                                0.0
+                            ],
+                            [
+                                13.0,
+                                0.0
+                            ],
+                            [
+                                14.0,
+                                0.0
+                            ],
+                            [
+                                15.0,
+                                0.0
+                            ],
+                            [
+                                16.0,
+                                0.0
+                            ],
+                            [
+                                17.0,
+                                0.0
+                            ],
+                            [
+                                18.0,
+                                0.0
+                            ],
+                            [
+                                19.0,
+                                0.0
+                            ],
+                            [
+                                20.0,
+                                0.0
+                            ],
+                            [
+                                21.0,
+                                0.0
+                            ],
+                            [
+                                22.0,
+                                0.0
+                            ],
+                            [
+                                23.0,
+                                0.0
+                            ],
+                            [
+                                24.0,
+                                0.0
+                            ],
+                            [
+                                25.0,
+                                0.0
+                            ],
+                            [
+                                26.0,
+                                0.0
+                            ],
+                            [
+                                27.0,
+                                0.0
+                            ],
+                            [
+                                28.0,
+                                0.0
+                            ],
+                            [
+                                29.0,
+                                0.0
+                            ],
+                            [
+                                30.0,
+                                0.0
+                            ],
+                            [
+                                31.0,
+                                0.0
+                            ],
+                            [
+                                32.0,
+                                0.0
+                            ],
+                            [
+                                33.0,
+                                0.0
+                            ],
+                            [
+                                34.0,
+                                0.0
+                            ],
+                            [
+                                35.0,
+                                0.0
+                            ],
+                            [
+                                36.0,
+                                0.0
+                            ],
+                            [
+                                37.0,
+                                0.05719971726996894
+                            ],
+                            [
+                                38.0,
+                                0.20799897189079614
+                            ],
+                            [
+                                39.0,
+                                0.25071304647551323
+                            ],
+                            [
+                                40.0,
+                                0.5427473172775462
+                            ],
+                            [
+                                41.0,
+                                1.2054468987910432
+                            ],
+                            [
+                                42.0,
+                                3.677421823029276
+                            ],
+                            [
+                                43.0,
+                                3.692371749133926
+                            ],
+                            [
+                                44.0,
+                                5.159655925129285
+                            ],
+                            [
+                                45.0,
+                                9.356480895108723
+                            ],
+                            [
+                                46.0,
+                                13.471573411937127
+                            ],
+                            [
+                                47.0,
+                                14.023717825623319
+                            ],
+                            [
+                                48.0,
+                                11.590798422624935
+                            ],
+                            [
+                                49.0,
+                                8.81146787474451
+                            ],
+                            [
+                                50.0,
+                                6.907107287726834
+                            ],
+                            [
+                                51.0,
+                                4.667942641312089
+                            ],
+                            [
+                                52.0,
+                                3.048187790386066
+                            ],
+                            [
+                                53.0,
+                                2.755652093491082
+                            ],
+                            [
+                                54.0,
+                                3.0482249330596174
+                            ],
+                            [
+                                55.0,
+                                1.4882326438786464
+                            ],
+                            [
+                                56.0,
+                                1.71092154315923
+                            ],
+                            [
+                                57.0,
+                                0.9309253985687445
+                            ],
+                            [
+                                58.0,
+                                0.5062174978392251
+                            ],
+                            [
+                                59.0,
+                                0.519700288338575
+                            ],
+                            [
+                                60.0,
+                                0.6655595673769957
+                            ],
+                            [
+                                61.0,
+                                0.6655595673769957
+                            ],
+                            [
+                                62.0,
+                                0.33461834602931834
+                            ],
+                            [
+                                63.0,
+                                0.1029594910859441
+                            ],
+                            [
+                                64.0,
+                                0.2573987277148603
+                            ],
+                            [
+                                65.0,
+                                0.2573987277148603
+                            ],
+                            [
+                                66.0,
+                                0.0857995759049534
+                            ],
+                            [
+                                67.0,
+                                0.0
+                            ],
+                            [
+                                68.0,
+                                0.0
+                            ],
+                            [
+                                69.0,
+                                0.0
+                            ],
+                            [
+                                70.0,
+                                0.0
+                            ],
+                            [
+                                71.0,
+                                0.0
+                            ],
+                            [
+                                72.0,
+                                0.0
+                            ],
+                            [
+                                73.0,
+                                0.0
+                            ],
+                            [
+                                74.0,
+                                0.0
+                            ],
+                            [
+                                75.0,
+                                0.0
+                            ],
+                            [
+                                76.0,
+                                0.0
+                            ],
+                            [
+                                77.0,
+                                0.0
+                            ],
+                            [
+                                78.0,
+                                0.0
+                            ],
+                            [
+                                79.0,
+                                0.0
+                            ],
+                            [
+                                80.0,
+                                0.0
+                            ],
+                            [
+                                81.0,
+                                0.0
+                            ],
+                            [
+                                82.0,
+                                0.0
+                            ],
+                            [
+                                83.0,
+                                0.0
+                            ],
+                            [
+                                84.0,
+                                0.0
+                            ],
+                            [
+                                85.0,
+                                0.0
+                            ],
+                            [
+                                86.0,
+                                0.0
+                            ],
+                            [
+                                87.0,
+                                0.0
+                            ],
+                            [
+                                88.0,
+                                0.0
+                            ],
+                            [
+                                89.0,
+                                0.0
+                            ],
+                            [
+                                90.0,
+                                0.0
+                            ],
+                            [
+                                91.0,
+                                0.0
+                            ],
+                            [
+                                92.0,
+                                0.0
+                            ],
+                            [
+                                93.0,
+                                0.0
+                            ],
+                            [
+                                94.0,
+                                0.0
+                            ],
+                            [
+                                95.0,
+                                0.0
+                            ],
+                            [
+                                96.0,
+                                0.0
+                            ],
+                            [
+                                97.0,
+                                0.0
+                            ],
+                            [
+                                98.0,
+                                0.0
+                            ],
+                            [
+                                99.0,
+                                0.0
+                            ],
+                            [
+                                100.0,
+                                0.0
+                            ]
+                        ],
+                        "color": "#d9534f"
+                    }
+                ],
+                [
+                    {
+                        "name": "Norfolk-1",
+                        "data": [
+                            [
+                                0.0,
+                                0.0
+                            ],
+                            [
+                                1.0,
+                                0.0
+                            ],
+                            [
+                                2.0,
+                                0.0
+                            ],
+                            [
+                                3.0,
+                                0.0
+                            ],
+                            [
+                                4.0,
+                                0.0
+                            ],
+                            [
+                                5.0,
+                                0.0
+                            ],
+                            [
+                                6.0,
+                                0.0
+                            ],
+                            [
+                                7.0,
+                                0.0
+                            ],
+                            [
+                                8.0,
+                                0.0
+                            ],
+                            [
+                                9.0,
+                                0.0
+                            ],
+                            [
+                                10.0,
+                                0.0
+                            ],
+                            [
+                                11.0,
+                                0.0
+                            ],
+                            [
+                                12.0,
+                                0.0
+                            ],
+                            [
+                                13.0,
+                                0.0
+                            ],
+                            [
+                                14.0,
+                                0.0
+                            ],
+                            [
+                                15.0,
+                                0.0
+                            ],
+                            [
+                                16.0,
+                                0.0
+                            ],
+                            [
+                                17.0,
+                                0.0
+                            ],
+                            [
+                                18.0,
+                                0.0
+                            ],
+                            [
+                                19.0,
+                                0.0
+                            ],
+                            [
+                                20.0,
+                                0.0
+                            ],
+                            [
+                                21.0,
+                                0.0
+                            ],
+                            [
+                                22.0,
+                                0.0
+                            ],
+                            [
+                                23.0,
+                                0.0
+                            ],
+                            [
+                                24.0,
+                                0.0
+                            ],
+                            [
+                                25.0,
+                                0.0
+                            ],
+                            [
+                                26.0,
+                                0.0
+                            ],
+                            [
+                                27.0,
+                                0.0
+                            ],
+                            [
+                                28.0,
+                                0.0
+                            ],
+                            [
+                                29.0,
+                                0.0
+                            ],
+                            [
+                                30.0,
+                                0.0
+                            ],
+                            [
+                                31.0,
+                                0.0
+                            ],
+                            [
+                                32.0,
+                                0.0
+                            ],
+                            [
+                                33.0,
+                                0.0
+                            ],
+                            [
+                                34.0,
+                                0.0
+                            ],
+                            [
+                                35.0,
+                                0.0
+                            ],
+                            [
+                                36.0,
+                                0.0
+                            ],
+                            [
+                                37.0,
+                                0.0
+                            ],
+                            [
+                                38.0,
+                                0.6064935064935065
+                            ],
+                            [
+                                39.0,
+                                0.5223665223665224
+                            ],
+                            [
+                                40.0,
+                                1.2424242424242424
+                            ],
+                            [
+                                41.0,
+                                2.458333333333332
+                            ],
+                            [
+                                42.0,
+                                3.5454545454545436
+                            ],
+                            [
+                                43.0,
+                                5.4119838942419545
+                            ],
+                            [
+                                44.0,
+                                7.816601498859559
+                            ],
+                            [
+                                45.0,
+                                8.138462970721033
+                            ],
+                            [
+                                46.0,
+                                12.370274170274193
+                            ],
+                            [
+                                47.0,
+                                14.498708280966369
+                            ],
+                            [
+                                48.0,
+                                16.008383372899534
+                            ],
+                            [
+                                49.0,
+                                17.035006749522893
+                            ],
+                            [
+                                50.0,
+                                12.74289321789322
+                            ],
+                            [
+                                51.0,
+                                5.431204906204906
+                            ],
+                            [
+                                52.0,
+                                4.352561327561327
+                            ],
+                            [
+                                53.0,
+                                4.078535353535353
+                            ],
+                            [
+                                54.0,
+                                3.624242424242423
+                            ],
+                            [
+                                55.0,
+                                2.2227272727272718
+                            ],
+                            [
+                                56.0,
+                                2.3648268398268395
+                            ],
+                            [
+                                57.0,
+                                1.711111111111111
+                            ],
+                            [
+                                58.0,
+                                1.4833333333333332
+                            ],
+                            [
+                                59.0,
+                                0.4206349206349206
+                            ],
+                            [
+                                60.0,
+                                0.5448773448773448
+                            ],
+                            [
+                                61.0,
+                                0.39285714285714285
+                            ],
+                            [
+                                62.0,
+                                0.0
+                            ],
+                            [
+                                63.0,
+                                0.0
+                            ],
+                            [
+                                64.0,
+                                0.0
+                            ],
+                            [
+                                65.0,
+                                0.0
+                            ],
+                            [
+                                66.0,
+                                0.0
+                            ],
+                            [
+                                67.0,
+                                0.0
+                            ],
+                            [
+                                68.0,
+                                0.0
+                            ],
+                            [
+                                69.0,
+                                0.0
+                            ],
+                            [
+                                70.0,
+                                0.0
+                            ],
+                            [
+                                71.0,
+                                0.0
+                            ],
+                            [
+                                72.0,
+                                0.0
+                            ],
+                            [
+                                73.0,
+                                0.0
+                            ],
+                            [
+                                74.0,
+                                0.0
+                            ],
+                            [
+                                75.0,
+                                0.0
+                            ],
+                            [
+                                76.0,
+                                0.0
+                            ],
+                            [
+                                77.0,
+                                0.0
+                            ],
+                            [
+                                78.0,
+                                0.0
+                            ],
+                            [
+                                79.0,
+                                0.0
+                            ],
+                            [
+                                80.0,
+                                0.0
+                            ],
+                            [
+                                81.0,
+                                0.0
+                            ],
+                            [
+                                82.0,
+                                0.0
+                            ],
+                            [
+                                83.0,
+                                0.0
+                            ],
+                            [
+                                84.0,
+                                0.0
+                            ],
+                            [
+                                85.0,
+                                0.0
+                            ],
+                            [
+                                86.0,
+                                0.0
+                            ],
+                            [
+                                87.0,
+                                0.0
+                            ],
+                            [
+                                88.0,
+                                0.0
+                            ],
+                            [
+                                89.0,
+                                0.0
+                            ],
+                            [
+                                90.0,
+                                0.0
+                            ],
+                            [
+                                91.0,
+                                0.0
+                            ],
+                            [
+                                92.0,
+                                0.0
+                            ],
+                            [
+                                93.0,
+                                0.0
+                            ],
+                            [
+                                94.0,
+                                0.0
+                            ],
+                            [
+                                95.0,
+                                0.0
+                            ],
+                            [
+                                96.0,
+                                0.0
+                            ],
+                            [
+                                97.0,
+                                0.0
+                            ],
+                            [
+                                98.0,
+                                0.0
+                            ],
+                            [
+                                99.0,
+                                0.0
+                            ],
+                            [
+                                100.0,
+                                0.0
+                            ]
+                        ],
+                        "color": "#f0ad4e"
+                    },
+                    {
+                        "name": "Warrior_10",
+                        "data": [
+                            [
+                                0.0,
+                                0.0
+                            ],
+                            [
+                                1.0,
+                                0.0
+                            ],
+                            [
+                                2.0,
+                                0.0
+                            ],
+                            [
+                                3.0,
+                                0.0
+                            ],
+                            [
+                                4.0,
+                                0.0
+                            ],
+                            [
+                                5.0,
+                                0.0
+                            ],
+                            [
+                                6.0,
+                                0.0
+                            ],
+                            [
+                                7.0,
+                                0.0
+                            ],
+                            [
+                                8.0,
+                                0.0
+                            ],
+                            [
+                                9.0,
+                                0.0
+                            ],
+                            [
+                                10.0,
+                                0.0
+                            ],
+                            [
+                                11.0,
+                                0.0
+                            ],
+                            [
+                                12.0,
+                                0.0
+                            ],
+                            [
+                                13.0,
+                                0.0
+                            ],
+                            [
+                                14.0,
+                                0.0
+                            ],
+                            [
+                                15.0,
+                                0.0
+                            ],
+                            [
+                                16.0,
+                                0.0
+                            ],
+                            [
+                                17.0,
+                                0.0
+                            ],
+                            [
+                                18.0,
+                                0.0
+                            ],
+                            [
+                                19.0,
+                                0.0
+                            ],
+                            [
+                                20.0,
+                                0.0
+                            ],
+                            [
+                                21.0,
+                                0.0
+                            ],
+                            [
+                                22.0,
+                                0.0
+                            ],
+                            [
+                                23.0,
+                                0.0
+                            ],
+                            [
+                                24.0,
+                                0.0
+                            ],
+                            [
+                                25.0,
+                                0.0
+                            ],
+                            [
+                                26.0,
+                                0.0
+                            ],
+                            [
+                                27.0,
+                                0.0
+                            ],
+                            [
+                                28.0,
+                                0.0
+                            ],
+                            [
+                                29.0,
+                                0.0
+                            ],
+                            [
+                                30.0,
+                                0.0
+                            ],
+                            [
+                                31.0,
+                                0.0
+                            ],
+                            [
+                                32.0,
+                                0.0
+                            ],
+                            [
+                                33.0,
+                                0.0
+                            ],
+                            [
+                                34.0,
+                                0.0
+                            ],
+                            [
+                                35.0,
+                                0.0
+                            ],
+                            [
+                                36.0,
+                                0.0
+                            ],
+                            [
+                                37.0,
+                                0.1111111111111111
+                            ],
+                            [
+                                38.0,
+                                0.40404040404040403
+                            ],
+                            [
+                                39.0,
+                                0.487012987012987
+                            ],
+                            [
+                                40.0,
+                                1.0542929292929293
+                            ],
+                            [
+                                41.0,
+                                2.3415945165945162
+                            ],
+                            [
+                                42.0,
+                                7.143434343434343
+                            ],
+                            [
+                                43.0,
+                                7.172474747474746
+                            ],
+                            [
+                                44.0,
+                                10.022691197691195
+                            ],
+                            [
+                                45.0,
+                                18.17507215007215
+                            ],
+                            [
+                                46.0,
+                                26.168686868686844
+                            ],
+                            [
+                                47.0,
+                                27.241233766233755
+                            ],
+                            [
+                                48.0,
+                                22.515259740259726
+                            ],
+                            [
+                                49.0,
+                                17.11637806637807
+                            ],
+                            [
+                                50.0,
+                                13.417135642135635
+                            ],
+                            [
+                                51.0,
+                                9.067532467532468
+                            ],
+                            [
+                                52.0,
+                                5.921139971139971
+                            ],
+                            [
+                                53.0,
+                                5.352886002886003
+                            ],
+                            [
+                                54.0,
+                                5.921212121212121
+                            ],
+                            [
+                                55.0,
+                                2.890909090909091
+                            ],
+                            [
+                                56.0,
+                                3.3234848484848487
+                            ],
+                            [
+                                57.0,
+                                1.8083333333333333
+                            ],
+                            [
+                                58.0,
+                                0.9833333333333333
+                            ],
+                            [
+                                59.0,
+                                1.0095238095238095
+                            ],
+                            [
+                                60.0,
+                                1.292857142857143
+                            ],
+                            [
+                                61.0,
+                                1.292857142857143
+                            ],
+                            [
+                                62.0,
+                                0.65
+                            ],
+                            [
+                                63.0,
+                                0.2
+                            ],
+                            [
+                                64.0,
+                                0.5
+                            ],
+                            [
+                                65.0,
+                                0.5
+                            ],
+                            [
+                                66.0,
+                                0.16666666666666666
+                            ],
+                            [
+                                67.0,
+                                0.0
+                            ],
+                            [
+                                68.0,
+                                0.0
+                            ],
+                            [
+                                69.0,
+                                0.0
+                            ],
+                            [
+                                70.0,
+                                0.0
+                            ],
+                            [
+                                71.0,
+                                0.0
+                            ],
+                            [
+                                72.0,
+                                0.0
+                            ],
+                            [
+                                73.0,
+                                0.0
+                            ],
+                            [
+                                74.0,
+                                0.0
+                            ],
+                            [
+                                75.0,
+                                0.0
+                            ],
+                            [
+                                76.0,
+                                0.0
+                            ],
+                            [
+                                77.0,
+                                0.0
+                            ],
+                            [
+                                78.0,
+                                0.0
+                            ],
+                            [
+                                79.0,
+                                0.0
+                            ],
+                            [
+                                80.0,
+                                0.0
+                            ],
+                            [
+                                81.0,
+                                0.0
+                            ],
+                            [
+                                82.0,
+                                0.0
+                            ],
+                            [
+                                83.0,
+                                0.0
+                            ],
+                            [
+                                84.0,
+                                0.0
+                            ],
+                            [
+                                85.0,
+                                0.0
+                            ],
+                            [
+                                86.0,
+                                0.0
+                            ],
+                            [
+                                87.0,
+                                0.0
+                            ],
+                            [
+                                88.0,
+                                0.0
+                            ],
+                            [
+                                89.0,
+                                0.0
+                            ],
+                            [
+                                90.0,
+                                0.0
+                            ],
+                            [
+                                91.0,
+                                0.0
+                            ],
+                            [
+                                92.0,
+                                0.0
+                            ],
+                            [
+                                93.0,
+                                0.0
+                            ],
+                            [
+                                94.0,
+                                0.0
+                            ],
+                            [
+                                95.0,
+                                0.0
+                            ],
+                            [
+                                96.0,
+                                0.0
+                            ],
+                            [
+                                97.0,
+                                0.0
+                            ],
+                            [
+                                98.0,
+                                0.0
+                            ],
+                            [
+                                99.0,
+                                0.0
+                            ],
+                            [
+                                100.0,
+                                0.0
+                            ]
+                        ],
+                        "color": "#d9534f"
+                    }
+                ]
+            ],
+            "config": {
+                "id": "fastqc_per_sequence_gc_content_plot",
+                "title": "FastQC: Per Sequence GC Content",
+                "xlab": "% GC",
+                "ylab": "Percentage",
+                "ymin": 0,
+                "xmax": 100,
+                "xmin": 0,
+                "yDecimals": false,
+                "tt_label": "<b>{point.x}% GC</b>: {point.y}",
+                "colors": {
+                    "Norfolk-1": "#f0ad4e",
+                    "Warrior_10": "#d9534f"
+                },
+                "data_labels": [
+                    {
+                        "name": "Percentages",
+                        "ylab": "Percentage"
+                    },
+                    {
+                        "name": "Counts",
+                        "ylab": "Count"
+                    }
+                ]
+            }
+        },
+        "fastqc_per_base_n_content_plot": {
+            "plot_type": "xy_line",
+            "datasets": [
+                [
+                    {
+                        "name": "Norfolk-1",
+                        "data": [
+                            [
+                                1,
+                                0.0
+                            ],
+                            [
+                                2,
+                                0.0
+                            ],
+                            [
+                                3,
+                                0.0
+                            ],
+                            [
+                                4,
+                                0.0
+                            ],
+                            [
+                                5,
+                                0.0
+                            ],
+                            [
+                                6,
+                                0.0
+                            ],
+                            [
+                                7,
+                                0.0
+                            ],
+                            [
+                                8,
+                                0.0
+                            ],
+                            [
+                                9,
+                                0.0
+                            ],
+                            [
+                                54,
+                                0.0
+                            ],
+                            [
+                                149,
+                                0.0
+                            ],
+                            [
+                                249,
+                                0.0
+                            ],
+                            [
+                                349,
+                                0.0
+                            ],
+                            [
+                                449,
+                                0.0
+                            ],
+                            [
+                                549,
+                                0.0
+                            ],
+                            [
+                                649,
+                                0.0
+                            ],
+                            [
+                                749,
+                                0.0
+                            ],
+                            [
+                                849,
+                                0.0
+                            ],
+                            [
+                                949,
+                                0.0
+                            ],
+                            [
+                                1049,
+                                0.0
+                            ],
+                            [
+                                1149,
+                                0.0
+                            ],
+                            [
+                                1249,
+                                0.0
+                            ],
+                            [
+                                1349,
+                                0.0
+                            ],
+                            [
+                                1449,
+                                0.0
+                            ],
+                            [
+                                1549,
+                                0.0
+                            ],
+                            [
+                                1649,
+                                0.0
+                            ],
+                            [
+                                1749,
+                                0.0
+                            ],
+                            [
+                                1849,
+                                0.0
+                            ],
+                            [
+                                1949,
+                                0.0
+                            ],
+                            [
+                                2049,
+                                0.0
+                            ],
+                            [
+                                2149,
+                                0.0
+                            ],
+                            [
+                                2249,
+                                0.0
+                            ],
+                            [
+                                2349,
+                                0.0
+                            ],
+                            [
+                                2449,
+                                0.0
+                            ],
+                            [
+                                2549,
+                                0.0
+                            ],
+                            [
+                                2649,
+                                0.0
+                            ],
+                            [
+                                2749,
+                                0.0
+                            ],
+                            [
+                                2849,
+                                0.0
+                            ],
+                            [
+                                2949,
+                                0.0
+                            ],
+                            [
+                                3049,
+                                0.0
+                            ],
+                            [
+                                3149,
+                                0.0
+                            ],
+                            [
+                                3249,
+                                0.0
+                            ],
+                            [
+                                3349,
+                                0.0
+                            ],
+                            [
+                                3449,
+                                0.0
+                            ],
+                            [
+                                3528,
+                                0.0
+                            ]
+                        ],
+                        "color": "#5cb85c"
+                    },
+                    {
+                        "name": "Warrior_10",
+                        "data": [
+                            [
+                                1,
+                                0.0
+                            ],
+                            [
+                                2,
+                                0.0
+                            ],
+                            [
+                                3,
+                                0.0
+                            ],
+                            [
+                                4,
+                                0.0
+                            ],
+                            [
+                                5,
+                                0.0
+                            ],
+                            [
+                                6,
+                                0.0
+                            ],
+                            [
+                                7,
+                                0.0
+                            ],
+                            [
+                                8,
+                                0.0
+                            ],
+                            [
+                                9,
+                                0.0
+                            ],
+                            [
+                                29,
+                                0.0
+                            ],
+                            [
+                                74,
+                                0.0
+                            ],
+                            [
+                                124,
+                                0.0
+                            ],
+                            [
+                                174,
+                                0.0
+                            ],
+                            [
+                                224,
+                                0.0
+                            ],
+                            [
+                                274,
+                                0.0
+                            ],
+                            [
+                                324,
+                                0.0
+                            ],
+                            [
+                                374,
+                                0.0
+                            ],
+                            [
+                                424,
+                                0.0
+                            ],
+                            [
+                                474,
+                                0.0
+                            ],
+                            [
+                                524,
+                                0.0
+                            ],
+                            [
+                                574,
+                                0.0
+                            ],
+                            [
+                                624,
+                                0.0
+                            ],
+                            [
+                                674,
+                                0.0
+                            ],
+                            [
+                                724,
+                                0.0
+                            ],
+                            [
+                                774,
+                                0.0
+                            ],
+                            [
+                                824,
+                                0.0
+                            ],
+                            [
+                                874,
+                                0.0
+                            ],
+                            [
+                                924,
+                                0.0
+                            ],
+                            [
+                                974,
+                                0.0
+                            ],
+                            [
+                                1024,
+                                0.0
+                            ],
+                            [
+                                1074,
+                                0.0
+                            ],
+                            [
+                                1124,
+                                0.0
+                            ],
+                            [
+                                1174,
+                                0.0
+                            ],
+                            [
+                                1224,
+                                0.0
+                            ],
+                            [
+                                1274,
+                                0.0
+                            ],
+                            [
+                                1324,
+                                0.0
+                            ],
+                            [
+                                1374,
+                                0.0
+                            ],
+                            [
+                                1424,
+                                0.0
+                            ],
+                            [
+                                1474,
+                                0.0
+                            ],
+                            [
+                                1524,
+                                0.0
+                            ],
+                            [
+                                1574,
+                                0.0
+                            ],
+                            [
+                                1624,
+                                0.0
+                            ],
+                            [
+                                1674,
+                                0.0
+                            ],
+                            [
+                                1724,
+                                0.0
+                            ],
+                            [
+                                1774,
+                                0.0
+                            ],
+                            [
+                                1824,
+                                0.0
+                            ],
+                            [
+                                1874,
+                                0.0
+                            ],
+                            [
+                                1924,
+                                0.0
+                            ],
+                            [
+                                1974,
+                                0.0
+                            ],
+                            [
+                                2024,
+                                0.0
+                            ],
+                            [
+                                2074,
+                                0.0
+                            ],
+                            [
+                                2124,
+                                0.0
+                            ],
+                            [
+                                2174,
+                                0.0
+                            ],
+                            [
+                                2224,
+                                0.0
+                            ],
+                            [
+                                2274,
+                                0.0
+                            ],
+                            [
+                                2324,
+                                0.0
+                            ],
+                            [
+                                2374,
+                                0.0
+                            ],
+                            [
+                                2424,
+                                0.0
+                            ],
+                            [
+                                2474,
+                                0.0
+                            ],
+                            [
+                                2524,
+                                0.0
+                            ],
+                            [
+                                2574,
+                                0.0
+                            ],
+                            [
+                                2624,
+                                0.0
+                            ],
+                            [
+                                2674,
+                                0.0
+                            ],
+                            [
+                                2724,
+                                0.0
+                            ],
+                            [
+                                2753,
+                                0.0
+                            ]
+                        ],
+                        "color": "#5cb85c"
+                    }
+                ]
+            ],
+            "config": {
+                "id": "fastqc_per_base_n_content_plot",
+                "title": "FastQC: Per Base N Content",
+                "ylab": "Percentage N-Count",
+                "xlab": "Position in Read (bp)",
+                "yCeiling": 100,
+                "yMinRange": 5,
+                "ymin": 0,
+                "xmin": 0,
+                "xDecimals": false,
+                "colors": {
+                    "Norfolk-1": "#5cb85c",
+                    "Warrior_10": "#5cb85c"
+                },
+                "tt_label": "<b>Base {point.x}</b>: {point.y:.2f}%",
+                "yPlotBands": [
+                    {
+                        "from": 20,
+                        "to": 100,
+                        "color": "#e6c3c3"
+                    },
+                    {
+                        "from": 5,
+                        "to": 20,
+                        "color": "#e6dcc3"
+                    },
+                    {
+                        "from": 0,
+                        "to": 5,
+                        "color": "#c3e6c3"
+                    }
+                ]
+            }
+        },
+        "fastqc_sequence_length_distribution_plot": {
+            "plot_type": "xy_line",
+            "datasets": [
+                [
+                    {
+                        "name": "Norfolk-1",
+                        "data": [
+                            [
+                                249,
+                                21.0
+                            ],
+                            [
+                                349,
+                                32.0
+                            ],
+                            [
+                                449,
+                                49.0
+                            ],
+                            [
+                                549,
+                                41.0
+                            ],
+                            [
+                                649,
+                                41.0
+                            ],
+                            [
+                                749,
+                                31.0
+                            ],
+                            [
+                                849,
+                                32.0
+                            ],
+                            [
+                                949,
+                                35.0
+                            ],
+                            [
+                                1049,
+                                65.0
+                            ],
+                            [
+                                1149,
+                                89.0
+                            ],
+                            [
+                                1249,
+                                137.0
+                            ],
+                            [
+                                1349,
+                                69.0
+                            ],
+                            [
+                                1449,
+                                106.0
+                            ],
+                            [
+                                1549,
+                                110.0
+                            ],
+                            [
+                                1649,
+                                29.0
+                            ],
+                            [
+                                1749,
+                                35.0
+                            ],
+                            [
+                                1849,
+                                24.0
+                            ],
+                            [
+                                1949,
+                                12.0
+                            ],
+                            [
+                                2049,
+                                5.0
+                            ],
+                            [
+                                2149,
+                                7.0
+                            ],
+                            [
+                                2249,
+                                7.0
+                            ],
+                            [
+                                2349,
+                                2.0
+                            ],
+                            [
+                                2449,
+                                0.0
+                            ],
+                            [
+                                2549,
+                                5.0
+                            ],
+                            [
+                                2649,
+                                5.0
+                            ],
+                            [
+                                2749,
+                                1.0
+                            ],
+                            [
+                                2849,
+                                0.0
+                            ],
+                            [
+                                2949,
+                                2.0
+                            ],
+                            [
+                                3049,
+                                3.0
+                            ],
+                            [
+                                3149,
+                                1.0
+                            ],
+                            [
+                                3249,
+                                1.0
+                            ],
+                            [
+                                3349,
+                                0.0
+                            ],
+                            [
+                                3449,
+                                2.0
+                            ],
+                            [
+                                3528,
+                                1.0
+                            ]
+                        ],
+                        "color": "#f0ad4e"
+                    },
+                    {
+                        "name": "Warrior_10",
+                        "data": [
+                            [
+                                249,
+                                39.0
+                            ],
+                            [
+                                349,
+                                131.0
+                            ],
+                            [
+                                449,
+                                143.0
+                            ],
+                            [
+                                549,
+                                145.0
+                            ],
+                            [
+                                649,
+                                108.0
+                            ],
+                            [
+                                749,
+                                69.0
+                            ],
+                            [
+                                849,
+                                55.0
+                            ],
+                            [
+                                949,
+                                33.0
+                            ],
+                            [
+                                1049,
+                                36.0
+                            ],
+                            [
+                                1149,
+                                21.0
+                            ],
+                            [
+                                1249,
+                                27.0
+                            ],
+                            [
+                                1349,
+                                21.0
+                            ],
+                            [
+                                1449,
+                                25.0
+                            ],
+                            [
+                                1549,
+                                51.0
+                            ],
+                            [
+                                1649,
+                                24.0
+                            ],
+                            [
+                                1749,
+                                25.0
+                            ],
+                            [
+                                1849,
+                                23.0
+                            ],
+                            [
+                                1949,
+                                8.0
+                            ],
+                            [
+                                2049,
+                                7.0
+                            ],
+                            [
+                                2149,
+                                3.0
+                            ],
+                            [
+                                2249,
+                                2.0
+                            ],
+                            [
+                                2349,
+                                1.0
+                            ],
+                            [
+                                2449,
+                                1.0
+                            ],
+                            [
+                                2549,
+                                0.0
+                            ],
+                            [
+                                2649,
+                                1.0
+                            ],
+                            [
+                                2728,
+                                1.0
+                            ]
+                        ],
+                        "color": "#f0ad4e"
+                    }
+                ]
+            ],
+            "config": {
+                "id": "fastqc_sequence_length_distribution_plot",
+                "title": "FastQC: Sequence Length Distribution",
+                "ylab": "Read Count",
+                "xlab": "Sequence Length (bp)",
+                "ymin": 0,
+                "yMinTickInterval": 0.1,
+                "xDecimals": false,
+                "colors": {
+                    "Norfolk-1": "#f0ad4e",
+                    "Warrior_10": "#f0ad4e"
+                },
+                "tt_label": "<b>{point.x} bp</b>: {point.y}"
+            }
+        },
+        "fastqc_sequence_duplication_levels_plot": {
+            "plot_type": "xy_line",
+            "datasets": [
+                [
+                    {
+                        "name": "Norfolk-1",
+                        "data": [
+                            100.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "color": "#5cb85c"
+                    },
+                    {
+                        "name": "Warrior_10",
+                        "data": [
+                            100.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "color": "#5cb85c"
+                    }
+                ]
+            ],
+            "config": {
+                "id": "fastqc_sequence_duplication_levels_plot",
+                "title": "FastQC: Sequence Duplication Levels",
+                "categories": [
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    ">10",
+                    ">50",
+                    ">100",
+                    ">500",
+                    ">1k",
+                    ">5k",
+                    ">10k+"
+                ],
+                "ylab": "% of Library",
+                "xlab": "Sequence Duplication Level",
+                "ymax": 100,
+                "ymin": 0,
+                "yMinTickInterval": 0.1,
+                "yLabelFormat": "{value:.0f}%",
+                "colors": {
+                    "Norfolk-1": "#5cb85c",
+                    "Warrior_10": "#5cb85c"
+                },
+                "tt_decimals": 2,
+                "tt_suffix": "%"
+            }
+        },
+        "fastqc-status-check-heatmap": {
+            "plot_type": "heatmap",
+            "data": [
+                [
+                    0,
+                    0,
+                    1
+                ],
+                [
+                    1,
+                    0,
+                    0.25
+                ],
+                [
+                    2,
+                    0,
+                    0.25
+                ],
+                [
+                    3,
+                    0,
+                    0.25
+                ],
+                [
+                    4,
+                    0,
+                    0.5
+                ],
+                [
+                    5,
+                    0,
+                    1
+                ],
+                [
+                    6,
+                    0,
+                    0.5
+                ],
+                [
+                    7,
+                    0,
+                    1
+                ],
+                [
+                    8,
+                    0,
+                    1
+                ],
+                [
+                    9,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    1,
+                    1
+                ],
+                [
+                    1,
+                    1,
+                    0.25
+                ],
+                [
+                    2,
+                    1,
+                    0.25
+                ],
+                [
+                    3,
+                    1,
+                    0.25
+                ],
+                [
+                    4,
+                    1,
+                    0.25
+                ],
+                [
+                    5,
+                    1,
+                    1
+                ],
+                [
+                    6,
+                    1,
+                    0.5
+                ],
+                [
+                    7,
+                    1,
+                    1
+                ],
+                [
+                    8,
+                    1,
+                    1
+                ],
+                [
+                    9,
+                    1,
+                    1
+                ]
+            ],
+            "xcats": [
+                "Basic Statistics",
+                "Per Base Sequence Quality",
+                "Per Sequence Quality Scores",
+                "Per Base Sequence Content",
+                "Per Sequence GC Content",
+                "Per Base N Content",
+                "Sequence Length Distribution",
+                "Sequence Duplication Levels",
+                "Overrepresented Sequences",
+                "Adapter Content"
+            ],
+            "ycats": [
+                "Norfolk-1",
+                "Warrior_10"
+            ],
+            "config": {
+                "id": "fastqc-status-check-heatmap",
+                "title": "FastQC: Status Checks",
+                "xTitle": "Section Name",
+                "yTitle": "Sample",
+                "min": 0,
+                "max": 1,
+                "square": false,
+                "colstops": [
+                    [
+                        0,
+                        "#ffffff"
+                    ],
+                    [
+                        0.25,
+                        "#d9534f"
+                    ],
+                    [
+                        0.5,
+                        "#fee391"
+                    ],
+                    [
+                        1,
+                        "#5cb85c"
+                    ]
+                ],
+                "decimalPlaces": 1,
+                "legend": false,
+                "datalabels": false,
+                "xcats_samples": false
+            }
+        }
+    },
+    "report_saved_raw_data": {
+        "multiqc_gene_coverage_lineplot": {
+            "Norfolk-1": {
+                "0.0": 388.0,
+                "1.0": 34.0,
+                "2.0": 34.0,
+                "3.0": 33.0,
+                "4.0": 33.0,
+                "5.0": 33.0,
+                "6.0": 33.0,
+                "7.0": 32.0,
+                "8.0": 32.0,
+                "9.0": 32.0,
+                "10.0": 31.0,
+                "11.0": 30.0,
+                "12.0": 30.0,
+                "13.0": 30.0,
+                "14.0": 30.0,
+                "15.0": 28.0,
+                "16.0": 28.0,
+                "17.0": 28.0,
+                "18.0": 28.0,
+                "19.0": 28.0,
+                "20.0": 28.0,
+                "21.0": 28.0,
+                "22.0": 28.0,
+                "23.0": 28.0,
+                "24.0": 28.0,
+                "25.0": 28.0,
+                "26.0": 28.0,
+                "27.0": 27.0,
+                "28.0": 27.0,
+                "29.0": 26.0,
+                "30.0": 26.0,
+                "31.0": 26.0,
+                "32.0": 26.0,
+                "33.0": 26.0,
+                "34.0": 26.0,
+                "35.0": 26.0,
+                "36.0": 25.0,
+                "37.0": 25.0,
+                "38.0": 25.0,
+                "39.0": 25.0,
+                "40.0": 25.0,
+                "41.0": 25.0,
+                "42.0": 24.0,
+                "43.0": 23.0,
+                "44.0": 23.0,
+                "45.0": 23.0,
+                "46.0": 23.0,
+                "47.0": 23.0,
+                "48.0": 23.0,
+                "49.0": 23.0,
+                "50.0": 23.0,
+                "51.0": 23.0,
+                "52.0": 22.0,
+                "53.0": 22.0,
+                "54.0": 22.0,
+                "55.0": 22.0,
+                "56.0": 22.0,
+                "57.0": 22.0,
+                "58.0": 22.0,
+                "59.0": 21.0,
+                "60.0": 20.0,
+                "61.0": 20.0,
+                "62.0": 20.0,
+                "63.0": 18.0,
+                "64.0": 17.0,
+                "65.0": 17.0,
+                "66.0": 17.0,
+                "67.0": 17.0,
+                "68.0": 17.0,
+                "69.0": 16.0,
+                "70.0": 15.0,
+                "71.0": 14.0,
+                "72.0": 14.0,
+                "73.0": 14.0,
+                "74.0": 14.0,
+                "75.0": 14.0,
+                "76.0": 12.0,
+                "77.0": 11.0,
+                "78.0": 11.0,
+                "79.0": 11.0,
+                "80.0": 11.0,
+                "81.0": 10.0,
+                "82.0": 10.0,
+                "83.0": 10.0,
+                "84.0": 10.0,
+                "85.0": 10.0,
+                "86.0": 8.0,
+                "87.0": 6.0,
+                "88.0": 5.0,
+                "89.0": 3.0,
+                "90.0": 1.0,
+                "91.0": 1.0,
+                "92.0": 1.0,
+                "93.0": 1.0,
+                "94.0": 1.0,
+                "95.0": 1.0,
+                "96.0": 1.0,
+                "97.0": 0.0,
+                "98.0": 0.0,
+                "99.0": 0.0,
+                "100.0": 0.0
+            },
+            "Warrior_10": {
+                "0.0": 388.0,
+                "1.0": 35.0,
+                "2.0": 34.0,
+                "3.0": 34.0,
+                "4.0": 33.0,
+                "5.0": 31.0,
+                "6.0": 31.0,
+                "7.0": 31.0,
+                "8.0": 30.0,
+                "9.0": 29.0,
+                "10.0": 28.0,
+                "11.0": 28.0,
+                "12.0": 28.0,
+                "13.0": 28.0,
+                "14.0": 27.0,
+                "15.0": 27.0,
+                "16.0": 27.0,
+                "17.0": 26.0,
+                "18.0": 26.0,
+                "19.0": 26.0,
+                "20.0": 25.0,
+                "21.0": 25.0,
+                "22.0": 25.0,
+                "23.0": 25.0,
+                "24.0": 25.0,
+                "25.0": 25.0,
+                "26.0": 24.0,
+                "27.0": 24.0,
+                "28.0": 24.0,
+                "29.0": 24.0,
+                "30.0": 23.0,
+                "31.0": 23.0,
+                "32.0": 22.0,
+                "33.0": 22.0,
+                "34.0": 21.0,
+                "35.0": 21.0,
+                "36.0": 20.0,
+                "37.0": 18.0,
+                "38.0": 18.0,
+                "39.0": 18.0,
+                "40.0": 18.0,
+                "41.0": 18.0,
+                "42.0": 17.0,
+                "43.0": 17.0,
+                "44.0": 16.0,
+                "45.0": 16.0,
+                "46.0": 16.0,
+                "47.0": 15.0,
+                "48.0": 13.0,
+                "49.0": 13.0,
+                "50.0": 13.0,
+                "51.0": 13.0,
+                "52.0": 12.0,
+                "53.0": 12.0,
+                "54.0": 12.0,
+                "55.0": 12.0,
+                "56.0": 11.0,
+                "57.0": 11.0,
+                "58.0": 10.0,
+                "59.0": 10.0,
+                "60.0": 10.0,
+                "61.0": 10.0,
+                "62.0": 10.0,
+                "63.0": 10.0,
+                "64.0": 9.0,
+                "65.0": 9.0,
+                "66.0": 9.0,
+                "67.0": 9.0,
+                "68.0": 9.0,
+                "69.0": 9.0,
+                "70.0": 8.0,
+                "71.0": 8.0,
+                "72.0": 8.0,
+                "73.0": 8.0,
+                "74.0": 8.0,
+                "75.0": 8.0,
+                "76.0": 7.0,
+                "77.0": 6.0,
+                "78.0": 6.0,
+                "79.0": 6.0,
+                "80.0": 4.0,
+                "81.0": 4.0,
+                "82.0": 4.0,
+                "83.0": 4.0,
+                "84.0": 4.0,
+                "85.0": 3.0,
+                "86.0": 3.0,
+                "87.0": 2.0,
+                "88.0": 1.0,
+                "89.0": 1.0,
+                "90.0": 1.0,
+                "91.0": 1.0,
+                "92.0": 0.0,
+                "93.0": 0.0,
+                "94.0": 0.0,
+                "95.0": 0.0,
+                "96.0": 0.0,
+                "97.0": 0.0,
+                "98.0": 0.0,
+                "99.0": 0.0,
+                "100.0": 0.0
+            }
+        },
+        "multiqc_samtools_flagstat": {
+            "Norfolk-1": {
+                "total_passed": 1049,
+                "total_failed": 0,
+                "secondary_passed": 0,
+                "secondary_failed": 0,
+                "supplementary_passed": 68,
+                "supplementary_failed": 0,
+                "duplicates_passed": 0,
+                "duplicates_failed": 0,
+                "mapped_passed": 698,
+                "mapped_failed": 0,
+                "mapped_passed_pct": 66.54,
+                "mapped_failed_pct": NaN,
+                "paired in sequencing_passed": 0,
+                "paired in sequencing_failed": 0,
+                "read1_passed": 0,
+                "read1_failed": 0,
+                "read2_passed": 0,
+                "read2_failed": 0,
+                "properly paired_passed": 0,
+                "properly paired_failed": 0,
+                "properly paired_passed_pct": NaN,
+                "properly paired_failed_pct": NaN,
+                "with itself and mate mapped_passed": 0,
+                "with itself and mate mapped_failed": 0,
+                "singletons_passed": 0,
+                "singletons_failed": 0,
+                "singletons_passed_pct": NaN,
+                "singletons_failed_pct": NaN,
+                "with mate mapped to a different chr_passed": 0,
+                "with mate mapped to a different chr_failed": 0,
+                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
+                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
+                "flagstat_total": 1049
+            },
+            "Warrior_10": {
+                "total_passed": 1002,
+                "total_failed": 0,
+                "secondary_passed": 0,
+                "secondary_failed": 0,
+                "supplementary_passed": 12,
+                "supplementary_failed": 0,
+                "duplicates_passed": 0,
+                "duplicates_failed": 0,
+                "mapped_passed": 241,
+                "mapped_failed": 0,
+                "mapped_passed_pct": 24.05,
+                "mapped_failed_pct": NaN,
+                "paired in sequencing_passed": 0,
+                "paired in sequencing_failed": 0,
+                "read1_passed": 0,
+                "read1_failed": 0,
+                "read2_passed": 0,
+                "read2_failed": 0,
+                "properly paired_passed": 0,
+                "properly paired_failed": 0,
+                "properly paired_passed_pct": NaN,
+                "properly paired_failed_pct": NaN,
+                "with itself and mate mapped_passed": 0,
+                "with itself and mate mapped_failed": 0,
+                "singletons_passed": 0,
+                "singletons_failed": 0,
+                "singletons_passed_pct": NaN,
+                "singletons_failed_pct": NaN,
+                "with mate mapped to a different chr_passed": 0,
+                "with mate mapped to a different chr_failed": 0,
+                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
+                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
+                "flagstat_total": 1002
+            }
+        },
+        "multiqc_fastqc": {
+            "Norfolk-1": {
+                "Filename": "Norfolk-1.fastq",
+                "File type": "Conventional base calls",
+                "Encoding": "Sanger / Illumina 1.9",
+                "Total Sequences": 1000.0,
+                "Sequences flagged as poor quality": 0.0,
+                "Sequence length": "208-3556",
+                "%GC": 47.0,
+                "total_deduplicated_percentage": 100.0,
+                "avg_sequence_length": 1212.879,
+                "basic_statistics": "pass",
+                "per_base_sequence_quality": "fail",
+                "per_sequence_quality_scores": "fail",
+                "per_base_sequence_content": "fail",
+                "per_sequence_gc_content": "warn",
+                "per_base_n_content": "pass",
+                "sequence_length_distribution": "warn",
+                "sequence_duplication_levels": "pass",
+                "overrepresented_sequences": "pass",
+                "adapter_content": "pass"
+            },
+            "Warrior_10": {
+                "Filename": "Warrior_10.fastq",
+                "File type": "Conventional base calls",
+                "Encoding": "Sanger / Illumina 1.9",
+                "Total Sequences": 1000.0,
+                "Sequences flagged as poor quality": 0.0,
+                "Sequence length": "203-2756",
+                "%GC": 46.0,
+                "total_deduplicated_percentage": 100.0,
+                "avg_sequence_length": 815.079,
+                "basic_statistics": "pass",
+                "per_base_sequence_quality": "fail",
+                "per_sequence_quality_scores": "fail",
+                "per_base_sequence_content": "fail",
+                "per_sequence_gc_content": "fail",
+                "per_base_n_content": "pass",
+                "sequence_length_distribution": "warn",
+                "sequence_duplication_levels": "pass",
+                "overrepresented_sequences": "pass",
+                "adapter_content": "pass"
+            }
+        },
+        "multiqc_general_stats": {
+            "Norfolk-1": {
+                "Samtools_mqc-generalstats-samtools-flagstat_total": 1049,
+                "Samtools_mqc-generalstats-samtools-mapped_passed": 698,
+                "FastQC_mqc-generalstats-fastqc-percent_duplicates": 0.0,
+                "FastQC_mqc-generalstats-fastqc-percent_gc": 47.0,
+                "FastQC_mqc-generalstats-fastqc-avg_sequence_length": 1212.879,
+                "FastQC_mqc-generalstats-fastqc-percent_fails": 30.0,
+                "FastQC_mqc-generalstats-fastqc-total_sequences": 1000.0
+            },
+            "Warrior_10": {
+                "Samtools_mqc-generalstats-samtools-flagstat_total": 1002,
+                "Samtools_mqc-generalstats-samtools-mapped_passed": 241,
+                "FastQC_mqc-generalstats-fastqc-percent_duplicates": 0.0,
+                "FastQC_mqc-generalstats-fastqc-percent_gc": 46.0,
+                "FastQC_mqc-generalstats-fastqc-avg_sequence_length": 815.079,
+                "FastQC_mqc-generalstats-fastqc-percent_fails": 40.0,
+                "FastQC_mqc-generalstats-fastqc-total_sequences": 1000.0
+            }
+        }
+    },
+    "config_analysis_dir_abs": [
+        "/Users/bryan/work/pst_marple/example/Norfolk-1/report",
+        "/Users/bryan/work/pst_marple/example/Warrior_10/report"
+    ],
+    "config_analysis_dir": [
+        "/Users/bryan/work/pst_marple/example/Norfolk-1/report",
+        "/Users/bryan/work/pst_marple/example/Warrior_10/report"
+    ],
+    "config_creation_date": "2022-09-30, 11:19",
+    "config_git_hash": "fea9bc9e631f26e0f33a16bc3588aefa669c4b4c",
+    "config_intro_text": false,
+    "config_report_comment": null,
+    "config_report_header_info": null,
+    "config_script_path": "/Users/bryan/work/pst_marple/marple_pst_miniconda/envs/marple-pst/lib/python3.8/site-packages/multiqc/utils",
+    "config_short_version": "1.12",
+    "config_subtitle": null,
+    "config_title": null,
+    "config_version": "1.12 (fea9bc9)"
+}

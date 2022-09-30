@@ -1,0 +1,3 @@
+Sample	Samtools_mqc-generalstats-samtools-flagstat_total	Samtools_mqc-generalstats-samtools-mapped_passed	FastQC_mqc-generalstats-fastqc-percent_duplicates	FastQC_mqc-generalstats-fastqc-percent_gc	FastQC_mqc-generalstats-fastqc-avg_sequence_length	FastQC_mqc-generalstats-fastqc-percent_fails	FastQC_mqc-generalstats-fastqc-total_sequences
+Norfolk-1	1049	698	0.0	47.0	1212.879	30.0	1000.0
+Warrior_10	1002	241	0.0	46.0	815.079	40.0	1000.0

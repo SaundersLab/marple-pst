@@ -1,0 +1,5 @@
+Module	Section	Sample Name	Source
+Samtools	flagstat	Norfolk-1	/Users/bryan/work/pst_marple/example/Norfolk-1/report/Norfolk-1.txt
+Samtools	flagstat	Warrior_10	/Users/bryan/work/pst_marple/example/Warrior_10/report/Warrior_10.txt
+FastQC	all_sections	Norfolk-1	/Users/bryan/work/pst_marple/example/Norfolk-1/report/Norfolk-1_fastqc.zip
+FastQC	all_sections	Warrior_10	/Users/bryan/work/pst_marple/example/Warrior_10/report/Warrior_10_fastqc.zip

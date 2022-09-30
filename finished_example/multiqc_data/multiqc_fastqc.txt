@@ -1,0 +1,3 @@
+Sample	Filename	File type	Encoding	Total Sequences	Sequences flagged as poor quality	Sequence length	%GC	total_deduplicated_percentage	avg_sequence_length	basic_statistics	per_base_sequence_quality	per_sequence_quality_scores	per_base_sequence_content	per_sequence_gc_content	per_base_n_content	sequence_length_distribution	sequence_duplication_levels	overrepresented_sequences	adapter_content
+Norfolk-1	Norfolk-1.fastq	Conventional base calls	Sanger / Illumina 1.9	1000.0	0.0	208-3556	47.0	100.0	1212.879	pass	fail	fail	fail	warn	pass	warn	pass	pass	pass
+Warrior_10	Warrior_10.fastq	Conventional base calls	Sanger / Illumina 1.9	1000.0	0.0	203-2756	46.0	100.0	815.079	pass	fail	fail	fail	fail	pass	warn	pass	pass	pass
