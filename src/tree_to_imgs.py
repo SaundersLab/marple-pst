@@ -19,9 +19,12 @@ if __name__ == '__main__':
         help='Path to spreadsheet containing isolate metadata and styles',
         default=join(data_dir, 'metadata_264_isolates.xlsx')
     )
-    parser.add_argument('--out_dir', help='Directory to create tree files in', default=realpath('.'))
+    parser.add_argument('--out_dir', help='Directory to create tree files in', default=None)
     parser.add_argument('--img_fmt', help='Format to output tree images as', default='pdf')
     args = parser.parse_args()
+    if args.out_dir is None:
+        args.out_dir = dirname(realpath(args.newick_path))
+        print(args.out_dir)
     newick_to_imgs(
         newick_path=args.newick_path,
         metadata_path=args.meta,
