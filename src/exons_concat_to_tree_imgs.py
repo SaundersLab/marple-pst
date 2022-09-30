@@ -1,4 +1,3 @@
-import sys
 from os.path import dirname, join, realpath
 from transform import exon_concat_paths_to_tree_imgs
 import argparse
@@ -10,7 +9,7 @@ if __name__ == '__main__':
     marple_dir = dirname(src_dir)
     data_dir = join(marple_dir, 'data')
 
-    parser = argparse.ArgumentParser(description='Create and visualise tree')
+    parser = argparse.ArgumentParser(description='Create and visualise tree with new samples')
     parser.add_argument(
         'relative_exon_concat_paths',
         type=str,
