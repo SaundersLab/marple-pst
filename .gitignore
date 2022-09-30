@@ -6,6 +6,9 @@ marple_pst_miniconda.sh
 example/multiqc*
 example/Norfolk-1
 example/Warrior_10
+example/metadata_264_isolates_2_new_samples.xlsx
+example/tree
+example/tree_with_new_metadata
 
 # results from running tests
 test/*/observed
