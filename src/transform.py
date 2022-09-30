@@ -343,12 +343,6 @@ def seq_to_pct_coverage(seq: str) -> float:
     pct_unknown = 100 * n_unknown / len(seq)
     return 100 - pct_unknown
 
-assert seq_to_pct_coverage('????') == 0
-assert seq_to_pct_coverage('NNNN') == 0
-assert seq_to_pct_coverage('ATCG') == 100
-assert seq_to_pct_coverage('A?AaTC?GAT') == 80
-assert seq_to_pct_coverage('ANAaTCNGAT') == 80
-
 def consensus_to_coverage(consensus, out_dir, step=1):
     sample_name, _ = get_sample_name_and_extenstion(consensus, 'fasta')
     out_path = join(out_dir, f'{sample_name}.csv')

@@ -1,6 +1,10 @@
 import unittest
 
-from src.transform import _base_ratios_from_reads, _get_genotype_and_valid_bases_and_valid_ratios
+from src.transform import (
+    _base_ratios_from_reads,
+    _get_genotype_and_valid_bases_and_valid_ratios,
+    seq_to_pct_coverage
+)
 
 class TestTransform(unittest.TestCase):
 
@@ -64,6 +68,18 @@ class TestTransform(unittest.TestCase):
         ]
         for ref, bases, ratio_strs, hetero_min, hetero_max in none_cases:
             self.assertIsNone(_get_genotype_and_valid_bases_and_valid_ratios(ref, bases, ratio_strs, hetero_min, hetero_max))
+
+    def test_seq_to_pct_coverage(self):
+        cases = [
+            ('????',       0),
+            ('NNNN',       0),
+            ('ATCG',       100),
+            ('A?AaTC?GAT', 80),
+            ('ANAaTCNGAT', 80),
+        ]
+        for seq, pct_coverage in cases:
+            self.assertEqual(seq_to_pct_coverage(seq), pct_coverage)
+
 
 
 if __name__ == '__main__':
