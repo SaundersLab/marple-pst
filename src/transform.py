@@ -344,6 +344,7 @@ def seq_to_pct_coverage(seq: str) -> float:
     return 100 - pct_unknown
 
 def consensus_to_coverage(consensus, out_dir, step=1):
+    makedirs(out_dir, exist_ok=True)
     sample_name, _ = get_sample_name_and_extenstion(consensus, 'fasta')
     out_path = join(out_dir, f'{sample_name}.csv')
     cov_pcts = [seq_to_pct_coverage(r.seq) for r in parse(consensus, 'fasta')]
@@ -619,7 +620,6 @@ def reads_list_to_exons_concat_with_report(
     multiqc_config: str,
 ):
     for fastq, out_dir in zip(fastq_paths, out_dirs):
-        print(fastq)
         reads_to_exons_concat(
             fastq=fastq,
             reference=reference,
