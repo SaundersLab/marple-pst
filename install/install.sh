@@ -25,11 +25,11 @@ if [ "$operating_system_name" = "unsupported" ]; then
     exit 1
 fi
 
-machine_name="$(uname -m)"
-if [ "$machine_name" != "x86_64" ]; then
-    echo "ERROR: only x86_64 is supported, try installing manually" >&2
-    exit 1
-fi
+# machine_name="$(uname -m)"
+# if [ "$machine_name" != "x86_64" ]; then
+#     echo "ERROR: only x86_64 is supported, try installing manually" >&2
+#     exit 1
+# fi
 
 # for conda_directory in ~/minconda ~/.conda ~/.anaconda ; do
 #     if [ -d $conda_directory ]; then
@@ -46,8 +46,11 @@ fi
 # done
 
 echo "INFO: Downloading miniconda installer"
-if [ "$operating_system_name" = "Mac" ]; then
+if [ "$operating_system_name" = "Mac" ] && [ "$machine_name" = "x86_64" ]; then
     curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -o "$install_dir"/marple_pst_miniconda.sh
+fi
+if [ "$operating_system_name" = "Mac" ] && [ "$machine_name" = "arm64" ]; then
+    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o "$install_dir"/marple_pst_miniconda.sh
 fi
 if [ "$operating_system_name" = "Linux" ]; then
     curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o "$install_dir"/marple_pst_miniconda.sh
