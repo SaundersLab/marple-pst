@@ -25,7 +25,7 @@ if [ "$operating_system_name" = "unsupported" ]; then
     exit 1
 fi
 
-# machine_name="$(uname -m)"
+machine_name="$(uname -m)"
 # if [ "$machine_name" != "x86_64" ]; then
 #     echo "ERROR: only x86_64 is supported, try installing manually" >&2
 #     exit 1
@@ -60,7 +60,15 @@ source "$marple_pst_dir"/marple_pst_miniconda/bin/activate
 conda --version
 echo "SUCCESS: activate conda with this command:"
 echo "source ~/marple_pst_miniconda/bin/activate"
-for i in $(seq ${CONDA_SHLVL}); do conda deactivate ; done
-conda env create --force -f env.yml
-conda activate marple-pst
+# for i in $(seq ${CONDA_SHLVL}); do conda deactivate ; done
+
+if [ "$operating_system_name" = "Mac" ] && [ "$machine_name" = "arm64" ]; then
+    CONDA_SUBDIR=osx-64 conda env create --force -f env.yml
+    conda activate marple-pst
+    conda config --env --set subdir osx-64
+else 
+    conda env create --force -f env.yml
+    conda activate marple-pst
+fi
+
 ./test/run_tests.sh
