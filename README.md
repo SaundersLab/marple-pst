@@ -132,5 +132,5 @@ Skip the end to end test and integration tests
 ./install/uninstall.sh
 ```
 
-- Deletes the `marple-pst` and its packacges
+- Deletes the `marple-pst` and its packages
 - Deletes `marple_pst_miniconda.sh` and `marple_pst_miniconda`
