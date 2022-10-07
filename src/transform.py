@@ -21,19 +21,21 @@ def reads_to_pileup(
     reference: str,
     out_dir: str,
     threads=1,
+    trim=True,
 ) -> str:
     makedirs(out_dir, exist_ok=True)
-
     sample_name, sample_ext = get_sample_name_and_extenstion(fastq, 'fastq')
     threads = str(threads)
-    porechopped = join(out_dir, f'{sample_name}_porechopped{sample_ext}')
-
-    print('trimming', end=' ', flush=True)
-    run(['porechop', '--threads', threads, '-i', fastq], porechopped)
+    if trim:
+        trimmed = join(out_dir, f'{sample_name}_porechopped{sample_ext}')
+        print('trimming', end=' ', flush=True)
+        run(['porechop', '--threads', threads, '-i', fastq], trimmed)
+    else:
+        trimmed = fastq
     print('aligning', end=' ', flush=True)
     run(['bwa', 'index', reference])
     aligned_sam = join(out_dir, f'{sample_name}.sam')
-    run(['bwa', 'mem', '-t', threads, reference, porechopped], aligned_sam)
+    run(['bwa', 'mem', '-t', threads, reference, trimmed], aligned_sam)
     aligned_bam = join(out_dir, f'{sample_name}_unsorted.bam')
     run(['samtools', 'view', '-@', threads, '-S', '-b', aligned_sam], aligned_bam)
     sorted_bam = join(out_dir, f'{sample_name}.bam')
@@ -320,9 +322,9 @@ def reads_to_exons_concat(
     hetero_min: float = .25,
     hetero_max: float = .75,
     threads=1,
+    trim=True,
 ) -> str:
-
-    pileup = reads_to_pileup(fastq, reference, out_dir, threads=threads)
+    pileup = reads_to_pileup(fastq, reference, out_dir, threads=threads, trim=trim)
     consensus = pileup_to_consensus(
         pileup, reference, out_dir, min_snp_depth,
         min_match_depth, hetero_min, hetero_max
@@ -633,6 +635,7 @@ def reads_list_to_exons_concat_with_report(
     out_dirs: List[str],
     multiqc_config: str,
     threads=1,
+    trim=True,
 ):
     for fastq_index, (fastq, out_dir) in enumerate(zip(fastq_paths, out_dirs)):
         sample_name = get_sample_name_and_extenstion(fastq, 'fastq')[0]
@@ -643,6 +646,7 @@ def reads_list_to_exons_concat_with_report(
             gff=gff,
             out_dir=out_dir,
             threads=threads,
+            trim=trim,
         )
         print('assessing', flush=True)
         sample_report(out_dir)

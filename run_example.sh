@@ -4,11 +4,14 @@
 set -euo pipefail
 
 threads=1
+trim="yes"
 while [[ $# -gt 1 ]]; do
     key=$1
     case $key in
         --threads) # Number of threads to use
             threads="$2" ; shift ;;
+        --trim) # Skip the trimming step
+            trim="$2" ; shift ;;
         *) echo "ERROR: Unkown option: $1 " >&2
         exit 1
         ;;
@@ -21,9 +24,7 @@ cd example
 mkdir -p Norfolk-1 Warrior_10
 cat fastq/barcode01/*.fastq > Norfolk-1/Norfolk-1.fastq
 cat fastq/barcode02/*.fastq > Warrior_10/Warrior_10.fastq
-../src/reads_to_exons_concat.sh \
-    --threads "$threads" \
-    Norfolk-1/Norfolk-1.fastq Warrior_10/Warrior_10.fastq
+../src/reads_to_exons_concat.sh --threads "$threads" --trim "$trim" Norfolk-1/Norfolk-1.fastq Warrior_10/Warrior_10.fastq
 ../src/exons_concat_to_tree_imgs.sh \
     --start ../data/8_isolates_388_genes_exons.fasta.gz \
     --out_dir tree \
