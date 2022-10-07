@@ -1,5 +1,4 @@
 from contextlib import redirect_stdout
-from importlib.metadata import metadata
 from io import StringIO
 import unittest
 
