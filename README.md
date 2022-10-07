@@ -4,15 +4,21 @@ Pipeline for analysis of Puccinia striiformis f.sp. tritici genomic reads
 
 ## Install
 
-```bash
-./install/install.sh
-```
+Before installing, ensure the licences of miniconda and software dependencies in `env.yml` are compatible with your usage.
 
-Before installing, please ensure the licences of miniconda and each software dependency in `env.yml` are compatible with your usage.
+The installer:
 
 - Installs conda (miniconda)
 - Installs dependencies from `eny.yml` into the environment `marple-pst`
 - Runs tests with `test/run_tests.sh`
+
+```bash
+./install/install.sh
+```
+
+For WSL, you should keep the `marple-pst` directory in the Linux file sytem (e.g. `~/marple-pst`), and not the windows file system (e.g. `/mnt/c/Users/me/Documents/marple-pst`) as you may get an error:
+
+`OSError: [Errno 40] Too many levels of symbolic links`
 
 ## Tutorial
 
