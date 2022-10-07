@@ -1,5 +1,5 @@
 import unittest
-from subprocess import run
+from subprocess import run, PIPE
 import filecmp
 import os
 from os.path import basename, join
@@ -50,7 +50,7 @@ class Assertions:
 class TestRunExample(unittest.TestCase, Assertions):
 
     def test_run_example(self):
-        run('./run_example.sh')
+        run('./run_example.sh', stdout=PIPE)
         for exp_dir, _, files in os.walk('finished_example'):
             if should_ignore_directory(basename(exp_dir)):
                 continue
@@ -63,4 +63,4 @@ class TestRunExample(unittest.TestCase, Assertions):
                 )
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(buffer=True)

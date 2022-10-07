@@ -1,4 +1,6 @@
+from contextlib import redirect_stdout
 from importlib.metadata import metadata
+from io import StringIO
 import unittest
 
 from src.transform import (
@@ -77,12 +79,13 @@ class IntegrationTestCase(unittest.TestCase, Assertions):
 class TestReadsToExonsConcat(IntegrationTestCase):
 
     def test_reads_to_exons_concat(self):
-        reads_to_exons_concat(
-            fastq=join(IN_DIR, 'isolate_1.fastq'),
-            reference='data/reference/pst-130_388_genes.fasta',
-            gff='data/reference/pst-130_388_genes_as_positive_strand_landmarks.gff3',
-            out_dir=join(OBS_DIR, 'isolate_1'),
-        )
+        with redirect_stdout(StringIO()) as f:
+            reads_to_exons_concat(
+                fastq=join(IN_DIR, 'isolate_1.fastq'),
+                reference='data/reference/pst-130_388_genes.fasta',
+                gff='data/reference/pst-130_388_genes_as_positive_strand_landmarks.gff3',
+                out_dir=join(OBS_DIR, 'isolate_1'),
+            )
         self.assertExpectedDirectoryFilesMatch(
             'isolate_1',
             # different installations seem to give different bam files despite

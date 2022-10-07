@@ -10,6 +10,7 @@ import pandas as pd
 from Bio import Phylo
 from Bio.SeqIO import parse
 
+
 from utils import (darken_color, file, get_sample_name_and_extenstion, pushd,
                    run, string_to_color, write_fasta)
 
@@ -26,7 +27,10 @@ def reads_to_pileup(
     sample_name, sample_ext = get_sample_name_and_extenstion(fastq, 'fastq')
     threads = str(threads)
     porechopped = join(out_dir, f'{sample_name}_porechopped{sample_ext}')
+
+    print('trimming', end=' ', flush=True)
     run(['porechop', '--threads', threads, '-i', fastq], porechopped)
+    print('aligning', end=' ', flush=True)
     run(['bwa', 'index', reference])
     aligned_sam = join(out_dir, f'{sample_name}.sam')
     run(['bwa', 'mem', '-t', threads, reference, porechopped], aligned_sam)
@@ -629,7 +633,9 @@ def reads_list_to_exons_concat_with_report(
     multiqc_config: str,
     threads=1,
 ):
-    for fastq, out_dir in zip(fastq_paths, out_dirs):
+    for fastq_index, (fastq, out_dir) in enumerate(zip(fastq_paths, out_dirs)):
+        sample_name = get_sample_name_and_extenstion(fastq, 'fastq')[0]
+        print(f'{fastq_index + 1}/{len(fastq_paths)} {sample_name}:', end=' ', flush=True)
         reads_to_exons_concat(
             fastq=fastq,
             reference=reference,
@@ -637,7 +643,9 @@ def reads_list_to_exons_concat_with_report(
             out_dir=out_dir,
             threads=threads,
         )
+        print('assessing', flush=True)
         sample_report(out_dir)
+    print('Report: compiling')
     report_dirs = [join(out_dir, 'report') for out_dir in out_dirs]
     run(['multiqc', '--config', multiqc_config] + report_dirs, out='/dev/null')
 
@@ -672,11 +680,13 @@ def exon_concat_paths_to_tree_imgs(
         starting_tree_input=starting_tree_input,
         new_tree_input=tree_input,
     )
+    print('Tree: making', end=' ', flush=True)
     newick = exons_concat_to_newick(
         exons_concat=tree_input,
         out_dir=out_dir,
         n_threads=n_threads,
     )
+    print('visualising', flush=True)
     imgs = newick_to_imgs(
         newick_path=newick,
         metadata_path=metadata_path,
