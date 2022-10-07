@@ -112,6 +112,51 @@ If you get stuck and want to see what the output should look like, then run this
 
 See [pipeline.md](docs/pipeline.md) for a flowchart of the pipeline.
 
+## API
+
+```text
+Align reads to reference genes then extract and concatenate exons
+
+reads_to_exons_concat.sh 
+  -h                    Show a help message and exit.
+  --ref                 Reference FASTA file to align reads to.
+  --gff                 Annotation file giving the position of exons within the
+                        reference genes. Genes should be specificied as if 
+                        everything was on the + strand.
+  --multiqc_config      MultiQC config file for creating the report.
+  --threads             Number of threads to use.
+  --trim                Should FASTQ files be trimmed (yes/no).
+  fastq1 ... fastqn     Read files for aligning to the reference genes. 
+                        Output for each read will be created in the same
+                        directory as the fastq file.
+```
+
+```text
+Create and visualise a tree with new samples
+
+exons_concat_to_tree_imgs.sh
+  -h                Show a help message and exit.
+  --meta            Path to spreadsheet containing isolate metadata and styles.
+  --start           Starting tree input, i.e. concatenated exons file for 
+                    previously sequenced samples.
+  --name            Name to use as a prefix for all created tree files.
+  --out_dir         Directory to create tree files in.
+  --threads         Number of threads to use for RAxML.
+  --img_fmt         Format to output tree images as.
+  exon_concat_paths Concatenated exons file for new samples to add to the tree.
+```
+
+```text
+Visualise a tree
+
+tree_to_imgs.sh
+  -h            Show a help message and exit.
+  --meta        Path to spreadsheet containing isolate metadata and styles.
+  --out_dir     Directory to create tree files in.
+  --img_fmt     Format to output tree images as.
+  newick_path   Tree in Newick format.
+```
+
 ## Test
 
 Run all the tests (roughly 2 minutes):
