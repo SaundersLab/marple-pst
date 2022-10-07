@@ -2,14 +2,14 @@
     "report_data_sources": {
         "Samtools": {
             "flagstat": {
-                "Norfolk-1": "/Users/bryan/work/pst_marple/example/Norfolk-1/report/Norfolk-1.txt",
-                "Warrior_10": "/Users/bryan/work/pst_marple/example/Warrior_10/report/Warrior_10.txt"
+                "Norfolk-1": "/Users/bryan/work/marple-pst/example/Norfolk-1/report/Norfolk-1.txt",
+                "Warrior_10": "/Users/bryan/work/marple-pst/example/Warrior_10/report/Warrior_10.txt"
             }
         },
         "FastQC": {
             "all_sections": {
-                "Norfolk-1": "/Users/bryan/work/pst_marple/example/Norfolk-1/report/Norfolk-1_fastqc.zip",
-                "Warrior_10": "/Users/bryan/work/pst_marple/example/Warrior_10/report/Warrior_10_fastqc.zip"
+                "Norfolk-1": "/Users/bryan/work/marple-pst/example/Norfolk-1/report/Norfolk-1_fastqc.zip",
+                "Warrior_10": "/Users/bryan/work/marple-pst/example/Warrior_10/report/Warrior_10_fastqc.zip"
             }
         }
     },
@@ -253,7 +253,7 @@
             }
         }
     ],
-    "report_multiqc_command": "/Users/bryan/work/pst_marple/marple_pst_miniconda/envs/marple-pst/bin/multiqc --config /Users/bryan/work/pst_marple/config/multiqc_config.yaml /Users/bryan/work/pst_marple/example/Norfolk-1/report /Users/bryan/work/pst_marple/example/Warrior_10/report",
+    "report_multiqc_command": "/Users/bryan/work/marple-pst/marple_pst_miniconda/envs/marple-pst/bin/multiqc --config /Users/bryan/work/marple-pst/config/multiqc_config.yaml /Users/bryan/work/marple-pst/example/Norfolk-1/report /Users/bryan/work/marple-pst/example/Warrior_10/report",
     "report_plot_data": {
         "gene_coverage_lineplot": {
             "plot_type": "xy_line",
@@ -620,7 +620,7 @@
                             ],
                             [
                                 89.0,
-                                3.0
+                                1.0
                             ],
                             [
                                 90.0,
@@ -648,7 +648,7 @@
                             ],
                             [
                                 96.0,
-                                1.0
+                                0.0
                             ],
                             [
                                 97.0,
@@ -4706,14 +4706,14 @@
                 "86.0": 8.0,
                 "87.0": 6.0,
                 "88.0": 5.0,
-                "89.0": 3.0,
+                "89.0": 1.0,
                 "90.0": 1.0,
                 "91.0": 1.0,
                 "92.0": 1.0,
                 "93.0": 1.0,
                 "94.0": 1.0,
                 "95.0": 1.0,
-                "96.0": 1.0,
+                "96.0": 0.0,
                 "97.0": 0.0,
                 "98.0": 0.0,
                 "99.0": 0.0,
@@ -4961,21 +4961,21 @@
         }
     },
     "config_analysis_dir_abs": [
-        "/Users/bryan/work/pst_marple/example/Norfolk-1/report",
-        "/Users/bryan/work/pst_marple/example/Warrior_10/report"
+        "/Users/bryan/work/marple-pst/example/Norfolk-1/report",
+        "/Users/bryan/work/marple-pst/example/Warrior_10/report"
     ],
     "config_analysis_dir": [
-        "/Users/bryan/work/pst_marple/example/Norfolk-1/report",
-        "/Users/bryan/work/pst_marple/example/Warrior_10/report"
+        "/Users/bryan/work/marple-pst/example/Norfolk-1/report",
+        "/Users/bryan/work/marple-pst/example/Warrior_10/report"
     ],
-    "config_creation_date": "2022-09-30, 11:19",
-    "config_git_hash": "fea9bc9e631f26e0f33a16bc3588aefa669c4b4c",
+    "config_creation_date": "2022-10-07, 11:19",
+    "config_git_hash": "8961ba4b551ca5a6c09b32ee35339d069b3d6e77",
     "config_intro_text": false,
     "config_report_comment": null,
     "config_report_header_info": null,
-    "config_script_path": "/Users/bryan/work/pst_marple/marple_pst_miniconda/envs/marple-pst/lib/python3.8/site-packages/multiqc/utils",
+    "config_script_path": "/Users/bryan/work/marple-pst/marple_pst_miniconda/envs/marple-pst/lib/python3.8/site-packages/multiqc/utils",
     "config_short_version": "1.12",
     "config_subtitle": null,
     "config_title": null,
-    "config_version": "1.12 (fea9bc9)"
+    "config_version": "1.12 (8961ba4)"
 }

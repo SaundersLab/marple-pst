@@ -81,7 +81,8 @@ def snp_ratios_and_snp_freq_to_consensus(
     ref_matches = snp_ratios[snp_ratios.alts == snp_ratios.ref]
     ref_matches_enough_depth = ref_matches.query(f'depth >= {min_match_depth}')
     for gene, pos, ref in ref_matches_enough_depth[['gene', 'pos', 'ref']].values:
-        consensus[gene][pos] = ref
+        # snp_ratios pos comes directly from pileup which is 1-based index
+        consensus[gene][pos - 1] = ref
 
     # Convert the sequence lists into strings
     consensus_fasta = {gene: ''.join(l) for gene, l in consensus.items()}
