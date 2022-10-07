@@ -3,6 +3,7 @@ from subprocess import run, PIPE
 import filecmp
 import os
 from os.path import basename, join
+from test.integration.tree_comp import trees_approx_equal
 
 def should_skip_end_to_end_tests():
     try:
@@ -23,7 +24,7 @@ def should_ignore_file(file):
     return matches(
         file,
         matches=['.DS_Store'],
-        suffixes=['.bam', '.sam', '.pdf', '.html', 'xlsx', '.zip'],
+        suffixes=['.bam', '.sam', '.pdf', '.html', 'xlsx', '.zip', '.newick'],
         prefixes=['RAxML_parsimonyTree', 'RAxML_info', 'RAxML_log', 'RAxML_result'],
     )
 
@@ -46,6 +47,12 @@ class Assertions:
         if not filecmp.cmp(exp_path, obs_path):
             raise AssertionError(f'contents of {exp_name} does not match the expected output')
 
+    def assertTreesApproxMatch(self, exp_path, obs_path):
+        exp_name = basename(exp_path)
+        self.assertFileExists(obs_path)
+        if not trees_approx_equal(exp_path, obs_path):
+            raise AssertionError(f'{exp_name} tree is too different to the expected output')
+
 @unittest.skipIf(should_skip_end_to_end_tests(), 'skipping end to end test')
 class TestRunExample(unittest.TestCase, Assertions):
 
@@ -55,6 +62,12 @@ class TestRunExample(unittest.TestCase, Assertions):
             if should_ignore_directory(basename(exp_dir)):
                 continue
             obs_dir = join('example', exp_dir[len('finished_example') + 1:])
+            for file in files:
+                if file.startswith('RAxML_bestTree'):
+                    self.assertTreesApproxMatch(
+                        join(exp_dir, file),
+                        join(obs_dir, file),
+                    )
             files = [file for file in files if not should_ignore_file(file)]
             for file in files:
                 self.assertExpectedFilesMatch(

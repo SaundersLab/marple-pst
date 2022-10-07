@@ -12,6 +12,7 @@ import filecmp
 import os
 from os.path import basename, join, splitext
 from test.integration.img_comp import imgs_approx_equal
+from test.integration.tree_comp import trees_approx_equal
 import glob
 
 def should_skip_integration_tests():
@@ -67,6 +68,12 @@ class Assertions:
         if not imgs_approx_equal(exp_path, obs_path):
             raise AssertionError(f'{exp_name} image is too different to the expected output')
 
+    def assertTreesApproxMatch(self, exp_path, obs_path):
+        exp_name = basename(exp_path)
+        self.assertFileExists(obs_path)
+        if not trees_approx_equal(exp_path, obs_path):
+            raise AssertionError(f'{exp_name} tree is too different to the expected output')
+
 
 @unittest.skipIf(should_skip_integration_tests(), 'skipping integration test')
 class IntegrationTestCase(unittest.TestCase, Assertions):
@@ -97,13 +104,12 @@ class TestReadsToExonsConcat(IntegrationTestCase):
 class TestExonsConcatToNewick(IntegrationTestCase):
 
     def test_exons_concat_to_newick(self):
-        # TODO: this is a fragile way to compare trees, something with
-        #       BIO.Phylo which re-roots, ladderizes, and does approximate
-        #       comparison of branch lengths would safer.
+        # TODO: this currently ignores the absolute scale and is not
+        #       flexible in terms of the tree being re-rooted
         input_name = '6_isolates_8000_bases.fasta'
         exp_path = join(EXP_DIR, f'RAxML_bestTree.{splitext(input_name)[0]}.newick')
         obs_path = exons_concat_to_newick(join(IN_DIR, input_name), OBS_DIR)
-        self.assertExpectedFilesMatch(exp_path, obs_path)
+        self.assertTreesApproxMatch(exp_path, obs_path)
 
     def test_exons_concat_to_newick_exceptions(self):
         # When run with a fasta file, RAxML reports it cannot be parsed as a phylip.
