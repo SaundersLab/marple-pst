@@ -1009,7 +1009,7 @@ raxmlHPC-PTHREADS-SSE3 -s /Users/bryan/work/marple-pst/example/tree/2_new_sample
 Partition: 0 with name: No Name Provided
 Base frequencies: 0.289 0.239 0.221 0.252 
 
-Inference[0]: Time 4.066144 GAMMA-based likelihood -713382.636998, best rearrangement setting 5
+Inference[0]: Time 3.807742 GAMMA-based likelihood -713382.636998, best rearrangement setting 5
 alpha[0]: 0.020000 rates[0] ac ag at cg ct gt: 0.487322 2.077546 0.482319 0.599056 3.643891 1.000000 
 
 
@@ -1025,5 +1025,5 @@ Final GAMMA-based Score of best tree -713365.904222
 Program execution info written to /Users/bryan/work/marple-pst/example/tree/RAxML_info.2_new_samples.newick
 Best-scoring ML tree written to: /Users/bryan/work/marple-pst/example/tree/RAxML_bestTree.2_new_samples.newick
 
-Overall execution time: 7.349202 secs or 0.002041 hours or 0.000085 days
+Overall execution time: 7.422496 secs or 0.002062 hours or 0.000086 days
 

@@ -461,7 +461,8 @@ def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, img_fmt='
 
     # Load metadata and styles
     tree = Phylo.read(newick_path, 'newick')
-    tree.ladderize()
+    tree.root_at_midpoint()
+    tree.ladderize(reverse=True)
     sheets = pd.read_excel(metadata_path, sheet_name=None, engine='openpyxl')
     metadata = sheets['metadata'].fillna('?').astype(
         str).set_index('tree_name').to_dict()
@@ -603,7 +604,7 @@ def newick_to_imgs(newick_path: str, metadata_path: str, out_dir: str, img_fmt='
                 '○': {'marker': 'o', 'fc': '#FFF', 'ec': color},
             }[val_style['marker']]
             ax.scatter([], [], label=style_val, **scatter_style)
-        ax.legend(title=' '.join(style_col.split('_')).title(), loc='lower left')
+        ax.legend(title=' '.join(style_col.split('_')).title(), loc='upper left')
 
         # Hide the right and top spines
         for side in ['right', 'top']:

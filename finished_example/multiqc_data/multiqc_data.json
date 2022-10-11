@@ -4968,8 +4968,8 @@
         "/Users/bryan/work/marple-pst/example/Norfolk-1/report",
         "/Users/bryan/work/marple-pst/example/Warrior_10/report"
     ],
-    "config_creation_date": "2022-10-07, 11:19",
-    "config_git_hash": "8961ba4b551ca5a6c09b32ee35339d069b3d6e77",
+    "config_creation_date": "2022-10-11, 11:56",
+    "config_git_hash": "deef7e10f3ad5cb0ee34ea8c8ea8a75632723bd6",
     "config_intro_text": false,
     "config_report_comment": null,
     "config_report_header_info": null,
@@ -4977,5 +4977,5 @@
     "config_short_version": "1.12",
     "config_subtitle": null,
     "config_title": null,
-    "config_version": "1.12 (8961ba4)"
+    "config_version": "1.12 (deef7e1)"
 }

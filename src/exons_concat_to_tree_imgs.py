@@ -25,7 +25,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--start',
         help='Starting tree input, i.e. concatenated exons file for previously sequenced samples',
-        default=join(data_dir, '56_isolates_388_genes_exons.fasta.gz')
+        default=join(data_dir, '57_isolates_388_genes_exons.fasta.gz')
     )
     parser.add_argument('--name', help='Name to use as a prefix for all created tree files',)
     parser.add_argument('--out_dir', help='Directory to create tree files in', default=realpath('.'))
