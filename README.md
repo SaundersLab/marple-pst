@@ -1,5 +1,7 @@
 <img alt="MARPLE DIAGNOSTICS" src="docs/marple-green.png" width="100%"/>
 
+[![Tests](https://github.com/SaundersLab/marple-pst/actions/workflows/test.yml/badge.svg)](https://github.com/SaundersLab/marple-pst/actions/workflows/test.yml)
+
 Pipeline for analysis of Puccinia striiformis f.sp. tritici genomic reads
 
 ## Install
