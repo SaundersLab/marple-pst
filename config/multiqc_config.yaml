@@ -10,7 +10,7 @@ custom_data:
       id: "gene_coverage_lineplot"
       title: "Gene Coverage"
       ylab: "Genes"
-      ylab: "Coverage"
+      xlab: "% Positions Covered"
       ymax: 388
       ymin: 0
       tt_label: "{point.y} genes have ≥ {point.x}% positions covered"

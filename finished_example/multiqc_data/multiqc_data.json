@@ -1082,7 +1082,8 @@
             "config": {
                 "id": "gene_coverage_lineplot",
                 "title": "Gene Coverage",
-                "ylab": "Coverage",
+                "ylab": "Genes",
+                "xlab": "% Positions Covered",
                 "ymax": 388,
                 "ymin": 0,
                 "tt_label": "{point.y} genes have ≥ {point.x}% positions covered",
@@ -4968,8 +4969,8 @@
         "/Users/bryan/work/marple-pst/example/Norfolk-1/report",
         "/Users/bryan/work/marple-pst/example/Warrior_10/report"
     ],
-    "config_creation_date": "2022-10-11, 11:56",
-    "config_git_hash": "deef7e10f3ad5cb0ee34ea8c8ea8a75632723bd6",
+    "config_creation_date": "2022-10-12, 13:53",
+    "config_git_hash": "5578bda94c6eb3d8f30f56853a988a3bb44c4ec0",
     "config_intro_text": false,
     "config_report_comment": null,
     "config_report_header_info": null,
@@ -4977,5 +4978,5 @@
     "config_short_version": "1.12",
     "config_subtitle": null,
     "config_title": null,
-    "config_version": "1.12 (deef7e1)"
+    "config_version": "1.12 (5578bda)"
 }
