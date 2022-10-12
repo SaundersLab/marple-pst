@@ -1,0 +1,19 @@
+name: Tests
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    name: Test
+    runs-on: "ubuntu-latest"
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - name: Install MARPLE
+        run: |
+          install/install.sh
+      - name: Run tests
+        run: |
+          test/run_tests.sh
