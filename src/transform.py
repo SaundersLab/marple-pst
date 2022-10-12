@@ -1,7 +1,7 @@
 import tempfile
 from collections import defaultdict
 from os import makedirs
-from os.path import abspath, basename, join
+from os.path import abspath, basename, isfile, join
 from re import finditer, sub
 from typing import Dict, Iterable, List, Optional, Tuple
 import subprocess
@@ -33,14 +33,20 @@ def reads_to_pileup(
     else:
         trimmed = fastq
     print('aligning', end=' ', flush=True)
-    run(['bwa', 'index', reference])
+    # Don't recreate the index if it already exists - important for running
+    # samples in parallel
+    if not isfile(f'{reference}.bwt'):
+        run(['bwa', 'index', reference])
     aligned_sam = join(out_dir, f'{sample_name}.sam')
     run(['bwa', 'mem', '-t', threads, reference, trimmed], aligned_sam)
     aligned_bam = join(out_dir, f'{sample_name}_unsorted.bam')
     run(['samtools', 'view', '-@', threads, '-S', '-b', aligned_sam], aligned_bam)
     sorted_bam = join(out_dir, f'{sample_name}.bam')
     run(['samtools', 'sort', '-@', threads, aligned_bam], sorted_bam)
-    run(['samtools', 'faidx', reference])
+    # Don't recreate the index if it already exists - may be important
+    # for running samples in parallel
+    if not isfile(f'{reference}.fai'):
+        run(['samtools', 'faidx', reference])
     pileup = join(out_dir, f'{sample_name}.pileup')
     run(['samtools', 'mpileup', '-f', reference, sorted_bam], pileup)
 
@@ -383,11 +389,13 @@ def create_empty_config_required_for_gene_coverage_mqc(sample: str, out_dir: str
     with open(join(out_dir, f'{config_name}.yaml'), 'w') as f:
         f.write(f'id: "{config_name}"' + '\n')
 
-def sample_report(sample_dir: str):
-    sample_name = basename(sample_dir)
+def sample_report(sample_dir: str, sample_name: str):
     out_dir = join(sample_dir, 'report')
-    # TODO: make this more flexible
-    reads_to_fastqc(join(sample_dir, f'{sample_name}.fastq'), out_dir)
+    for fastq_ext in ['.fastq', '.fastq.gz', '.fq', '.fq.gz']:
+        fastq_path = join(sample_dir, f'{sample_name}{fastq_ext}')
+        if isfile(fastq_path):
+            reads_to_fastqc(fastq_path, out_dir)
+            break
     alignment_to_flagstat(join(sample_dir, f'{sample_name}.bam'), out_dir)
     consensus_to_coverage(join(sample_dir, f'{sample_name}.fasta'), out_dir)
     create_empty_config_required_for_gene_coverage_mqc(sample_name, out_dir)
@@ -650,7 +658,7 @@ def reads_list_to_exons_concat_with_report(
             trim=trim,
         )
         print('assessing', flush=True)
-        sample_report(out_dir)
+        sample_report(out_dir, sample_name)
     print('Report: compiling')
     report_dirs = [join(out_dir, 'report') for out_dir in out_dirs]
     run(['multiqc', '--config', multiqc_config] + report_dirs, out='/dev/null')
