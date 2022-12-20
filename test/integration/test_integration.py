@@ -155,25 +155,28 @@ class TestReadsToFastqc(IntegrationTestCase):
         #       multiqc can pick up the data more easily, but it may
         #       be better to just test multiqc output instead
         obs_dir = join(OBS_DIR, 'fastqc')
+        os.makedirs(OBS_DIR, exist_ok=True)
         obs_path, _ = reads_to_fastqc(join(IN_DIR, 'isolate_1.fastq'), obs_dir)
         self.assertFileContainsString(obs_path, 'isolate_1.fastq')
 
 class TestAlignmentToFlagstat(IntegrationTestCase):
 
     def test_alignment_to_flagstat(self):
-        alignment_to_flagstat(join(IN_DIR, 'isolate_1_sorted.bam'), join(OBS_DIR, 'flagstat'))
+        flagstat_dir = join(OBS_DIR, 'flagstat')
+        os.makedirs(flagstat_dir, exist_ok=True)
+        alignment_to_flagstat(join(IN_DIR, 'isolate_1_sorted.bam'), join(flagstat_dir, 'isolate_1_sorted.txt'))
         self.assertExpectedDirectoryFilesMatch('flagstat')
 
 class TestConsensusToCoverage(IntegrationTestCase):
 
     def test_consensus_to_coverage(self):
-        self.assertExpectedFilesMatch(
-            join(EXP_DIR, 'consensus_to_coverage', 'consensus_1.csv'),
-            consensus_to_coverage(
-                join(IN_DIR, 'consensus_1.fasta'),
-                OBS_DIR,
-            )
+        os.makedirs(OBS_DIR, exist_ok=True)
+        exp_coverage_path = join(EXP_DIR, 'consensus_to_coverage', 'consensus_1.csv')
+        obs_coverage_path = join(OBS_DIR, 'consensus_1.csv')
+        consensus_to_coverage(
+            join(IN_DIR, 'consensus_1.fasta'), obs_coverage_path,
         )
+        self.assertExpectedFilesMatch(exp_coverage_path, obs_coverage_path)
 
 class TestConsensusesToCoverageTable(IntegrationTestCase):
 
