@@ -98,7 +98,10 @@ class TestReadsToExonsConcat(IntegrationTestCase):
             # the same sam files, so ignore these for comparison.
             # Look like sam file can be in different order because of threads
             # as well. 
-            ignore=['isolate_1.bam', 'isolate_1_unsorted.bam', 'isolate_1.sam']
+            ignore=[
+                'isolate_1.bam', 'isolate_1_unsorted.bam', 'isolate_1.sam',
+                'isolate_1_snp_freq.tsv', 'isolate_1_snp_ratios.tsv'
+            ]
         )
 
 class TestExonsConcatToNewick(IntegrationTestCase):
