@@ -7,8 +7,9 @@ from src.report import (
     reads_to_fastqc, alignment_to_flagstat,
     consensus_to_coverage
 )
+from src.fasta_to_newick import fasta_to_newick
 from src.transform import (
-    reads_to_exons_concat, exons_concat_to_newick, 
+    reads_to_exons_concat, 
     consensuses_to_coverage_table
 )
 from shutil import rmtree
@@ -110,21 +111,21 @@ class TestReadsToExonsConcat(IntegrationTestCase):
 
 class TestExonsConcatToNewick(IntegrationTestCase):
 
-    def test_exons_concat_to_newick(self):
+    def test_fasta_to_newick(self):
         # TODO: this currently ignores the absolute scale and is not
         #       flexible in terms of the tree being re-rooted
         input_name = '6_isolates_8000_bases.fasta'
         exp_path = join(EXP_DIR, f'RAxML_bestTree.{splitext(input_name)[0]}.newick')
-        obs_path = exons_concat_to_newick(join(IN_DIR, input_name), OBS_DIR)
+        obs_path = fasta_to_newick(join(IN_DIR, input_name), OBS_DIR)
         self.assertTreesApproxMatch(exp_path, obs_path)
 
-    def test_exons_concat_to_newick_exceptions(self):
+    def test_fasta_to_newick_exceptions(self):
         # When run with a fasta file, RAxML reports it cannot be parsed as a phylip.
         # This message can make it harder to find the actual error if RAxML crashes
-        # so exons_concat_to_newick is supposed to supress that message.
+        # so fasta_to_newick is supposed to supress that message.
         exception = ''
         try:
-            exons_concat_to_newick(join(IN_DIR, 'mixed_length_sequences.fasta'), OBS_DIR)
+            fasta_to_newick(join(IN_DIR, 'mixed_length_sequences.fasta'), OBS_DIR)
         except Exception as e:
             exception = str(e)
         self.assertNotIn(

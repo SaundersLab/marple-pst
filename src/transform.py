@@ -8,7 +8,7 @@ from Bio.SeqIO import parse
 from pileup_to_consensus import pileup_to_consensus
 from reads_to_pileup import reads_to_pileup
 from newick_to_images import newick_to_images
-
+from fasta_to_newick import fasta_to_newick
 from report import report
 
 from utils import (file, get_sample_name_and_extenstion, pushd,
@@ -90,46 +90,6 @@ def consensuses_to_coverage_table(
     return coverage_table_path
 
 
-def exons_concat_to_newick(exons_concat: str, out_dir: str, n_threads=1) -> str:
-    makedirs(out_dir, exist_ok=True)
-    collection_name, _ = get_sample_name_and_extenstion(exons_concat, 'fasta')
-    # need absolute path because we're about to run raxml from the output directory
-    exons_concat = abspath(exons_concat)
-
-    # output name cannot contain slashes, so run raxml from the output directory
-    with pushd(out_dir):
-        # make a temporary file to prevent raxml log being written to screen
-        with tempfile.TemporaryFile() as log:
-            try:
-                args = [
-                    'raxmlHPC-PTHREADS-SSE3',
-                     '-s', exons_concat,
-                     '-m', 'GTRGAMMA',
-                     '-n', f'{collection_name}.newick',
-                     '-p', '100',
-                ]
-                if n_threads >= 2:
-                    args += ['-T', str(n_threads)]
-                run(args, out=log)
-            except:
-                # if raxml failed then raise an exception with the error message
-                # which was written to the temporary file (redirected from stdout)
-                log.seek(0)
-                error = log.read().decode()
-                # When run with a fasta file, RAxML reports it cannot be parsed as a phylip.
-                # This message can make it harder to find the actual error if RAxML crashes,
-                # so supress that message.
-                error = error.replace(
-                    "\nRAxML can't, parse the alignment file as phylip file \nit will now try to parse it as FASTA file\n\n",
-                    ''
-                )
-                raise Exception(error)
-
-    return join(out_dir, f'RAxML_bestTree.{collection_name}.newick')
-
-
-
-
 def reads_list_to_exons_concat_with_report(
     fastq_paths: List[str],
     reference: str,
@@ -163,14 +123,12 @@ def exon_concat_paths_to_tree_input(
     exon_concat_paths: List[str],
     starting_tree_input: str,
     new_tree_input: str,
-) -> str:
+) -> None:
     with open(new_tree_input, 'w') as f_out:
         for path in [*exon_concat_paths, starting_tree_input]:
             with file(path) as f_in:
                 for line in f_in:
                     f_out.write(line)
-    # You already know where to find it, but for consistency
-    return new_tree_input
 
 
 def exon_concat_paths_to_tree_imgs(
@@ -190,7 +148,7 @@ def exon_concat_paths_to_tree_imgs(
         new_tree_input=tree_input,
     )
     print('Tree: making', end=' ', flush=True)
-    newick = exons_concat_to_newick(
+    newick = fasta_to_newick(
         exons_concat=tree_input,
         out_dir=out_dir,
         n_threads=n_threads,
