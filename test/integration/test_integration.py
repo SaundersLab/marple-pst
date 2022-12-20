@@ -8,10 +8,9 @@ from src.report import (
     consensus_to_coverage
 )
 from src.fasta_to_newick import fasta_to_newick
-from src.transform import (
-    reads_to_exons_concat, 
-    consensuses_to_coverage_table
-)
+from src.reads_to_features_concat import reads_to_features_concat
+from src.transform import consensuses_to_coverage_table
+
 from shutil import rmtree
 import filecmp
 import os
@@ -87,11 +86,12 @@ class IntegrationTestCase(unittest.TestCase, Assertions):
         setUp()
 
 
-class TestReadsToExonsConcat(IntegrationTestCase):
+class TestReadsToFeaturesConcat(IntegrationTestCase):
 
-    def test_reads_to_exons_concat(self):
+    def test_reads_to_features_concat(self):
         with redirect_stdout(StringIO()) as f:
-            reads_to_exons_concat(
+            reads_to_features_concat(
+                feature='exon',
                 fastq=join(IN_DIR, 'isolate_1.fastq'),
                 reference='data/reference/pst-130_388_genes.fasta',
                 gff='data/reference/pst-130_388_genes_as_positive_strand_landmarks.gff3',

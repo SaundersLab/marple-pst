@@ -11,57 +11,10 @@ from newick_to_images import newick_to_images
 from fasta_to_newick import fasta_to_newick
 from report import report
 
-from utils import (file, get_sample_name_and_extenstion, pushd,
-                   run, write_fasta)
+from utils import file, get_sample_name_and_extenstion, run
 
 from extract_features import extract_features
-
-def concat_fasta_sequences(
-    fasta_path: str, concat_fasta_path: str, header: str
-) -> None:
-    """
-    Concatenate all the sequences in a fasta file into a single record.
-    """
-    sequences_combined = ''.join(str(r.seq) for r in parse(fasta_path, 'fasta'))
-    write_fasta({header: sequences_combined}, concat_fasta_path)
-
-def reads_to_exons_concat(
-    fastq: str,
-    reference: str,
-    gff: str,
-    out_dir: str,
-    min_snp_depth: int = 20,
-    min_match_depth: int = 2,
-    hetero_min: float = .25,
-    hetero_max: float = .75,
-    threads=1,
-    trim=True,
-    max_read_length=None,
-) -> str:
-    pileup_path = reads_to_pileup(
-        fastq=fastq,
-        reference=reference,
-        out_dir=out_dir,
-        threads=threads,
-        trim=trim,
-        max_read_length=max_read_length,
-    )
-    sample_name, _ = get_sample_name_and_extenstion(pileup_path, 'pileup')
-    consensus_path = join(out_dir, f'{sample_name}.fasta')
-    pileup_to_consensus(
-        pileup_path=pileup_path,
-        ref_path=reference,
-        out_path=consensus_path,
-        min_snp_depth=min_snp_depth,
-        min_ref_depth=min_match_depth,
-        hetero_min=hetero_min,
-        hetero_max=hetero_max,
-    )
-    exons_path = join(out_dir, f'{sample_name}_exons.fasta')
-    extract_features(consensus_path, gff, exons_path, feature='exon')
-    exons_concat_path = join(out_dir, f'{sample_name}_exons_concat.fasta')
-    concat_fasta_sequences(exons_path, exons_concat_path, sample_name)
-    return exons_concat_path
+from reads_to_features_concat import reads_to_features_concat
 
 
 
@@ -103,7 +56,8 @@ def reads_list_to_exons_concat_with_report(
     for fastq_index, (fastq, out_dir) in enumerate(zip(fastq_paths, out_dirs)):
         sample_name = get_sample_name_and_extenstion(fastq, 'fastq')[0]
         print(f'{fastq_index + 1}/{len(fastq_paths)} {sample_name}:', end=' ', flush=True)
-        reads_to_exons_concat(
+        reads_to_features_concat(
+            feature='exon',
             fastq=fastq,
             reference=reference,
             gff=gff,
