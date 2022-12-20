@@ -83,7 +83,7 @@ def consensus_to_exons(consensus_path: str, gff: str, out_dir: str) -> str:
         r.id: ''.join(r.seq[i] for i in sorted(exon_positions[r.id]))
         for r in parse(consensus_path, 'fasta')
     }
-    write_fasta(consensus_exons, consensus_exons_path)
+    write_fasta(consensus_exons, consensus_exons_path, sort=True)
 
     # Let the caller know where to find the consensus exons
     return consensus_exons_path
@@ -96,7 +96,7 @@ def exons_to_exons_concat(exons_path: str, out_dir: str) -> str:
     if sample_name.endswith('_exons'):
         sample_name = sample_name[:-len('_exons')]
     all_genes_exons = ''.join(str(r.seq) for r in parse(exons_path, 'fasta'))
-    write_fasta({sample_name: all_genes_exons}, exons_concat_path)
+    write_fasta({sample_name: all_genes_exons}, exons_concat_path, sort=True)
 
     return exons_concat_path
 
