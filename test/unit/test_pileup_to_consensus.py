@@ -1,7 +1,7 @@
 import unittest
 from src.pileup_to_consensus import (
     base_ratios_from_reads,
-    get_genotype_and_valid_base_ratios,
+    genotype_and_valid_base_ratios,
     pileup_row_to_consensus_at_locus
 )
 
@@ -30,7 +30,7 @@ class TestPileupToConsensus(unittest.TestCase):
                 base_ratios
             )
 
-    def test_get_genotype_and_valid_bases_and_valid_ratios(self):
+    def test_genotype_and_valid_base_ratios(self):
         cases = [
             # 0/0 : pref ≥ hetero_max or only refbase qualified
             ('A', {'A': 1}, '0/0', {'A': 1.0}),
@@ -57,13 +57,13 @@ class TestPileupToConsensus(unittest.TestCase):
         ]
         for ref, base_ratios, genotype, valid_base_ratios in cases:
             self.assertEqual(
-                get_genotype_and_valid_base_ratios(ref, base_ratios, .2, .8),
+                genotype_and_valid_base_ratios(ref, base_ratios, .2, .8),
                 (genotype, valid_base_ratios)
             )
 
         # No bases qualified
         self.assertEqual(
-            get_genotype_and_valid_base_ratios('G', {b: .25 for b in 'ACTG'}, .3, .7),
+            genotype_and_valid_base_ratios('G', {b: .25 for b in 'ACTG'}, .3, .7),
             (None, None)
         )
 

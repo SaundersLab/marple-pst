@@ -30,7 +30,7 @@ def base_ratios_from_reads(
     return {base: n / depth for base, n in base_counts.items() if n}
 
 
-def get_genotype_and_valid_base_ratios(
+def genotype_and_valid_base_ratios(
     ref: str,
     base_ratios: Dict[str, float],
     hetero_min: float,
@@ -84,24 +84,24 @@ def pileup_row_to_consensus_at_locus(
         'AT': 'W',  'CG': 'S',  'AC': 'M',  'GT': 'K',  'AG': 'R',  'CT': 'Y',
         'TA': 'W',  'GC': 'S',  'CA': 'M',  'TG': 'K',  'GA': 'R',  'TC': 'Y',
     }
-    contig, pos_str, ref, depth_str, reads, *_ = row.split('\t')
+    seqid, pos_str, ref, depth_str, reads, *_ = row.split('\t')
     depth = int(depth_str)
     pos = int(pos_str)
-    null_consensus = contig, pos - 1, 'N'
+    null_consensus = seqid, pos - 1, 'N'
     if depth < min_ref_depth:
         return null_consensus
     base_ratios = base_ratios_from_reads(ref, depth, reads)
     if list(base_ratios) == [ref]:
-        return contig, pos - 1, ref
+        return seqid, pos - 1, ref
     if depth < min_snp_depth:
         return null_consensus
-    genotype, valid_base_ratios = get_genotype_and_valid_base_ratios(
+    genotype, valid_base_ratios = genotype_and_valid_base_ratios(
         ref, base_ratios, hetero_min, hetero_max
     )
     if valid_base_ratios is None or genotype == '?':
         return null_consensus
     alleles = ''.join(valid_base_ratios)
-    return contig, pos - 1, alleles_to_code[alleles]
+    return seqid, pos - 1, alleles_to_code[alleles]
 
 
 def pileup_to_consensus(
@@ -112,13 +112,13 @@ def pileup_to_consensus(
     consensus = {r.id: ['N'] * len(r.seq) for r in parse(ref_path, 'fasta')}
     with file(pileup_path) as f:
         for row in f:
-            contig, pos, consensus[contig][pos] = pileup_row_to_consensus_at_locus(
+            seqid, pos, consensus[seqid][pos] = pileup_row_to_consensus_at_locus(
                 row, **kwargs
             )
 
     with file(out_path, 'wt') as f:
-        for contig in consensus:
-            f.write('>' + contig + '\n' + ''.join(consensus[contig]) + '\n')
+        for seqid in consensus:
+            f.write('>' + seqid + '\n' + ''.join(consensus[seqid]) + '\n')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a consensus genome from a pileup file.')
