@@ -1,10 +1,7 @@
 import tempfile
-from collections import defaultdict
 from os import makedirs
-from os.path import abspath, basename, isfile, join
-from re import finditer, sub
-from typing import Dict, Iterable, List, Optional, Tuple
-import subprocess
+from os.path import abspath, isfile, join
+from typing import Dict, Iterable, List, Tuple
 import pandas as pd
 
 from Bio.SeqIO import parse
