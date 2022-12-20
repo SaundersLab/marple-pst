@@ -17,19 +17,14 @@ from utils import (file, get_sample_name_and_extenstion, pushd,
 
 from consensus_to_exons import consensus_to_exons
 
-
-
-def exons_to_exons_concat(exons_path: str, out_dir: str) -> str:
-    sample_name, sample_ext = get_sample_name_and_extenstion(
-        exons_path, 'fasta')
-    exons_concat_path = join(out_dir, f'{sample_name}_concat{sample_ext}')
-    if sample_name.endswith('_exons'):
-        sample_name = sample_name[:-len('_exons')]
-    all_genes_exons = ''.join(str(r.seq) for r in parse(exons_path, 'fasta'))
-    write_fasta({sample_name: all_genes_exons}, exons_concat_path, sort=True)
-
-    return exons_concat_path
-
+def concat_fasta_sequences(
+    fasta_path: str, concat_fasta_path: str, header: str
+) -> None:
+    """
+    Concatenate all the sequences in a fasta file into a single record.
+    """
+    sequences_combined = ''.join(str(r.seq) for r in parse(fasta_path, 'fasta'))
+    write_fasta({header: sequences_combined}, concat_fasta_path)
 
 def reads_to_exons_concat(
     fastq: str,
@@ -65,8 +60,9 @@ def reads_to_exons_concat(
     )
     exons_path = join(out_dir, f'{sample_name}_exons.fasta')
     consensus_to_exons(consensus_path, gff, exons_path)
-    exons_concat = exons_to_exons_concat(exons_path, out_dir)
-    return exons_concat
+    exons_concat_path = join(out_dir, f'{sample_name}_exons_concat.fasta')
+    concat_fasta_sequences(exons_path, exons_concat_path, sample_name)
+    return exons_concat_path
 
 
 def reads_to_fastqc(fastq: str, out_dir: str) -> Tuple[str, str]:
