@@ -3,10 +3,13 @@ from io import StringIO
 import unittest
 
 from src.newick_to_images import newick_to_images
+from src.report import (
+    reads_to_fastqc, alignment_to_flagstat,
+    consensus_to_coverage
+)
 from src.transform import (
     reads_to_exons_concat, exons_concat_to_newick, 
-    reads_to_fastqc, alignment_to_flagstat, consensuses_to_coverage_table,
-    consensus_to_coverage
+    consensuses_to_coverage_table
 )
 from shutil import rmtree
 import filecmp
