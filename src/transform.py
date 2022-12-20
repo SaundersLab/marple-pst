@@ -15,41 +15,8 @@ from newick_to_images import newick_to_images
 from utils import (file, get_sample_name_and_extenstion, pushd,
                    run, write_fasta)
 
+from consensus_to_exons import consensus_to_exons
 
-
-# Extract the exons from the gene sequence. Take shortcuts because
-# we have a very specific GFF file. The GFF and reference were
-# transformed so everything is on plus strand, and seqid is the gene.
-# So we don't have to worryabout phase or attributes.
-
-
-def consensus_to_exons(consensus_path: str, gff: str, out_dir: str) -> str:
-
-    sample_name, sample_ext = get_sample_name_and_extenstion(
-        consensus_path, 'fasta')
-
-    # Find the exon positions
-    exon_positions = defaultdict(set)
-    with file(gff) as f:
-        for line in f:
-            # Assumes everything's on the positive strand
-            seqid, _, type_, start, end, _, strand, _, _ = line.strip().split('\t')
-            assert strand == '+', 'Only + strand supported'
-            if type_ == 'exon':
-                exon_positions[seqid].update(
-                    set(range(int(start) - 1, int(end))))
-
-    consensus_exons_path = join(out_dir, f'{sample_name}_exons{sample_ext}')
-
-    # Write the gene bases only in the exon positions
-    consensus_exons = {
-        r.id: ''.join(r.seq[i] for i in sorted(exon_positions[r.id]))
-        for r in parse(consensus_path, 'fasta')
-    }
-    write_fasta(consensus_exons, consensus_exons_path, sort=True)
-
-    # Let the caller know where to find the consensus exons
-    return consensus_exons_path
 
 
 def exons_to_exons_concat(exons_path: str, out_dir: str) -> str:
@@ -96,8 +63,9 @@ def reads_to_exons_concat(
         hetero_min=hetero_min,
         hetero_max=hetero_max,
     )
-    exons = consensus_to_exons(consensus_path, gff, out_dir)
-    exons_concat = exons_to_exons_concat(exons, out_dir)
+    exons_path = join(out_dir, f'{sample_name}_exons.fasta')
+    consensus_to_exons(consensus_path, gff, exons_path)
+    exons_concat = exons_to_exons_concat(exons_path, out_dir)
     return exons_concat
 
 
