@@ -1,19 +1,15 @@
-import tempfile
 from os import makedirs
-from os.path import abspath, isfile, join
-from typing import Dict, Iterable, List, Tuple
+from os.path import join
+from typing import Dict, Iterable, List
 import pandas as pd
 
 from Bio.SeqIO import parse
-from pileup_to_consensus import pileup_to_consensus
-from reads_to_pileup import reads_to_pileup
 from newick_to_images import newick_to_images
 from fasta_to_newick import fasta_to_newick
 from report import report
 
 from utils import file, get_sample_name_and_extenstion, run
 
-from extract_features import extract_features
 from reads_to_features_concat import reads_to_features_concat
 
 
