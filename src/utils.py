@@ -1,7 +1,6 @@
 import contextlib
 import gzip
 import subprocess
-from hashlib import sha1
 from os import chdir, getcwd
 from os.path import basename
 from typing import Dict, IO, List, Tuple, Union
