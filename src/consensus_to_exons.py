@@ -24,12 +24,13 @@ def consensus_to_exons(
             assert strand == '+', 'Only + strand supported'
             if type_ == 'exon':
                 exon_positions[seqid].update(
-                    set(range(int(start) - 1, int(end))))
+                    set(range(int(start) - 1, int(end)))
+                )
 
     # Write the gene bases only in the exon positions
     consensus_exons = {
         r.id: ''.join(r.seq[i] for i in sorted(exon_positions[r.id]))
         for r in parse(consensus_path, 'fasta')
     }
-    
+
     write_fasta(consensus_exons, exons_path, sort=True)
