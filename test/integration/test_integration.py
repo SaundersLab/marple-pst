@@ -2,8 +2,9 @@ from contextlib import redirect_stdout
 from io import StringIO
 import unittest
 
+from src.newick_to_images import newick_to_images
 from src.transform import (
-    newick_to_imgs, reads_to_exons_concat, exons_concat_to_newick, 
+    reads_to_exons_concat, exons_concat_to_newick, 
     reads_to_fastqc, alignment_to_flagstat, consensuses_to_coverage_table,
     consensus_to_coverage
 )
@@ -131,14 +132,14 @@ class TestExonsConcatToNewick(IntegrationTestCase):
 
 class TestNewickToImgs(IntegrationTestCase):
 
-    def test_newick_to_imgs(self):
+    def test_newick_to_images(self):
         # TODO: this is a fragile way to compare plots, something with
         #       image histograms might be safer but its a tricky one.
         name = '50_isolates'
         newick_path = join(IN_DIR, f'RAxML_bestTree.{name}.newick')
         metadata_path = 'data/metadata_264_isolates.xlsx'
 
-        newick_to_imgs(newick_path, metadata_path, join(OBS_DIR, f'{name}_imgs'), 'png')
+        newick_to_images(newick_path, metadata_path, join(OBS_DIR, f'{name}_imgs'), 'png')
 
         for exp_path in glob.glob(join(EXP_DIR, '50_isolates_imgs', '*')):
             obs_path = join(OBS_DIR, '50_isolates_imgs', basename(exp_path))

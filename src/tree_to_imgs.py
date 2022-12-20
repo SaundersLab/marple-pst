@@ -1,6 +1,6 @@
 import sys
 from os.path import dirname, join, realpath
-from transform import newick_to_imgs
+from newick_to_images import newick_to_images
 import argparse
 
 if __name__ == '__main__':
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     if args.out_dir is None:
         args.out_dir = dirname(realpath(args.newick_path))
         print(args.out_dir)
-    newick_to_imgs(
+    newick_to_images(
         newick_path=args.newick_path,
         metadata_path=args.meta,
         out_dir=args.out_dir,

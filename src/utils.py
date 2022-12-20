@@ -1,4 +1,3 @@
-import colorsys
 import contextlib
 import gzip
 import subprocess
@@ -7,7 +6,6 @@ from os import chdir, getcwd
 from os.path import basename
 from typing import Dict, IO, List, Tuple, Union
 
-import matplotlib
 
 
 def file(path, mode='rt') -> IO:
@@ -83,18 +81,6 @@ def pushd(new_dir: str):
         chdir(previous_dir)
 
 
-def string_to_color(s: str) -> str:
-    if s == '?':
-        return '#00DD00'
-    hash_ = str(int(sha1(str(s).encode("utf-8")).hexdigest(), 16))
-    color_tuple = tuple(
-        (int(hash_[(i * 3):(i * 3) + 3]) % 255) / 300 for i in range(3))
-    return matplotlib.colors.to_hex(color_tuple)
-
-
-def darken_color(color_hex: str) -> str:
-    h, l, s = matplotlib.colors.hex2color(color_hex)
-    return matplotlib.colors.to_hex(colorsys.hls_to_rgb(h, .25, s))
 
 def write_fasta(fasta: Dict[str, str], path: str, sort=False) -> None:
     with file(path, 'wt') as f_out:

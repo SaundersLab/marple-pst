@@ -32,6 +32,7 @@ if __name__ == '__main__':
     )
     parser.add_argument('--threads', type=int, help='Number of threads to use', default=2)
     parser.add_argument('--trim', help='Should FASTQ files be trimmed (yes/no)', default='yes')
+    parser.add_argument('--max_read_length', help='Maximum length of read to align', default=None)
     args = parser.parse_args()
     fastq_paths = [realpath(path) for path in args.relative_fastq_paths]
     out_dirs = [dirname(path) for path in fastq_paths]
