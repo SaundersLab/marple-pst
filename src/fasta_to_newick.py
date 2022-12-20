@@ -3,11 +3,11 @@ from os import makedirs
 from os.path import abspath, join
 from utils import get_sample_name_and_extenstion, pushd, run
 
-def fasta_to_newick(exons_concat: str, out_dir: str, n_threads=1) -> str:
+def fasta_to_newick(fasta_path: str, out_dir: str, n_threads=1) -> str:
     makedirs(out_dir, exist_ok=True)
-    collection_name, _ = get_sample_name_and_extenstion(exons_concat, 'fasta')
+    collection_name, _ = get_sample_name_and_extenstion(fasta_path, 'fasta')
     # need absolute path because we're about to run raxml from the output directory
-    exons_concat = abspath(exons_concat)
+    fasta_path = abspath(fasta_path)
 
     # output name cannot contain slashes, so run raxml from the output directory
     with pushd(out_dir):
@@ -16,7 +16,7 @@ def fasta_to_newick(exons_concat: str, out_dir: str, n_threads=1) -> str:
             try:
                 args = [
                     'raxmlHPC-PTHREADS-SSE3',
-                     '-s', exons_concat,
+                     '-s', fasta_path,
                      '-m', 'GTRGAMMA',
                      '-n', f'{collection_name}.newick',
                      '-p', '100',

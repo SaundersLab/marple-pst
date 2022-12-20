@@ -14,7 +14,7 @@ from report import report
 from utils import (file, get_sample_name_and_extenstion, pushd,
                    run, write_fasta)
 
-from consensus_to_exons import consensus_to_exons
+from extract_features import extract_features
 
 def concat_fasta_sequences(
     fasta_path: str, concat_fasta_path: str, header: str
@@ -58,7 +58,7 @@ def reads_to_exons_concat(
         hetero_max=hetero_max,
     )
     exons_path = join(out_dir, f'{sample_name}_exons.fasta')
-    consensus_to_exons(consensus_path, gff, exons_path)
+    extract_features(consensus_path, gff, exons_path, feature='exon')
     exons_concat_path = join(out_dir, f'{sample_name}_exons_concat.fasta')
     concat_fasta_sequences(exons_path, exons_concat_path, sample_name)
     return exons_concat_path
@@ -149,7 +149,7 @@ def exon_concat_paths_to_tree_imgs(
     )
     print('Tree: making', end=' ', flush=True)
     newick = fasta_to_newick(
-        exons_concat=tree_input,
+        fasta_path=tree_input,
         out_dir=out_dir,
         n_threads=n_threads,
     )
