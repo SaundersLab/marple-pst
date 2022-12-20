@@ -75,8 +75,16 @@ def reads_to_exons_concat(
     hetero_max: float = .75,
     threads=1,
     trim=True,
+    max_read_length=None,
 ) -> str:
-    pileup_path = reads_to_pileup(fastq, reference, out_dir, threads=threads, trim=trim)
+    pileup_path = reads_to_pileup(
+        fastq=fastq,
+        reference=reference,
+        out_dir=out_dir,
+        threads=threads,
+        trim=trim,
+        max_read_length=max_read_length,
+    )
     sample_name, _ = get_sample_name_and_extenstion(pileup_path, 'pileup')
     consensus_path = join(out_dir, f'{sample_name}.fasta')
     pileup_to_consensus(
