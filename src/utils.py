@@ -4,7 +4,7 @@ import subprocess
 from os import chdir, getcwd
 from os.path import basename
 from typing import Dict, IO, List, Tuple, Union
-
+from Bio.SeqIO import parse
 
 
 def file(path, mode='rt') -> IO:
@@ -88,3 +88,9 @@ def write_fasta(fasta: Dict[str, str], path: str, sort=False) -> None:
             assert isinstance(header, str)
             assert isinstance(fasta[header], str)
             f_out.write('>' + header + '\n' + fasta[header] + '\n')
+
+
+# Convert a FASTA with line breaks in sequences to 2 rows per record
+def unwrap_fasta(wrapped_fasta: str, unwrapped_fasta: str) -> None:
+    with open(unwrapped_fasta, 'wt') as f:
+        f.write(''.join(f'>' + r.description + '\n' + str(r.seq) + '\n' for r in parse(wrapped_fasta, 'fasta')))
