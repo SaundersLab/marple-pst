@@ -1,6 +1,39 @@
-from transform import reads_list_to_exons_concat_with_report
 from os.path import join, dirname, realpath
 import argparse
+from utils import get_sample_name_and_extenstion, run
+from typing import List
+from reads_to_features_concat import reads_to_features_concat
+from report import report
+
+def reads_list_to_exons_concat_with_report(
+    fastq_paths: List[str],
+    reference: str,
+    gff: str,
+    out_dirs: List[str],
+    multiqc_config: str,
+    threads=1,
+    trim=True,
+    max_read_length=None,
+):
+    for fastq_index, (fastq, out_dir) in enumerate(zip(fastq_paths, out_dirs)):
+        sample_name = get_sample_name_and_extenstion(fastq, 'fastq')[0]
+        print(f'{fastq_index + 1}/{len(fastq_paths)} {sample_name}:', end=' ', flush=True)
+        reads_to_features_concat(
+            feature='exon',
+            fastq=fastq,
+            reference=reference,
+            gff=gff,
+            out_dir=out_dir,
+            threads=threads,
+            trim=trim,
+            max_read_length=max_read_length,
+        )
+        print('assessing', flush=True)
+        report(out_dir, sample_name)
+    print('Report: compiling')
+    report_dirs = [join(out_dir, 'report') for out_dir in out_dirs]
+    run(['multiqc', '--config', multiqc_config] + report_dirs, out='/dev/null')
+
 
 if __name__ == '__main__':
     src_dir = dirname(realpath(__file__))

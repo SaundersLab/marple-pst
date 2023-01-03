@@ -1,7 +1,53 @@
 from os.path import dirname, join, realpath
-from transform import exon_concat_paths_to_tree_imgs
 import argparse
+from typing import List, Dict
+from utils import file
+from fasta_to_newick import fasta_to_newick
+from os import makedirs
+from newick_to_images import newick_to_images
 
+def exon_concat_paths_to_tree_input(
+    exon_concat_paths: List[str],
+    starting_tree_input: str,
+    new_tree_input: str,
+) -> None:
+    with open(new_tree_input, 'w') as f_out:
+        for path in [*exon_concat_paths, starting_tree_input]:
+            with file(path) as f_in:
+                for line in f_in:
+                    f_out.write(line)
+
+
+def exon_concat_paths_to_tree_imgs(
+    exon_concat_paths: List[str],
+    starting_tree_input: str,
+    tree_name: str,
+    out_dir: str,
+    metadata_path: str,
+    n_threads=1,
+    img_fmt='pdf',
+) -> Dict[str, str]:
+    makedirs(out_dir, exist_ok=True)
+    tree_input = join(out_dir, f'{tree_name}.fasta')
+    exon_concat_paths_to_tree_input(
+        exon_concat_paths=exon_concat_paths,
+        starting_tree_input=starting_tree_input,
+        new_tree_input=tree_input,
+    )
+    print('Tree: making', end=' ', flush=True)
+    newick = fasta_to_newick(
+        fasta_path=tree_input,
+        out_dir=out_dir,
+        n_threads=n_threads,
+    )
+    print('visualising', flush=True)
+    imgs = newick_to_images(
+        newick_path=newick,
+        metadata_path=metadata_path,
+        out_dir=out_dir,
+        img_fmt=img_fmt,
+    )
+    return imgs
 
 
 if __name__ == '__main__':

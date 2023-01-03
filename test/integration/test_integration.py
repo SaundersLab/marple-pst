@@ -5,11 +5,10 @@ import unittest
 from src.newick_to_images import newick_to_images
 from src.report import (
     reads_to_fastqc, alignment_to_flagstat,
-    consensus_to_coverage
+    consensus_to_coverage, consensuses_to_coverage_table
 )
 from src.fasta_to_newick import fasta_to_newick
 from src.reads_to_features_concat import reads_to_features_concat
-from src.transform import consensuses_to_coverage_table
 
 from shutil import rmtree
 import filecmp

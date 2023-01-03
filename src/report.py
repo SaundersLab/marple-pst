@@ -1,6 +1,6 @@
 from os import makedirs
 from os.path import join, isfile
-from typing import Tuple
+from typing import Tuple, Iterable
 from utils import run, get_sample_name_and_extenstion
 from Bio.SeqIO import parse
 import pandas as pd
@@ -59,3 +59,28 @@ def report(sample_dir: str, sample_name: str):
     coverage_path = join(out_dir, f'{sample_name}.csv')
     consensus_to_coverage(join(sample_dir, f'{sample_name}.fasta'), coverage_path)
     create_empty_config_required_for_gene_coverage_mqc(sample_name, out_dir)
+
+
+def consensuses_to_coverage_table(
+    consensus_paths: Iterable[str],
+    collection_name: str,
+    out_dir: str
+) -> str:
+    makedirs(out_dir, exist_ok=True)
+    coverage_rows = []
+    for consensus_path in consensus_paths:
+        sample_name, _ = get_sample_name_and_extenstion(
+            consensus_path, 'fasta')
+        pct_coverages = []
+        for r in parse(consensus_path, 'fasta'):
+            pct_missing = (r.seq.count('?') + r.seq.count('N')) / len(r.seq)
+            pct_coverages.append(1 - pct_missing)
+        coverage_rows.append({
+            'sample': sample_name,
+            '<50% coverage': len([p for p in pct_coverages if p < .5]),
+            '≥50% coverage': len([p for p in pct_coverages if p >= .5]),
+        })
+    coverage_df = pd.DataFrame(coverage_rows)
+    coverage_table_path = join(out_dir, f'{collection_name}.tsv')
+    coverage_df.to_csv(coverage_table_path, sep='\t', index=None)
+    return coverage_table_path
