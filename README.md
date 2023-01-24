@@ -75,8 +75,8 @@ Our starting point is a directory for each sample containing the fastq files cre
 
     In this example we use a starting tree input containing only 8 isolates to save time.
 
-    When you run this with real samples, use `../data/56_isolates_388_genes_exons.fasta.gz` which
-    contains 56 isolates.
+    When you run this with real samples, use `../data/57_isolates_388_genes_exons.fasta.gz` which
+    contains 57 isolates.
 
 7. Inspect the tree by opening `example/tree/2_new_samples_country.pdf` in your browser.
 
