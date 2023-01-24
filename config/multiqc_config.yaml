@@ -14,6 +14,71 @@ custom_data:
       ymax: 388
       ymin: 0
       tt_label: "{point.y} genes have ≥ {point.x}% positions covered"
+  "total_coverage":
+    file_format: "csv"
+    plot_type: "generalstats"
+    id: "total_coverage"
+    pconfig:
+      - "exon_consensus":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          title: "Exon"
+          placement: 19
+      - "exon_2":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 20
+          title: "Exon 2x"
+      - "exon_10":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 21
+          title: "Exon 10x"
+          hidden: True
+      - "exon_20":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 22
+          title: "Exon 20x"
+      - "gene_consensus":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 23
+          title: "Gene"
+      - "gene_2":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 24
+          title: "Gene 2x"
+      - "gene_10":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 25
+          title: "Gene 10x"
+          hidden: True
+      - "gene_20":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 26
+          title: "Gene 20x"
 sp:
   gene_coverage:
-    fn: "*.csv"
+    fn: "*_gene_coverage.csv"
+  total_coverage:
+    fn: "*_total_coverage.csv"

@@ -365,7 +365,7 @@ def seq_to_pct_coverage(seq: str) -> float:
 def consensus_to_coverage(consensus, out_dir, step=1):
     makedirs(out_dir, exist_ok=True)
     sample_name, _ = get_sample_name_and_extenstion(consensus, 'fasta')
-    out_path = join(out_dir, f'{sample_name}.csv')
+    out_path = join(out_dir, f'{sample_name}_gene_coverage.csv')
     cov_pcts = [seq_to_pct_coverage(r.seq) for r in parse(consensus, 'fasta')]
 
     pct_coverage_thresholds = list(range(0, 101, step))
@@ -379,6 +379,71 @@ def consensus_to_coverage(consensus, out_dir, step=1):
     }).to_csv(out_path, index=None, header=None)
     return out_path
 
+def read_gff(path: str) -> pd.DataFrame:
+    gff = pd.read_csv(path, sep='\t', comment='#', header=None)
+    gff.columns = ['seqid', 'source', 'type', 'start', 'end', 'score', 'strand', 'phase', 'attributes']
+    gff['length'] = gff.end - gff.start + 1
+    return gff
+
+def pileup_to_gene_depths(pileup_path: str, gff_path: str) -> pd.DataFrame:
+    gff = read_gff(gff_path)
+    assert set(gff.strand) == {'+'}
+    depths = {
+        gene: [0 for _ in range(length)] for gene, length 
+        in gff.query('type == "gene"')[['seqid', 'length']].values
+    }
+    with file(pileup_path) as f:
+        for line in f:
+            gene, pos, _, depth, *_ = line.split()
+            depths[gene][int(pos) - 1] = int(depth)
+    return pd.DataFrame([
+        {'gene': gene, 'depth': d, 'pos': i + 1}
+        for gene, depths in depths.items()
+        for i, d in enumerate(depths)
+    ])
+
+def gene_depths_to_exon_depths(gene_depths: pd.DataFrame, gff_path: str) -> pd.DataFrame:
+    gff = read_gff(gff_path)
+    assert set(gff.strand) == {'+'}
+    exons = gff.query('type == "exon"')
+    gene_to_exon_ranges = {gene: set() for gene in set(exons.seqid)}
+    for gene, start, end in exons[['seqid', 'start', 'end']].values:
+        for i in range(start, end + 1):
+            gene_to_exon_ranges[gene].add(i)
+
+    return gene_depths[[
+        pos in gene_to_exon_ranges[gene] 
+        for gene, pos in gene_depths[['gene', 'pos']].values
+    ]]
+
+def pileup_to_exon_depths(pileup_path: str, gff_path: str) -> pd.DataFrame:
+    return gene_depths_to_exon_depths(pileup_to_gene_depths(pileup_path, gff_path), gff_path)
+
+def total_coverage_table(
+    pileup_path: str,
+    gff_path: str,
+    gene_consensus_path: str,
+    exon_consensus_path: str,
+    out_dir: str,
+):
+
+    sample_name, _ = get_sample_name_and_extenstion(pileup_path, 'pileup')
+
+    gene_depths = pileup_to_gene_depths(pileup_path, gff_path)
+    exon_depths = gene_depths_to_exon_depths(gene_depths, gff_path)
+
+    gene_consensus = ''.join(str(r.seq) for r in parse(gene_consensus_path, 'fasta'))
+    exon_consensus = ''.join(str(r.seq) for r in parse(exon_consensus_path, 'fasta'))
+
+    coverage_dict = {'Sample Name': sample_name}
+    for feature, depths, consensus in zip(('gene', 'exon'), (gene_depths, exon_depths), (gene_consensus, exon_consensus)):
+        for threshold in [2, 10, 20]:
+            coverage_dict[f'{feature}_{threshold}'] = 100 * sum(depths.depth >= threshold) / depths.shape[0]
+        coverage_dict[f'{feature}_consensus'] = 100 * (1 - consensus.count('N') / len(consensus))
+    pd.DataFrame(coverage_dict, index=[0]).to_csv(
+        join(out_dir, f'{sample_name}_total_coverage.csv'), index=None
+    )
+
 # This is a work around to ensure that multiqc can create the plot specified in
 # config/multiqc_config.yaml.
 # Unless there is at least one _mqc.yaml in the directory, multiqc will not 
@@ -389,7 +454,7 @@ def create_empty_config_required_for_gene_coverage_mqc(sample: str, out_dir: str
     with open(join(out_dir, f'{config_name}.yaml'), 'w') as f:
         f.write(f'id: "{config_name}"' + '\n')
 
-def sample_report(sample_dir: str, sample_name: str):
+def sample_report(sample_dir: str, sample_name: str, gff_path: str):
     out_dir = join(sample_dir, 'report')
     for fastq_ext in ['.fastq', '.fastq.gz', '.fq', '.fq.gz']:
         fastq_path = join(sample_dir, f'{sample_name}{fastq_ext}')
@@ -399,6 +464,13 @@ def sample_report(sample_dir: str, sample_name: str):
     alignment_to_flagstat(join(sample_dir, f'{sample_name}.bam'), out_dir)
     consensus_to_coverage(join(sample_dir, f'{sample_name}.fasta'), out_dir)
     create_empty_config_required_for_gene_coverage_mqc(sample_name, out_dir)
+    total_coverage_table(
+        pileup_path=join(sample_dir, f'{sample_name}.pileup'),
+        gene_consensus_path=join(sample_dir, f'{sample_name}.fasta'),
+        exon_consensus_path=join(sample_dir, f'{sample_name}_exons.fasta'),
+        gff_path=gff_path,
+        out_dir=out_dir,
+    )
 
 def consensuses_to_coverage_table(
     consensus_paths: Iterable[str],
@@ -658,7 +730,7 @@ def reads_list_to_exons_concat_with_report(
             trim=trim,
         )
         print('assessing', flush=True)
-        sample_report(out_dir, sample_name)
+        sample_report(out_dir, sample_name, gff)
     print('Report: compiling')
     report_dirs = [join(out_dir, 'report') for out_dir in out_dirs]
     run(['multiqc', '--config', multiqc_config] + report_dirs, out='/dev/null')
