@@ -16,6 +16,28 @@
     "report_general_stats_data": [
         {
             "Norfolk-1": {
+                "gene_2": 4.436619926504717,
+                "gene_10": 1.2922280068469458,
+                "gene_20": 0.6846945925091573,
+                "gene_consensus": 4.334033992307528,
+                "exon_2": 4.7907353303530575,
+                "exon_10": 1.4977647928473372,
+                "exon_20": 0.7857447366053794,
+                "exon_consensus": 4.684548323887972
+            },
+            "Warrior_10": {
+                "gene_2": 3.6836332567634287,
+                "gene_10": 0.2758290392102953,
+                "gene_20": 0.12002849937768476,
+                "gene_consensus": 3.6307142878259757,
+                "exon_2": 3.676847321466984,
+                "exon_10": 0.25832971554397866,
+                "exon_20": 0.11616037171318948,
+                "exon_consensus": 3.6275671637704843
+            }
+        },
+        {
+            "Norfolk-1": {
                 "total_passed": 1049,
                 "total_failed": 0,
                 "secondary_passed": 0,
@@ -105,6 +127,176 @@
     ],
     "report_general_stats_headers": [
         {
+            "exon_consensus": {
+                "max": 100,
+                "min": 0,
+                "scale": "RdYlGn",
+                "suffix": "%",
+                "title": "Exon",
+                "placement": 19.0,
+                "namespace": "total_coverage",
+                "description": "Exon",
+                "rid": "mqc-generalstats-total_coverage-exon_consensus",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "hidden": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "dmax": 100.0,
+                "dmin": 0.0
+            },
+            "exon_2": {
+                "max": 100,
+                "min": 0,
+                "scale": "RdYlGn",
+                "suffix": "%",
+                "placement": 20.0,
+                "title": "Exon 2x",
+                "namespace": "total_coverage",
+                "description": "Exon 2x",
+                "rid": "mqc-generalstats-total_coverage-exon_2",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "hidden": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "dmax": 100.0,
+                "dmin": 0.0
+            },
+            "exon_10": {
+                "max": 100,
+                "min": 0,
+                "scale": "RdYlGn",
+                "suffix": "%",
+                "placement": 21.0,
+                "title": "Exon 10x",
+                "hidden": true,
+                "namespace": "total_coverage",
+                "description": "Exon 10x",
+                "rid": "mqc-generalstats-total_coverage-exon_10",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "dmax": 100.0,
+                "dmin": 0.0
+            },
+            "exon_20": {
+                "max": 100,
+                "min": 0,
+                "scale": "RdYlGn",
+                "suffix": "%",
+                "placement": 22.0,
+                "title": "Exon 20x",
+                "namespace": "total_coverage",
+                "description": "Exon 20x",
+                "rid": "mqc-generalstats-total_coverage-exon_20",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "hidden": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "dmax": 100.0,
+                "dmin": 0.0
+            },
+            "gene_consensus": {
+                "max": 100,
+                "min": 0,
+                "scale": "RdYlGn",
+                "suffix": "%",
+                "placement": 23.0,
+                "title": "Gene",
+                "namespace": "total_coverage",
+                "description": "Gene",
+                "rid": "mqc-generalstats-total_coverage-gene_consensus",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "hidden": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "dmax": 100.0,
+                "dmin": 0.0
+            },
+            "gene_2": {
+                "max": 100,
+                "min": 0,
+                "scale": "RdYlGn",
+                "suffix": "%",
+                "placement": 24.0,
+                "title": "Gene 2x",
+                "namespace": "total_coverage",
+                "description": "Gene 2x",
+                "rid": "mqc-generalstats-total_coverage-gene_2",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "hidden": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "dmax": 100.0,
+                "dmin": 0.0
+            },
+            "gene_10": {
+                "max": 100,
+                "min": 0,
+                "scale": "RdYlGn",
+                "suffix": "%",
+                "placement": 25.0,
+                "title": "Gene 10x",
+                "hidden": true,
+                "namespace": "total_coverage",
+                "description": "Gene 10x",
+                "rid": "mqc-generalstats-total_coverage-gene_10",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "dmax": 100.0,
+                "dmin": 0.0
+            },
+            "gene_20": {
+                "max": 100,
+                "min": 0,
+                "scale": "RdYlGn",
+                "suffix": "%",
+                "placement": 26.0,
+                "title": "Gene 20x",
+                "namespace": "total_coverage",
+                "description": "Gene 20x",
+                "rid": "mqc-generalstats-total_coverage-gene_20",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "hidden": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "dmax": 100.0,
+                "dmin": 0.0
+            }
+        },
+        {
             "flagstat_total": {
                 "title": "M Reads",
                 "description": "Total reads in the bam file (millions)",
@@ -117,7 +309,7 @@
                 "rid": "mqc-generalstats-samtools-flagstat_total",
                 "scale": "GnBu",
                 "format": "{:,.1f}",
-                "colour": "55,126,184",
+                "colour": "77,175,74",
                 "max": null,
                 "ceiling": null,
                 "floor": null,
@@ -136,7 +328,7 @@
                 "rid": "mqc-generalstats-samtools-mapped_passed",
                 "scale": "GnBu",
                 "format": "{:,.1f}",
-                "colour": "55,126,184",
+                "colour": "77,175,74",
                 "hidden": null,
                 "max": null,
                 "ceiling": null,
@@ -157,7 +349,7 @@
                 "namespace": "FastQC",
                 "rid": "mqc-generalstats-fastqc-percent_duplicates",
                 "format": "{:,.1f}",
-                "colour": "77,175,74",
+                "colour": "152,78,163",
                 "hidden": null,
                 "ceiling": null,
                 "floor": null,
@@ -178,7 +370,7 @@
                 "format": "{:,.0f}",
                 "namespace": "FastQC",
                 "rid": "mqc-generalstats-fastqc-percent_gc",
-                "colour": "77,175,74",
+                "colour": "152,78,163",
                 "hidden": null,
                 "ceiling": null,
                 "floor": null,
@@ -199,7 +391,7 @@
                 "hidden": false,
                 "namespace": "FastQC",
                 "rid": "mqc-generalstats-fastqc-avg_sequence_length",
-                "colour": "77,175,74",
+                "colour": "152,78,163",
                 "max": null,
                 "ceiling": null,
                 "floor": null,
@@ -221,7 +413,7 @@
                 "hidden": true,
                 "namespace": "FastQC",
                 "rid": "mqc-generalstats-fastqc-percent_fails",
-                "colour": "77,175,74",
+                "colour": "152,78,163",
                 "ceiling": null,
                 "floor": null,
                 "minRange": null,
@@ -241,7 +433,7 @@
                 "namespace": "FastQC",
                 "rid": "mqc-generalstats-fastqc-total_sequences",
                 "format": "{:,.1f}",
-                "colour": "77,175,74",
+                "colour": "152,78,163",
                 "hidden": null,
                 "max": null,
                 "ceiling": null,
@@ -260,7 +452,7 @@
             "datasets": [
                 [
                     {
-                        "name": "Norfolk-1",
+                        "name": "Norfolk-1_gene_coverage",
                         "data": [
                             [
                                 0.0,
@@ -669,7 +861,7 @@
                         ]
                     },
                     {
-                        "name": "Warrior_10",
+                        "name": "Warrior_10_gene_coverage",
                         "data": [
                             [
                                 0.0,
@@ -4617,7 +4809,7 @@
     },
     "report_saved_raw_data": {
         "multiqc_gene_coverage_lineplot": {
-            "Norfolk-1": {
+            "Norfolk-1_gene_coverage": {
                 "0.0": 388.0,
                 "1.0": 34.0,
                 "2.0": 34.0,
@@ -4720,7 +4912,7 @@
                 "99.0": 0.0,
                 "100.0": 0.0
             },
-            "Warrior_10": {
+            "Warrior_10_gene_coverage": {
                 "0.0": 388.0,
                 "1.0": 35.0,
                 "2.0": 34.0,
@@ -4942,6 +5134,14 @@
         },
         "multiqc_general_stats": {
             "Norfolk-1": {
+                "total_coverage_mqc-generalstats-total_coverage-exon_consensus": 4.684548323887972,
+                "total_coverage_mqc-generalstats-total_coverage-exon_2": 4.7907353303530575,
+                "total_coverage_mqc-generalstats-total_coverage-exon_10": 1.4977647928473372,
+                "total_coverage_mqc-generalstats-total_coverage-exon_20": 0.7857447366053794,
+                "total_coverage_mqc-generalstats-total_coverage-gene_consensus": 4.334033992307528,
+                "total_coverage_mqc-generalstats-total_coverage-gene_2": 4.436619926504717,
+                "total_coverage_mqc-generalstats-total_coverage-gene_10": 1.2922280068469458,
+                "total_coverage_mqc-generalstats-total_coverage-gene_20": 0.6846945925091573,
                 "Samtools_mqc-generalstats-samtools-flagstat_total": 1049,
                 "Samtools_mqc-generalstats-samtools-mapped_passed": 698,
                 "FastQC_mqc-generalstats-fastqc-percent_duplicates": 0.0,
@@ -4951,6 +5151,14 @@
                 "FastQC_mqc-generalstats-fastqc-total_sequences": 1000.0
             },
             "Warrior_10": {
+                "total_coverage_mqc-generalstats-total_coverage-exon_consensus": 3.6275671637704843,
+                "total_coverage_mqc-generalstats-total_coverage-exon_2": 3.676847321466984,
+                "total_coverage_mqc-generalstats-total_coverage-exon_10": 0.25832971554397866,
+                "total_coverage_mqc-generalstats-total_coverage-exon_20": 0.11616037171318948,
+                "total_coverage_mqc-generalstats-total_coverage-gene_consensus": 3.6307142878259757,
+                "total_coverage_mqc-generalstats-total_coverage-gene_2": 3.6836332567634287,
+                "total_coverage_mqc-generalstats-total_coverage-gene_10": 0.2758290392102953,
+                "total_coverage_mqc-generalstats-total_coverage-gene_20": 0.12002849937768476,
                 "Samtools_mqc-generalstats-samtools-flagstat_total": 1002,
                 "Samtools_mqc-generalstats-samtools-mapped_passed": 241,
                 "FastQC_mqc-generalstats-fastqc-percent_duplicates": 0.0,
@@ -4969,8 +5177,8 @@
         "/Users/bryan/work/marple-pst/example/Norfolk-1/report",
         "/Users/bryan/work/marple-pst/example/Warrior_10/report"
     ],
-    "config_creation_date": "2022-10-12, 13:53",
-    "config_git_hash": "5578bda94c6eb3d8f30f56853a988a3bb44c4ec0",
+    "config_creation_date": "2023-01-24, 16:53",
+    "config_git_hash": "ff2c05d4cc0b56c4b3244792481d23e0b80717c6",
     "config_intro_text": false,
     "config_report_comment": null,
     "config_report_header_info": null,
@@ -4978,5 +5186,5 @@
     "config_short_version": "1.12",
     "config_subtitle": null,
     "config_title": null,
-    "config_version": "1.12 (5578bda)"
+    "config_version": "1.12 (ff2c05d)"
 }
