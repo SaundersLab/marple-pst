@@ -14,6 +14,23 @@ from Bio.SeqIO import parse
 from utils import (darken_color, file, get_sample_name_and_extenstion, pushd,
                    run, string_to_color, write_fasta)
 
+def filter_read_length(
+    fastq_in: str,
+    fastq_out: str,
+    max_read_length=4_000,
+) -> None:
+    read_length = 0
+    record = ''
+    with open(fastq_in) as f_in, open(fastq_out, 'wt') as f_out:
+        for i, line in enumerate(f_in):
+            if (i % 4) == 0: # sequence identifier line
+                if i > 0 and read_length <= max_read_length:
+                    f_out.write(record)
+                record = ''
+            elif (i % 4) == 1: # sequence letters line
+                read_length = len(line.strip())
+            record += line
+        f_out.write(record)
 
 # Make a pileup and return the path to it
 def reads_to_pileup(
@@ -22,6 +39,7 @@ def reads_to_pileup(
     out_dir: str,
     threads=1,
     trim=True,
+    max_read_length=4_000,
 ) -> str:
     makedirs(out_dir, exist_ok=True)
     sample_name, sample_ext = get_sample_name_and_extenstion(fastq, 'fastq')
@@ -32,13 +50,16 @@ def reads_to_pileup(
         run(['porechop', '--threads', threads, '-i', fastq], trimmed)
     else:
         trimmed = fastq
+    filtered = join(out_dir, f'{sample_name}_len_le_{max_read_length}{sample_ext}')
+    print('filtering', end=' ', flush=True)
+    filter_read_length(trimmed, filtered, max_read_length)
     print('aligning', end=' ', flush=True)
     # Don't recreate the index if it already exists - important for running
     # samples in parallel
     if not isfile(f'{reference}.bwt'):
         run(['bwa', 'index', reference])
     aligned_sam = join(out_dir, f'{sample_name}.sam')
-    run(['bwa', 'mem', '-t', threads, reference, trimmed], aligned_sam)
+    run(['bwa', 'mem', '-t', threads, reference, filtered], aligned_sam)
     aligned_bam = join(out_dir, f'{sample_name}_unsorted.bam')
     run(['samtools', 'view', '-@', threads, '-S', '-b', aligned_sam], aligned_bam)
     sorted_bam = join(out_dir, f'{sample_name}.bam')
@@ -329,8 +350,12 @@ def reads_to_exons_concat(
     hetero_max: float = .75,
     threads=1,
     trim=True,
+    max_read_length=4_000,
 ) -> str:
-    pileup = reads_to_pileup(fastq, reference, out_dir, threads=threads, trim=trim)
+    pileup = reads_to_pileup(
+        fastq, reference, out_dir, threads=threads, trim=trim,
+        max_read_length=max_read_length
+    )
     consensus = pileup_to_consensus(
         pileup, reference, out_dir, min_snp_depth,
         min_match_depth, hetero_min, hetero_max
@@ -717,6 +742,7 @@ def reads_list_to_exons_concat_with_report(
     multiqc_config: str,
     threads=1,
     trim=True,
+    max_read_length=4000,
 ):
     for fastq_index, (fastq, out_dir) in enumerate(zip(fastq_paths, out_dirs)):
         sample_name = get_sample_name_and_extenstion(fastq, 'fastq')[0]
@@ -728,6 +754,7 @@ def reads_list_to_exons_concat_with_report(
             out_dir=out_dir,
             threads=threads,
             trim=trim,
+            max_read_length=4000,
         )
         print('assessing', flush=True)
         sample_report(out_dir, sample_name, gff)

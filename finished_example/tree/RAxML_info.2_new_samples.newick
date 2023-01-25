@@ -976,7 +976,7 @@ Akifumi S. Tanabe (NRIFS)
 Charlie Taylor    (UF)
 
 
-Alignment has 2507 distinct alignment patterns
+Alignment has 2504 distinct alignment patterns
 
 Proportion of gaps and completely undetermined characters in this alignment: 29.36%
 
@@ -993,7 +993,7 @@ GAMMA model of rate heterogeneity, ML estimate of alpha-parameter
 GAMMA Model parameters will be estimated up to an accuracy of 0.1000000000 Log Likelihood units
 
 Partition: 0
-Alignment Patterns: 2507
+Alignment Patterns: 2504
 Name: No Name Provided
 DataType: DNA
 Substitution Matrix: GTR
@@ -1009,21 +1009,21 @@ raxmlHPC-PTHREADS-SSE3 -s /Users/bryan/work/marple-pst/example/tree/2_new_sample
 Partition: 0 with name: No Name Provided
 Base frequencies: 0.289 0.239 0.221 0.252 
 
-Inference[0]: Time 10.594871 GAMMA-based likelihood -713382.636998, best rearrangement setting 5
-alpha[0]: 0.020000 rates[0] ac ag at cg ct gt: 0.487322 2.077546 0.482319 0.599056 3.643891 1.000000 
+Inference[0]: Time 2.526486 GAMMA-based likelihood -713382.651424, best rearrangement setting 5
+alpha[0]: 0.020000 rates[0] ac ag at cg ct gt: 0.488111 2.077313 0.483884 0.598791 3.643862 1.000000 
 
 
 Conducting final model optimizations on all 1 trees under GAMMA-based models ....
 
-Inference[0] final GAMMA-based Likelihood: -713365.904222 tree written to file /Users/bryan/work/marple-pst/example/tree/RAxML_result.2_new_samples.newick
+Inference[0] final GAMMA-based Likelihood: -713368.395210 tree written to file /Users/bryan/work/marple-pst/example/tree/RAxML_result.2_new_samples.newick
 
 
-Starting final GAMMA-based thorough Optimization on tree 0 likelihood -713365.904222 .... 
+Starting final GAMMA-based thorough Optimization on tree 0 likelihood -713368.395210 .... 
 
-Final GAMMA-based Score of best tree -713365.904222
+Final GAMMA-based Score of best tree -713368.395210
 
 Program execution info written to /Users/bryan/work/marple-pst/example/tree/RAxML_info.2_new_samples.newick
 Best-scoring ML tree written to: /Users/bryan/work/marple-pst/example/tree/RAxML_bestTree.2_new_samples.newick
 
-Overall execution time: 18.952502 secs or 0.005265 hours or 0.000219 days
+Overall execution time: 5.266082 secs or 0.001463 hours or 0.000061 days
 

@@ -33,6 +33,7 @@ if __name__ == '__main__':
     )
     parser.add_argument('--threads', type=int, help='Number of threads to use', default=2)
     parser.add_argument('--trim', help='Should FASTQ files be trimmed (yes/no)', default='yes')
+    parser.add_argument('--max_read_length', type=int, help='Maxmium length of read in FASTQ to keep', default=4_000)
     parser.add_argument('--version', action='version', version=__version__)
     args = parser.parse_args()
     fastq_paths = [realpath(path) for path in args.relative_fastq_paths]
@@ -45,4 +46,5 @@ if __name__ == '__main__':
         multiqc_config=args.multiqc_config,
         threads=args.threads,
         trim=args.trim.lower().startswith('y'),
+        max_read_length=args.max_read_length,
     )
