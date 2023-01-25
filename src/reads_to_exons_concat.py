@@ -1,6 +1,7 @@
 from transform import reads_list_to_exons_concat_with_report
 from os.path import join, dirname, realpath
 import argparse
+from version import __version__
 
 if __name__ == '__main__':
     src_dir = dirname(realpath(__file__))
@@ -32,6 +33,7 @@ if __name__ == '__main__':
     )
     parser.add_argument('--threads', type=int, help='Number of threads to use', default=2)
     parser.add_argument('--trim', help='Should FASTQ files be trimmed (yes/no)', default='yes')
+    parser.add_argument('--version', action='version', version=__version__)
     args = parser.parse_args()
     fastq_paths = [realpath(path) for path in args.relative_fastq_paths]
     out_dirs = [dirname(path) for path in fastq_paths]

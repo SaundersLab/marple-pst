@@ -1,7 +1,7 @@
 from os.path import dirname, join, realpath
 from transform import exon_concat_paths_to_tree_imgs
 import argparse
-
+from version import __version__
 
 
 if __name__ == '__main__':
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     parser.add_argument('--out_dir', help='Directory to create tree files in', default=realpath('.'))
     parser.add_argument('--threads', type=int, help='Number of threads to use for RAxML', default=1)
     parser.add_argument('--img_fmt', help='Format to output tree images as', default='pdf')
-
+    parser.add_argument('--version', action='version', version=__version__)
     args = parser.parse_args()
     exon_concat_paths_to_tree_imgs(
         exon_concat_paths=[realpath(path) for path in args.relative_exon_concat_paths],
