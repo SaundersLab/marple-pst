@@ -14,6 +14,82 @@ custom_data:
       ymax: 388
       ymin: 0
       tt_label: "{point.y} genes have ≥ {point.x}% positions covered"
+  "total_coverage":
+    file_format: "csv"
+    plot_type: "generalstats"
+    id: "total_coverage"
+    pconfig:
+      - "exon_consensus":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          title: "Qualifying Bases"
+          description: "Bases (in exons) with high enough coverage to use for the tree"
+          placement: 19
+      - "exon_2":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 20
+          title: "Exon Bases 2x"
+          hidden: True
+          description: "Bases in exons with ≥ 2x coverage"
+      - "exon_10":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 21
+          title: "Exon Bases 10x"
+          hidden: True
+          description: "Bases in exons with ≥ 10x coverage"
+      - "exon_20":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 22
+          title: "Exon Bases 20x"
+          hidden: True
+          description: "Bases in exons with ≥ 20x coverage"
+      - "gene_consensus":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 23
+          title: "Consensus Bases"
+          hidden: True
+          description: "Bases used for consensus sequence"
+      - "gene_2":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 24
+          title: "Bases at 2x"
+          description: "Bases with ≥ 2x coverage"
+      - "gene_10":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 25
+          title: "Bases at 10x"
+          hidden: True
+          description: "Bases with ≥ 10x coverage"
+      - "gene_20":
+          max: 100
+          min: 0
+          scale: "RdYlGn"
+          suffix: "%"
+          placement: 26
+          title: "Bases at 20x"
+          description: "Bases with ≥ 20x coverage"
 sp:
   gene_coverage:
-    fn: "*.csv"
+    fn: "*_gene_coverage.csv"
+  total_coverage:
+    fn: "*_total_coverage.csv"

@@ -75,8 +75,8 @@ Our starting point is a directory for each sample containing the fastq files cre
 
     In this example we use a starting tree input containing only 8 isolates to save time.
 
-    When you run this with real samples, use `../data/56_isolates_388_genes_exons.fasta.gz` which
-    contains 56 isolates.
+    When you run this with real samples, use `../data/57_isolates_388_genes_exons.fasta.gz` which
+    contains 57 isolates.
 
 7. Inspect the tree by opening `example/tree/2_new_samples_country.pdf` in your browser.
 
@@ -120,7 +120,6 @@ See [pipeline.md](docs/pipeline.md) for a flowchart of the pipeline.
 Align reads to reference genes then extract and concatenate exons
 
 reads_to_exons_concat.sh 
-  -h                    Show a help message and exit.
   --ref                 Reference FASTA file to align reads to.
   --gff                 Annotation file giving the position of exons within the
                         reference genes. Genes should be specificied as if 
@@ -137,7 +136,6 @@ reads_to_exons_concat.sh
 Create and visualise a tree with new samples
 
 exons_concat_to_tree_imgs.sh
-  -h                Show a help message and exit.
   --meta            Path to spreadsheet containing isolate metadata and styles.
   --start           Starting tree input, i.e. concatenated exons file for 
                     previously sequenced samples.
@@ -152,11 +150,17 @@ exons_concat_to_tree_imgs.sh
 Visualise a tree
 
 tree_to_imgs.sh
-  -h            Show a help message and exit.
   --meta        Path to spreadsheet containing isolate metadata and styles.
   --out_dir     Directory to create tree files in.
   --img_fmt     Format to output tree images as.
   newick_path   Tree in Newick format.
+```
+
+With all of the above you can use:
+
+```text
+  -h          Show a help message and exit.
+  --version   Show the marple-pst version number and exit.
 ```
 
 ## Test

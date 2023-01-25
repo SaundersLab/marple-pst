@@ -2,6 +2,7 @@ import sys
 from os.path import dirname, join, realpath
 from transform import newick_to_imgs
 import argparse
+from version import __version__
 
 if __name__ == '__main__':
     src_dir = dirname(realpath(__file__))
@@ -21,6 +22,7 @@ if __name__ == '__main__':
     )
     parser.add_argument('--out_dir', help='Directory to create tree files in', default=None)
     parser.add_argument('--img_fmt', help='Format to output tree images as', default='pdf')
+    parser.add_argument('--version', action='version', version=__version__)
     args = parser.parse_args()
     if args.out_dir is None:
         args.out_dir = dirname(realpath(args.newick_path))
