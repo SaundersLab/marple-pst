@@ -1,6 +1,6 @@
 # conda installation
-marple_pst_miniconda
-marple_pst_miniconda.sh
+conda
+Mambaforge.sh
 
 # results from running example
 example/multiqc*

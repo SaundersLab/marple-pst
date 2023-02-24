@@ -10,5 +10,5 @@ src_dir=$(cd $(dirname "$script"); pwd)
 set -euo pipefail
 
 marple_pst_dir=$( dirname "$src_dir" )
-source "$marple_pst_dir"/marple_pst_miniconda/bin/activate marple-pst
+source "$marple_pst_dir"/conda/bin/activate marple-pst
 python3 "$src_dir"/exons_concat_to_tree_imgs.py $@
