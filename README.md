@@ -6,11 +6,11 @@ Pipeline for analysis of Puccinia striiformis f.sp. tritici genomic reads
 
 ## Install
 
-Before installing, ensure the licences of miniconda and software dependencies in `env.yml` are compatible with your usage.
+Before installing, ensure the licences of mamba and software dependencies in `env.yml` are compatible with your usage.
 
 The installer:
 
-- Installs conda (miniconda)
+- Installs mamba
 - Installs dependencies from `eny.yml` into the environment `marple-pst`
 - Runs tests with `test/run_tests.sh`
 
