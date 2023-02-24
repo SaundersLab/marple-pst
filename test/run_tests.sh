@@ -5,7 +5,7 @@ export PYTHONPATH=$PYTHONPATH:$PWD/src
 # Bash strict mode
 set -euo pipefail
 
-source marple_pst_miniconda/bin/activate marple-pst
+source conda/bin/activate marple-pst
 
 coverage=false
 # allow user to skip certain tests and get coverage if requested
